@@ -80,29 +80,20 @@ namespace AptitudeEngine
             return toReturn;
         }
 
-        //Subtraction
         public static Vector2 operator -(Vector2 left, Vector2 right)
             => new Vector2(left.X - right.X, left.Y - right.Y);
 
-        //Addition
         public static Vector2 operator +(Vector2 left, Vector2 right)
             => new Vector2(left.X + right.X, left.Y + right.Y);
 
-        //Multiplication
-        public static Vector2 operator *(Vector2 left, Vector2 right)
-            => new Vector2(left.X * right.X, left.Y * right.Y);
         public static Vector2 operator *(Vector2 left, float right)
             => new Vector2(left.X * right, left.Y * right);
+
         public static Vector2 operator *(float left, Vector2 right)
             => new Vector2(left * right.X, left * right.Y);
 
-        //Division
-        public static Vector2 operator /(Vector2 left, Vector2 right)
-            => new Vector2(left.X / right.X, left.Y / right.Y);
         public static Vector2 operator /(Vector2 left, float right)
             => new Vector2(left.X / right, left.Y / right);
-        public static Vector2 operator /(float left, Vector2 right)
-            => new Vector2(left / right.X, left / right.Y);
 
         public static implicit operator OpenTK.Vector2(Vector2 vec)
             => new OpenTK.Vector2(vec.X, vec.Y);
