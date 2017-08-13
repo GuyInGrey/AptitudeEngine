@@ -28,9 +28,6 @@ namespace AptitudeEngine
             Y = v.Y;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Add(Vector2 vec1, Vector2 vec2) => vec1 + vec2;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Add(params Vector2[] vecs)
         {
             var toReturn = Zero;
