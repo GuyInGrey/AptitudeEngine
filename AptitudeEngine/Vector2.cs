@@ -42,42 +42,13 @@ namespace AptitudeEngine
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Subtract(Vector2 vec1, Vector2 vec2) => vec1 - vec2;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Subtract(params Vector2[] vecs)
-        {
-            var toReturn = Zero;
-            for (var i = 0; i < vecs.Length; i++)
-            {
-                toReturn -= vecs[i];
-            }
-            return toReturn;
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Multiply(Vector2 vec1, Vector2 vec2) => vec1 * vec2;
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Multiple(params Vector2[] vecs)
         {
-            var toReturn = Zero;
-            for (var i = 0; i < vecs.Length; i++)
-            {
-                toReturn *= vecs[i];
-            }
-            return toReturn;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Divide(Vector2 vec1, Vector2 vec2) => vec1 / vec2;
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Divide(params Vector2[] vecs)
-        {
-            var toReturn = Zero;
-            for (var i = 0; i < vecs.Length; i++)
-            {
-                toReturn /= vecs[i];
-            }
-            return toReturn;
         }
 
         public static Vector2 operator -(Vector2 left, Vector2 right)
