@@ -48,7 +48,7 @@ namespace AptitudeEngine.Tests
 
 			if (Math.Abs(speed.SquareMagnitude) > float.Epsilon)
 			{
-				camera.Move(speed.Normalized() * Speed * Context.DeltaTime);
+				camera.Move(speed.Normalized * Speed * Context.DeltaTime);
 			}
 		}
 	}
