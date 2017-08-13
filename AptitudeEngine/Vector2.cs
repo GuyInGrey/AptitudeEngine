@@ -26,13 +26,6 @@ namespace AptitudeEngine
             Y = v.Y;
         }
 
-		public void Normalize()
-		{
-			var inverse = 1f / Magnitude;
-			X *= inverse;
-			Y *= inverse;
-		}
-
 		public Vector2 Normalized()
 			=> this * (1f / Magnitude);
 
