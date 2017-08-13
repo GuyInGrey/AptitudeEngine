@@ -35,7 +35,27 @@ namespace AptitudeEngine
 		public Vector2 Normalized()
 			=> this * (1f / Magnitude);
 
-		public static implicit operator OpenTK.Vector2(Vector2 vec)
+        public static Vector2 Add(Vector2 vec1, Vector2 vec2) => vec1 + vec2;
+
+        public static Vector2 Add(params Vector2[] vecs)
+        {
+            Vector2 toReturn = Zero;
+
+            for (int i = 0; i < vecs.Length; i++)
+            {
+                toReturn.X += vecs[i].X;
+                toReturn.Y += vecs[i].Y;
+            }
+
+            return toReturn;
+        }
+
+        public static Vector2 operator +(Vector2 a, Vector2 b) =>
+            new Vector2(a.X + b.X, a.Y + b.Y);
+        public static Vector2 operator -(Vector2 a, Vector2 b) =>
+            new Vector2(a.X - b.X, a.Y - b.Y);
+
+        public static implicit operator OpenTK.Vector2(Vector2 vec)
 			=> new OpenTK.Vector2(vec.X, vec.Y);
 		public static implicit operator OpenTK.Vector3(Vector2 vec)
 			=> new OpenTK.Vector3(vec.X, vec.Y, 0f);
