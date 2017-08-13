@@ -5,14 +5,15 @@ namespace AptitudeEngine
 {
     public struct Vector2
     {
-		public static readonly Vector2 Zero = new Vector2(0f, 0f); 
+        public static readonly Vector2 Zero = new Vector2(0f, 0f);
 
         public float X { get; set; }
         public float Y { get; set; }
 
-		public float SquareMagnitude => (X * X) + (Y * Y);
-		
-		public float Magnitude => (float)Math.Sqrt(SquareMagnitude);
+        public float SquareMagnitude => (X * X) + (Y * Y);
+
+        public float Magnitude => (float)Math.Sqrt(SquareMagnitude);
+
         public Vector2 Normalized => this * (1f / Magnitude);
 
         public Vector2(float x, float y)
@@ -104,8 +105,8 @@ namespace AptitudeEngine
             => new Vector2(left / right.X, left / right.Y);
 
         public static implicit operator OpenTK.Vector2(Vector2 vec)
-			=> new OpenTK.Vector2(vec.X, vec.Y);
-		public static implicit operator OpenTK.Vector3(Vector2 vec)
-			=> new OpenTK.Vector3(vec.X, vec.Y, 0f);
+            => new OpenTK.Vector2(vec.X, vec.Y);
+        public static implicit operator OpenTK.Vector3(Vector2 vec)
+            => new OpenTK.Vector3(vec.X, vec.Y, 0f);
     }
 }
