@@ -13,6 +13,7 @@ namespace AptitudeEngine
 		public float SquareMagnitude => (X * X) + (Y * Y);
 		
 		public float Magnitude => (float)Math.Sqrt(SquareMagnitude);
+        public Vector2 Normalized => this * (1f / Magnitude);
 
         public Vector2(float x, float y)
         {
@@ -25,9 +26,6 @@ namespace AptitudeEngine
             X = v.X;
             Y = v.Y;
         }
-
-		public Vector2 Normalized()
-			=> this * (1f / Magnitude);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Add(Vector2 vec1, Vector2 vec2) => vec1 + vec2;
