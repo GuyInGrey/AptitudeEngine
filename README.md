@@ -1,2 +1,2 @@
 # AptitudeEngine
-A 2D based, new technology using, game engine in C#.
+A 2D RPG Engine.
