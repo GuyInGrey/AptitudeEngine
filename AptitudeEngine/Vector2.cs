@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace AptitudeEngine
 {
@@ -35,33 +36,85 @@ namespace AptitudeEngine
 		public Vector2 Normalized()
 			=> this * (1f / Magnitude);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Add(Vector2 vec1, Vector2 vec2) => vec1 + vec2;
-
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Add(params Vector2[] vecs)
         {
-            Vector2 toReturn = Zero;
-
-            for (int i = 0; i < vecs.Length; i++)
+            var toReturn = Zero;
+            for (var i = 0; i < vecs.Length; i++)
             {
-                toReturn.X += vecs[i].X;
-                toReturn.Y += vecs[i].Y;
+                toReturn += vecs[i];
             }
-
             return toReturn;
         }
 
-        public static Vector2 operator +(Vector2 a, Vector2 b) =>
-            new Vector2(a.X + b.X, a.Y + b.Y);
-        public static Vector2 operator -(Vector2 a, Vector2 b) =>
-            new Vector2(a.X - b.X, a.Y - b.Y);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Subtract(Vector2 vec1, Vector2 vec2) => vec1 - vec2;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Subtract(params Vector2[] vecs)
+        {
+            var toReturn = Zero;
+            for (var i = 0; i < vecs.Length; i++)
+            {
+                toReturn -= vecs[i];
+            }
+            return toReturn;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Multiply(Vector2 vec1, Vector2 vec2) => vec1 * vec2;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Multiple(params Vector2[] vecs)
+        {
+            var toReturn = Zero;
+            for (var i = 0; i < vecs.Length; i++)
+            {
+                toReturn *= vecs[i];
+            }
+            return toReturn;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Divide(Vector2 vec1, Vector2 vec2) => vec1 / vec2;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Divide(params Vector2[] vecs)
+        {
+            var toReturn = Zero;
+            for (var i = 0; i < vecs.Length; i++)
+            {
+                toReturn /= vecs[i];
+            }
+            return toReturn;
+        }
+
+        //Subtraction
+        public static Vector2 operator -(Vector2 left, Vector2 right)
+            => new Vector2(left.X - right.X, left.Y - right.Y);
+
+        //Addition
+        public static Vector2 operator +(Vector2 left, Vector2 right)
+            => new Vector2(left.X + right.X, left.Y + right.Y);
+
+        //Multiplication
+        public static Vector2 operator *(Vector2 left, Vector2 right)
+            => new Vector2(left.X * right.X, left.Y * right.Y);
+        public static Vector2 operator *(Vector2 left, float right)
+            => new Vector2(left.X * right, left.Y * right);
+        public static Vector2 operator *(float left, Vector2 right)
+            => new Vector2(left * right.X, left * right.Y);
+
+        //Division
+        public static Vector2 operator /(Vector2 left, Vector2 right)
+            => new Vector2(left.X / right.X, left.Y / right.Y);
+        public static Vector2 operator /(Vector2 left, float right)
+            => new Vector2(left.X / right, left.Y / right);
+        public static Vector2 operator /(float left, Vector2 right)
+            => new Vector2(left / right.X, left / right.Y);
 
         public static implicit operator OpenTK.Vector2(Vector2 vec)
 			=> new OpenTK.Vector2(vec.X, vec.Y);
 		public static implicit operator OpenTK.Vector3(Vector2 vec)
 			=> new OpenTK.Vector3(vec.X, vec.Y, 0f);
-		public static Vector2 operator *(Vector2 a, Vector2 b)
-			=> new Vector2(a.X * b.X, a.Y * b.Y);
-		public static Vector2 operator *(Vector2 a, float b)
-			=> new Vector2(a.X * b, a.Y * b);
     }
 }
