@@ -6,38 +6,39 @@ using System.Threading.Tasks;
 
 namespace AptitudeEngine
 {
-	public class AptComponent : ComponentEventChain, IDisposable
-	{
-		public string Guid { get; }
-		
-		internal AptObject owner;
-		public AptObject Owner => owner;
-		public AptContext Context => owner?.Context;
-		public AptInput Input => Context?.Input;
-		public bool Disposed { get; private set; }
+    public class AptComponent : ComponentEventChain, IDisposable
+    {
+        public string Guid { get; }
 
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
+        internal AptObject owner;
+        public AptObject Owner => owner;
+        public AptContext Context => owner?.Context;
+        public Transform Transform => owner?.Transform;
+        public AptInput Input => Context?.Input;
+        public bool Disposed { get; private set; }
 
-		private void Dispose(bool disposing)
-		{
-			if (Disposed)
-			{
-				return;
-			}
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-			if (disposing)
-			{
-				
-			}
+        private void Dispose(bool disposing)
+        {
+            if (Disposed)
+            {
+                return;
+            }
 
-			owner = null;
+            if (disposing)
+            {
 
-			Disposed = true;
-		}
+            }
+
+            owner = null;
+
+            Disposed = true;
+        }
 
         public AptComponent() =>
             // We're not ensuring Guid is totally unique like in AptObject
@@ -45,13 +46,13 @@ namespace AptitudeEngine
             Guid = System.Guid.NewGuid().ToString("N");
 
         public override bool Equals(object obj)
-			=> obj is AptComponent comp && Guid.Equals(comp.Guid);
+            => obj is AptComponent comp && Guid.Equals(comp.Guid);
 
-		public override int GetHashCode()
-		{
-			var hash = 269;
-			hash = (hash * 47) + Guid.GetHashCode();
-			return hash;
-		}
-	}
+        public override int GetHashCode()
+        {
+            var hash = 269;
+            hash = (hash * 47) + Guid.GetHashCode();
+            return hash;
+        }
+    }
 }

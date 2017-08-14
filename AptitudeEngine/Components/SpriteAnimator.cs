@@ -26,10 +26,10 @@ namespace AptitudeEngine.Components
             {
                 return;
             }
-			
+
             timeSinceLastAnimationFrame += Owner.Context.DeltaTime;
 
-            if (timeSinceLastAnimationFrame >= 1/(float)Animation.FrameRate)
+            if (timeSinceLastAnimationFrame >= 1 / (float)Animation.FrameRate)
             {
                 frameIndex++;
                 timeSinceLastAnimationFrame = 0;

@@ -136,6 +136,9 @@ namespace AptitudeEngine
         public static Vector2 operator -(Vector2 left, Vector2 right)
             => new Vector2(left.X - right.X, left.Y - right.Y);
 
+        public static Vector2 operator -(Vector2 vec)
+            => new Vector2(-vec.X, -vec.Y);
+
         public static Vector2 operator +(Vector2 left, Vector2 right)
             => new Vector2(left.X + right.X, left.Y + right.Y);
 
