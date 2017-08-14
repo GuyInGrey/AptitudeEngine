@@ -16,10 +16,9 @@ namespace AptitudeEngine.Components
         {
             var thisSize = new Rectangle(Transform.Position, Transform.Size);
 
-            ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
             if (Context.MainCamera.Transform.Bounds.IntersectsWith(thisSize))
             {
-
+                ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
             }
         }
     }

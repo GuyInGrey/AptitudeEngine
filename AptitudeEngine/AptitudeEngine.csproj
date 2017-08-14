@@ -89,6 +89,7 @@
     <Compile Include="Assets\SpriteAsset.cs" />
     <Compile Include="Components\SpriteAnimator.cs" />
     <Compile Include="Components\SpriteRenderer.cs" />
+    <Compile Include="Transform.cs" />
     <Compile Include="Vector2.cs" />
   </ItemGroup>
   <ItemGroup>
