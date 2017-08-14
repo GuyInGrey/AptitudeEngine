@@ -8,19 +8,19 @@ using AptitudeEngine.Components;
 
 namespace AptitudeEngine.Components
 {
-	public class SpriteRenderer : AptComponent
-	{
+    public class SpriteRenderer : AptComponent
+    {
         public SpriteAsset Sprite { get; set; }
-		
-		public override void Render(FrameEventArgs a)
-        {
-            var thisSize = new Rectangle(Owner.Position, Owner.Size);
 
-			ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
-			if (Context.MainCamera.Owner.Bounds.IntersectsWith(thisSize))
+        public override void Render(FrameEventArgs a)
+        {
+            var thisSize = new Rectangle(Transform.Position, Transform.Size);
+
+            ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
+            if (Context.MainCamera.Transform.Bounds.IntersectsWith(thisSize))
             {
-                
+
             }
         }
-	}
+    }
 }

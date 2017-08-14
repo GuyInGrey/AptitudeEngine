@@ -44,7 +44,7 @@ namespace AptitudeEngine.Tests
 
 			var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
 			someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/me.jpg");
-			someSprite.Owner.Position = new Vector2(-0.5f, -0.5f);
+			someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
 		}
 
         public Rectangle Rec(float x, float y, float width, float height) =>
