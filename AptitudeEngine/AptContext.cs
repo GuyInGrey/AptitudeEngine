@@ -26,13 +26,14 @@ namespace AptitudeEngine
         private List<AptObject> hierarchy;
         private List<AptObject> toBeInitialized;
 
-        private readonly GameWindow gameWindow;
+        private readonly OpenTK.GameWindow gameWindow;
         private int frameCount;
         private float timeSinceLastFrameLog;
 
         public AptInput Input { get; }
-
         public Camera MainCamera { get; internal set; }
+        public bool Disposed { get; private set; }
+        public float DeltaTime { get; private set; }
 
         public Color ClearColor
         {
@@ -48,144 +49,6 @@ namespace AptitudeEngine
             set => GL.ClearColor(value);
         }
 
-        public bool Disposed { get; private set; }
-        public float DeltaTime { get; private set; }
-
-        public event EventHandler<EventArgs> Load
-        {
-            add => gameWindow.Load += value;
-            remove => gameWindow.Load -= value;
-        }
-
-        public event EventHandler<FrameEventArgs> PreRenderFrame;
-
-        public event EventHandler<FrameEventArgs> RenderFrame
-        {
-            add => gameWindow.RenderFrame += value;
-            remove => gameWindow.RenderFrame -= value;
-        }
-
-        public event EventHandler<FrameEventArgs> PostRenderFrame;
-
-        public event EventHandler<FrameEventArgs> PreUpdateFrame;
-
-        public event EventHandler<FrameEventArgs> UpdateFrame
-        {
-            add => gameWindow.UpdateFrame += value;
-            remove => gameWindow.UpdateFrame -= value;
-        }
-
-        public event EventHandler<FrameEventArgs> PostUpdateFrame;
-
-        public event EventHandler<EventArgs> Unload
-        {
-            add => gameWindow.Unload += value;
-            remove => gameWindow.Unload -= value;
-        }
-
-        public event EventHandler<MouseWheelEventArgs> MouseWheel
-        {
-            add => gameWindow.MouseWheel += value;
-            remove => gameWindow.MouseWheel -= value;
-        }
-
-        public event EventHandler<EventArgs> Closed
-        {
-            add => gameWindow.Closed += value;
-            remove => gameWindow.Closed -= value;
-        }
-
-        public event EventHandler<CancelEventArgs> Closing
-        {
-            add => gameWindow.Closing += value;
-            remove => gameWindow.Closing -= value;
-        }
-
-        public event EventHandler<EventArgs> OnDisposed
-        {
-            add => gameWindow.Disposed += value;
-            remove => gameWindow.Disposed -= value;
-        }
-
-        public event EventHandler<EventArgs> FocusedChanged
-        {
-            add => gameWindow.FocusedChanged += value;
-            remove => gameWindow.FocusedChanged -= value;
-        }
-
-        public event EventHandler<EventArgs> IconChanged
-        {
-            add => gameWindow.IconChanged += value;
-            remove => gameWindow.IconChanged -= value;
-        }
-
-        public event EventHandler<KeyboardKeyEventArgs> KeyDown
-        {
-            add => gameWindow.KeyDown += value;
-            remove => gameWindow.KeyDown -= value;
-        }
-
-        public event EventHandler<KeyPressEventArgs> KeyPress
-        {
-            add => gameWindow.KeyPress += value;
-            remove => gameWindow.KeyPress -= value;
-        }
-
-        public event EventHandler<KeyboardKeyEventArgs> KeyUp
-        {
-            add => gameWindow.KeyUp += value;
-            remove => gameWindow.KeyUp -= value;
-        }
-
-        public event EventHandler<MouseMoveEventArgs> MouseMove
-        {
-            add => gameWindow.MouseMove += value;
-            remove => gameWindow.MouseMove -= value;
-        }
-
-        public event EventHandler<EventArgs> MouseEnter
-        {
-            add => gameWindow.MouseEnter += value;
-            remove => gameWindow.MouseEnter -= value;
-        }
-
-        public event EventHandler<EventArgs> MouseLeave
-        {
-            add => gameWindow.MouseLeave += value;
-            remove => gameWindow.MouseLeave -= value;
-        }
-
-        public event EventHandler<EventArgs> Resize
-        {
-            add => gameWindow.Resize += value;
-            remove => gameWindow.Resize -= value;
-        }
-
-        public event EventHandler<EventArgs> TitleChanged
-        {
-            add => gameWindow.TitleChanged += value;
-            remove => gameWindow.TitleChanged -= value;
-        }
-
-        public event EventHandler<EventArgs> VisibleChanged
-        {
-            add => gameWindow.VisibleChanged += value;
-            remove => gameWindow.VisibleChanged -= value;
-        }
-
-        public event EventHandler<EventArgs> WindowBorderChanged
-        {
-            add => gameWindow.WindowBorderChanged += value;
-            remove => gameWindow.WindowBorderChanged -= value;
-        }
-
-        public event EventHandler<EventArgs> WindowStateChanged
-        {
-            add => gameWindow.WindowStateChanged += value;
-            remove => gameWindow.WindowStateChanged -= value;
-        }
-
-        public event EventHandler<MouseButtonEventArgs> MouseDown
         /// <summary>
         /// Initialize a new Aptitude Context, capturing a OpenTK context internally, using <see cref="GraphicsMode.Default"/>.
         /// </summary>
@@ -217,20 +80,7 @@ namespace AptitudeEngine
                 flags,
                 display)
         {
-            add => gameWindow.MouseDown += value;
-            remove => gameWindow.MouseDown -= value;
-        }
 
-        public event EventHandler<MouseButtonEventArgs> MouseUp
-        {
-            add => gameWindow.MouseUp += value;
-            remove => gameWindow.MouseUp -= value;
-        }
-
-        public event EventHandler<EventArgs> Move
-        {
-            add => gameWindow.Move += value;
-            remove => gameWindow.Move -= value;
         }
 
         /// <summary>
@@ -359,6 +209,7 @@ namespace AptitudeEngine
 
             PostRenderFrame?.Invoke(this, e);
         }
+
         private void GameContext_Unload(object sender, EventArgs e) =>
             Dispose();
 
@@ -374,6 +225,8 @@ namespace AptitudeEngine
                 RecurseGameObjects(go.Children, action);
             }
         }
+        public void Begin()
+            => gameWindow.Run();
 
         public AptObject Instantiate()
             => Instantiate(null);
@@ -468,5 +321,121 @@ namespace AptitudeEngine
 
         ~AptContext()
             => Dispose(false);
+
+        public event EventHandler<EventArgs> Load
+        {
+            add => gameWindow.Load += value;
+            remove => gameWindow.Load -= value;
+        }
+
+        public event EventHandler<FrameEventArgs> PreRenderFrame;
+
+        public event EventHandler<FrameEventArgs> RenderFrame;
+
+        public event EventHandler<FrameEventArgs> PostRenderFrame;
+
+        public event EventHandler<FrameEventArgs> PreUpdateFrame;
+
+        public event EventHandler<FrameEventArgs> UpdateFrame;
+
+        public event EventHandler<FrameEventArgs> PostUpdateFrame;
+
+        public event EventHandler<EventArgs> Unload
+        {
+            add => gameWindow.Unload += value;
+            remove => gameWindow.Unload -= value;
+        }
+
+        public event EventHandler<MouseWheelEventArgs> MouseWheel;
+
+        public event EventHandler<EventArgs> Closed
+        {
+            add => gameWindow.Closed += value;
+            remove => gameWindow.Closed -= value;
+        }
+
+        public event EventHandler<CancelEventArgs> Closing
+        {
+            add => gameWindow.Closing += value;
+            remove => gameWindow.Closing -= value;
+        }
+
+        public event EventHandler<EventArgs> OnDisposed
+        {
+            add => gameWindow.Disposed += value;
+            remove => gameWindow.Disposed -= value;
+        }
+
+        public event EventHandler<EventArgs> FocusedChanged
+        {
+            add => gameWindow.FocusedChanged += value;
+            remove => gameWindow.FocusedChanged -= value;
+        }
+
+        public event EventHandler<EventArgs> IconChanged
+        {
+            add => gameWindow.IconChanged += value;
+            remove => gameWindow.IconChanged -= value;
+        }
+
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+
+        public event EventHandler<KeyPressEventArgs> KeyPress;
+
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+
+        public event EventHandler<MouseMoveEventArgs> MouseMove;
+
+        public event EventHandler<EventArgs> MouseEnter
+        {
+            add => gameWindow.MouseEnter += value;
+            remove => gameWindow.MouseEnter -= value;
+        }
+
+        public event EventHandler<EventArgs> MouseLeave
+        {
+            add => gameWindow.MouseLeave += value;
+            remove => gameWindow.MouseLeave -= value;
+        }
+
+        public event EventHandler<EventArgs> Resize
+        {
+            add => gameWindow.Resize += value;
+            remove => gameWindow.Resize -= value;
+        }
+
+        public event EventHandler<EventArgs> TitleChanged
+        {
+            add => gameWindow.TitleChanged += value;
+            remove => gameWindow.TitleChanged -= value;
+        }
+
+        public event EventHandler<EventArgs> VisibleChanged
+        {
+            add => gameWindow.VisibleChanged += value;
+            remove => gameWindow.VisibleChanged -= value;
+        }
+
+        public event EventHandler<EventArgs> WindowBorderChanged
+        {
+            add => gameWindow.WindowBorderChanged += value;
+            remove => gameWindow.WindowBorderChanged -= value;
+        }
+
+        public event EventHandler<EventArgs> WindowStateChanged
+        {
+            add => gameWindow.WindowStateChanged += value;
+            remove => gameWindow.WindowStateChanged -= value;
+        }
+
+        public event EventHandler<MouseButtonEventArgs> MouseDown;
+
+        public event EventHandler<MouseButtonEventArgs> MouseUp;
+
+        public event EventHandler<EventArgs> Move
+        {
+            add => gameWindow.Move += value;
+            remove => gameWindow.Move -= value;
+        }
     }
 }
