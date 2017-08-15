@@ -1,6 +1,11 @@
 ﻿using System;
 
-using OpenTK;
+using AptitudeEngine;
+using AptitudeEngine.Assets;
+using AptitudeEngine.Components;
+using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
+using AptitudeEngine.Logging;
 
 namespace AptitudeEngine.Components
 {
@@ -26,10 +31,10 @@ namespace AptitudeEngine.Components
             {
                 return;
             }
-			
+
             timeSinceLastAnimationFrame += Owner.Context.DeltaTime;
 
-            if (timeSinceLastAnimationFrame >= 1/(float)Animation.FrameRate)
+            if (timeSinceLastAnimationFrame >= 1 / (float)Animation.FrameRate)
             {
                 frameIndex++;
                 timeSinceLastAnimationFrame = 0;

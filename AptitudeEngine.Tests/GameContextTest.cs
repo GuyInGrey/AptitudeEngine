@@ -7,9 +7,6 @@ using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 
-using OpenTK.Graphics;
-using OpenTK;
-
 namespace AptitudeEngine.Tests
 {
     public static class EntryPoint
@@ -29,7 +26,7 @@ namespace AptitudeEngine.Tests
         
         public void GameTestStart()
         {
-			context = new AptContext("Test Context", 750, 750, 60, 60, GraphicsMode.Default, VSyncMode.Off, GameWindowFlags.FixedWindow, DisplayDevice.Default);
+			context = new AptContext("Test Context");
 			context.Load += Context_Load;
             context.Begin();
 		}
@@ -44,7 +41,7 @@ namespace AptitudeEngine.Tests
 
 			var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
 			someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/me.jpg");
-			someSprite.Owner.Position = new Vector2(-0.5f, -0.5f);
+			someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
 		}
 
         public Rectangle Rec(float x, float y, float width, float height) =>
