@@ -26,7 +26,7 @@ namespace AptitudeEngine.Tests
         
         public void GameTestStart()
         {
-			context = new AptContext("Test Context", 750, 750, 60, 60, GraphicsMode.Default, VSyncMode.Off, GameWindowFlags.FixedWindow, DisplayDevice.Default);
+			context = new AptContext("Test Context");
 			context.Load += Context_Load;
             context.Begin();
 		}
