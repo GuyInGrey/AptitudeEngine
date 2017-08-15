@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using OpenTK;
+using AptitudeEngine.Assets;
+using AptitudeEngine.Components;
+using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
+using AptitudeEngine.Logging;
 
 namespace AptitudeEngine
 {
