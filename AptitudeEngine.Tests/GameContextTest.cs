@@ -7,9 +7,6 @@ using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 
-using OpenTK.Graphics;
-using OpenTK;
-
 namespace AptitudeEngine.Tests
 {
     public static class EntryPoint

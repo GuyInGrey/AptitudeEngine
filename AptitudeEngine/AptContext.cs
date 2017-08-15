@@ -5,14 +5,12 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Diagnostics;
 
-using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
 
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
 using AptitudeEngine.Logging;
 using AptitudeEngine.Logging.Formatters;
 using AptitudeEngine.Logging.Handlers;
