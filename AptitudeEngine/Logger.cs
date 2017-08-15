@@ -11,11 +11,11 @@ namespace AptitudeEngine
 {
     public static class Logger
     {
-        private static readonly LogPublisher LogPublisher;
-        private static readonly ModuleManager ModuleManager;
-        private static readonly DebugLogger DebugLogger;
+        private static readonly LogPublisher logPublisher;
+        private static readonly ModuleManager moduleManager;
+        private static readonly DebugLogger debugLogger;
 
-        private static readonly object Sync = new object();
+        private static readonly object sync = new object();
         private static Level _defaultLevel = Level.Info;
         private static bool _isTurned = true;
         private static bool _isTurnedDebug = true;
@@ -33,11 +33,11 @@ namespace AptitudeEngine
 
         static Logger()
         {
-            lock (Sync)
+            lock (sync)
             {
-                LogPublisher = new LogPublisher();
-                ModuleManager = new ModuleManager();
-                DebugLogger = new DebugLogger();
+                logPublisher = new LogPublisher();
+                moduleManager = new ModuleManager();
+                debugLogger = new DebugLogger();
             }
         }
 
@@ -58,7 +58,7 @@ namespace AptitudeEngine
 
         public static ILoggerHandlerManager LoggerHandlerManager
         {
-            get { return LogPublisher; }
+            get { return logPublisher; }
         }
 
         public static void Log()
@@ -85,7 +85,7 @@ namespace AptitudeEngine
         public static void Log(Exception exception)
         {
             Log(Level.Error, exception.Message);
-            ModuleManager.ExceptionLog(exception);
+            moduleManager.ExceptionLog(exception);
         }
 
         public static void Log<TClass>(Exception exception) where TClass : class
@@ -118,10 +118,10 @@ namespace AptitudeEngine
 
             var currentDateTime = DateTime.Now;
 
-            ModuleManager.BeforeLog();
+            moduleManager.BeforeLog();
             var logMessage = new LogMessage(level, message, currentDateTime, callingClass, callingMethod, lineNumber);
-            LogPublisher.Publish(logMessage);
-            ModuleManager.AfterLog(logMessage);
+            logPublisher.Publish(logMessage);
+            moduleManager.AfterLog(logMessage);
         }
 
         private static MethodBase GetCallingMethodBase(StackFrame stackFrame)
@@ -165,23 +165,23 @@ namespace AptitudeEngine
 
         public static IEnumerable<LogMessage> Messages
         {
-            get { return LogPublisher.Messages; }
+            get { return logPublisher.Messages; }
         }
 
         public static DebugLogger Debug
         {
-            get { return DebugLogger; }
+            get { return debugLogger; }
         }
 
         public static ModuleManager Modules
         {
-            get { return ModuleManager; }
+            get { return moduleManager; }
         }
 
         public static bool StoreLogMessages
         {
-            get { return LogPublisher.StoreLogMessages; }
-            set { LogPublisher.StoreLogMessages = value; }
+            get { return logPublisher.StoreLogMessages; }
+            set { logPublisher.StoreLogMessages = value; }
         }
 
         static class FilterPredicates
