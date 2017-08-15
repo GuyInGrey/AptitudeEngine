@@ -4,7 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using AptitudeEngine;
+using AptitudeEngine.Assets;
+using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
+using AptitudeEngine.Logging;
 
 namespace AptitudeEngine
 {
@@ -35,7 +40,7 @@ namespace AptitudeEngine
             keysWaitingUp = new OrderedHashSet<KeyCode>();
         }
 
-        private void Context_PreUpdateFrame(object sender, OpenTK.FrameEventArgs e)
+        private void Context_PreUpdateFrame(object sender, FrameEventArgs e)
         {
             var alter = new Dictionary<KeyCode, KeyState>();
 
@@ -100,42 +105,42 @@ namespace AptitudeEngine
             }
         }
 
-        private void Context_KeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        private void Context_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             // if the key is pressed and then lifted in a single frame
             // then ensure that it wont be processed as being down
             // and queue it to be processed as being up.
-            var key = (KeyCode)e.Key;
+            var key = e.Key;
             keysWaitingDown.TryRemove(key);
             keysWaitingUp.TryAdd(key);
         }
 
-        private void Context_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        private void Context_KeyDown(object sender, KeyboardKeyEventArgs e)
         {
             // if the key is lifted and then pressed in a single frame
             // then ensure that it wont be processed as being up
             // and queue it to be processed as being down.
-            var key = e.Key.ToApt();
+            var key = e.Key;
             keysWaitingUp.TryRemove(key);
             keysWaitingDown.TryAdd(key);
         }
 
-        private void Context_MouseUp(object sender, OpenTK.Input.MouseButtonEventArgs e)
+        private void Context_MouseUp(object sender, MouseButtonEventArgs e)
         {
             // if the button is pressed and then lifted in a single frame
             // then ensure that it wont be processed as being down
             // and queue it to be processed as being up.
-            var key = e.Button.ToApt();
+            var key = e.Key;
             keysWaitingDown.TryRemove(key);
             keysWaitingUp.TryAdd(key);
         }
 
-        private void Context_MouseDown(object sender, OpenTK.Input.MouseButtonEventArgs e)
+        private void Context_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // if the button is lifted and then pressed in a single frame
             // then ensure that it wont be processed as being up
             // and queue it to be processed as being down.
-            var key = e.Button.ToApt();
+            var key = e.Key;
             keysWaitingUp.TryRemove(key);
             keysWaitingDown.TryAdd(key);
         }
