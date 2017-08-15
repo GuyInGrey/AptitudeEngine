@@ -186,6 +186,36 @@ namespace AptitudeEngine
         }
 
         public event EventHandler<MouseButtonEventArgs> MouseDown
+        /// <summary>
+        /// Initialize a new Aptitude Context, capturing a OpenTK context internally, using <see cref="GraphicsMode.Default"/>.
+        /// </summary>
+        /// <param name="title">The title of the window that is associated with this context.</param>
+        /// <param name="width">The width of the window in pixels.</param>
+        /// <param name="height">The height of the window in pixels.</param>
+        /// <param name="maxUpdates">The maximum number of times per second that a logic update should occur.</param>
+        /// <param name="maxFrames">The maximum number of times per second that a frame render should occur.</param>
+        /// <param name="bufferMode">The vsync mode of the window buffer. See <see cref="VSyncMode"/>,</param>
+        /// <param name="flags">Flags determining if the window should be in a windowed or fullscreen state. See <see cref="GameWindowFlags"/>,</param>
+        /// <param name="display">The display that the game window should put focus on rendering to. See <see cref="DisplayIndex"/>,</param>
+        public AptContext(
+            string title = "",
+            int width = 800,
+            int height = 600,
+            double maxUpdates = 60,
+            double maxFrames = 60,
+            VSyncMode bufferMode = VSyncMode.Off,
+            GameWindowFlags flags = GameWindowFlags.FixedWindow,
+            DisplayIndex display = DisplayIndex.Primary
+            ) : this(
+                GraphicsMode.Default,
+                title,
+                width,
+                height,
+                maxUpdates,
+                maxFrames,
+                bufferMode,
+                flags,
+                display)
         {
             add => gameWindow.MouseDown += value;
             remove => gameWindow.MouseDown -= value;
@@ -203,19 +233,47 @@ namespace AptitudeEngine
             remove => gameWindow.Move -= value;
         }
 
-        public AptContext(string title, int width, int height, double maxUpdates, double maxFrames, GraphicsMode graphicsMode, VSyncMode bufferMode, GameWindowFlags flags, DisplayDevice device)
+        /// <summary>
+        /// Initialize a new Aptitude Context, capturing a OpenTK context internally.
+        /// </summary>
+        /// <param name="graphicsMode"></param>
+        /// <param name="title">The title of the window that is associated with this context.</param>
+        /// <param name="width">The width of the window in pixels.</param>
+        /// <param name="height">The height of the window in pixels.</param>
+        /// <param name="maxUpdates">The number of times per second that an update should occur.</param>
+        /// <param name="maxFrames">The number of times per second that a render should occur.</param>
+        /// <param name="bufferMode">The vsync mode of the window buffer. See <see cref="VSyncMode"/>,</param>
+        /// <param name="flags">Flags determining if the window should be in a windowed or fullscreen state. See <see cref="GameWindowFlags"/>,</param>
+        /// <param name="display">The display that the game window should put focus on rendering to. See <see cref="DisplayIndex"/>,</param>
+        public AptContext(
+            GraphicsMode graphicsMode,
+            string title = "",
+            int width = 800,
+            int height = 600,
+            double maxUpdates = 60,
+            double maxFrames = 60,
+            VSyncMode bufferMode = VSyncMode.Off,
+            GameWindowFlags flags = GameWindowFlags.FixedWindow,
+            DisplayIndex display = DisplayIndex.Primary
+            )
         {
             Logger.LoggerHandlerManager
                 .AddHandler(new ConsoleLoggerHandler(new DefaultLoggerFormatter()));
-
+            
             Logger.Log<AptContext>("Setting up OpenTK Context and GameWindow.");
-            gameWindow = new GameWindow(width, height, graphicsMode, title, flags, device)
+            gameWindow = new OpenTK.GameWindow(
+                width,
+                height,
+                graphicsMode,
+                title,
+                (OpenTK.GameWindowFlags)flags,
+                OpenTK.DisplayDevice.GetDisplay((OpenTK.DisplayIndex)display))
             {
-                VSync = bufferMode,
+                VSync = (OpenTK.VSyncMode)bufferMode,
                 TargetRenderFrequency = maxFrames,
                 TargetUpdateFrequency = maxUpdates,
             };
-
+            
             Load += GameContext_Load;
             UpdateFrame += GameContext_UpdateFrame;
             RenderFrame += GameContext_RenderFrame;
