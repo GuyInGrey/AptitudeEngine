@@ -128,18 +128,52 @@ namespace AptitudeEngine
             UpdateFrame += GameContext_UpdateFrame;
             RenderFrame += GameContext_RenderFrame;
             Unload += GameContext_Unload;
-
+            
+            gameWindow.RenderFrame += GameWindow_RenderFrame;
+            gameWindow.UpdateFrame += GameWindow_UpdateFrame;
+            gameWindow.MouseWheel += GameWindow_MouseWheel;
+            gameWindow.KeyDown += GameWindow_KeyDown;
+            gameWindow.KeyPress += GameWindow_KeyPress;
+            gameWindow.KeyUp += GameWindow_KeyUp;
+            gameWindow.MouseMove += GameWindow_MouseMove;
+            gameWindow.MouseDown += GameWindow_MouseDown;
+            gameWindow.MouseUp += GameWindow_MouseUp;
+            
             // Initialize anything not context sensitive.
             hierarchy = new List<AptObject>();
             toBeInitialized = new List<AptObject>();
             objectTable = new Dictionary<string, AptObject>();
-
+            
             Logger.Log<AptContext>("Setting up input handling.");
             Input = new AptInput(this);
         }
 
-        public void Begin()
-            => gameWindow.Run();
+        private void GameWindow_MouseUp(object sender, OpenTK.Input.MouseButtonEventArgs e)
+            => MouseUp?.Invoke(sender, e);
+
+        private void GameWindow_MouseDown(object sender, OpenTK.Input.MouseButtonEventArgs e)
+            => MouseDown?.Invoke(sender, e);
+
+        private void GameWindow_MouseMove(object sender, OpenTK.Input.MouseMoveEventArgs e)
+            => MouseMove?.Invoke(sender, e);
+
+        private void GameWindow_KeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+            => KeyUp?.Invoke(sender, e);
+
+        private void GameWindow_KeyPress(object sender, OpenTK.KeyPressEventArgs e)
+            => KeyPress?.Invoke(sender, e);
+
+        private void GameWindow_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+            => KeyDown?.Invoke(sender, e);
+
+        private void GameWindow_MouseWheel(object sender, OpenTK.Input.MouseWheelEventArgs e)
+            => MouseWheel?.Invoke(sender, e);
+
+        private void GameWindow_UpdateFrame(object sender, OpenTK.FrameEventArgs e)
+            => UpdateFrame?.Invoke(sender, e);
+
+        private void GameWindow_RenderFrame(object sender, OpenTK.FrameEventArgs e)
+            => RenderFrame?.Invoke(sender, e);
 
         private void GameContext_Load(object sender, EventArgs e) =>
             // Initialize anything context sensitive
