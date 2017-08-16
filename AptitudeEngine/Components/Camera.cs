@@ -34,9 +34,7 @@ namespace AptitudeEngine.Components
             GL.Translate(Transform.Position);
         }
 
-        public void SetAsMain()
-        {
-            Context.MainCamera = this;
-        }
+        public void SetAsMain() 
+            => Context.MainCamera = this;
     }
 }

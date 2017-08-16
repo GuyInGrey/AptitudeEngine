@@ -16,11 +16,8 @@ namespace AptitudeEngine.Components
         public override void Render(FrameEventArgs a)
         {
             var thisSize = new Rectangle(Transform.Position, Transform.Size);
-
-            if (Context.MainCamera.Transform.Bounds.IntersectsWith(thisSize))
-            {
-                ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
-            }
+            
+            ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
         }
     }
 }

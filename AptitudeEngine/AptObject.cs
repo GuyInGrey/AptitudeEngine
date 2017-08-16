@@ -128,10 +128,7 @@ namespace AptitudeEngine
             return null;
         }
 
-        private void IterateComponents(Action<AptComponent> action)
-        {
-            IterateComponents(components.ToArray(), action);
-        }
+        private void IterateComponents(Action<AptComponent> action) => IterateComponents(components.ToArray(), action);
 
         private void IterateComponents(AptComponent[] comps, Action<AptComponent> action)
         {
@@ -169,9 +166,16 @@ namespace AptitudeEngine
             ao?.SetParentFinal(this);
         }
 
-        private void AddChildFinal(AptObject ao)
+        private void AddChildFinal(AptObject ao) => children.Add(ao);
+
+        public void RemoveChild(int index)
         {
-            children.Add(ao);
+            if (children.Count < index - 1)
+            {
+                return;
+            }
+
+            RemoveChild(Children[index]);
         }
 
         /// <summary>

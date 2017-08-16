@@ -21,16 +21,6 @@ namespace AptitudeEngine
         /// </summary>
         public Vector2 Size { get; set; } = new Vector2(1f, 1f);
 
-        public Rectangle Bounds
-        {
-            get => new Rectangle(Position, Size);
-            set
-            {
-                Position = value.Position;
-                Size = value.Size;
-            }
-        }
-
         /// <summary>
         /// World space rotation, in counter-clockwise radians.
         /// </summary>
@@ -76,9 +66,7 @@ namespace AptitudeEngine
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate by.</param>
         public void Rotate(float degrees)
-        {
             // lmao p simple right
-            Rotation += degrees;
-        }
+            => Rotation += degrees;
     }
 }
