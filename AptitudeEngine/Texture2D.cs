@@ -24,9 +24,19 @@ namespace AptitudeEngine
 
         public static Texture2D FromStream(FileStream reader)
         {
-            using (var bmp = new Bitmap(reader))
+            try
             {
-                return FromBitmap(bmp);
+                using (var bmp = new Bitmap(reader))
+                {
+                    return FromBitmap(bmp);
+                }
+            }
+            catch (ArgumentException ae)
+            {
+                throw new ArgumentException(
+                    "The stream passed is likely not reading a filetype supported by System.Drawing.Bitmap",
+                    "reader",
+                    ae);
             }
         }
 
@@ -54,7 +64,6 @@ namespace AptitudeEngine
 
             var w = bmp.Width;
             var h = bmp.Height;
-            bmp.Dispose();
             return new Texture2D(id, w, h);
         }
     }
