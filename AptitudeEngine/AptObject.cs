@@ -168,8 +168,14 @@ namespace AptitudeEngine
 
         private void AddChildFinal(AptObject ao) => children.Add(ao);
 
+        public void RemoveChild(int index)
         {
-            children.Add(ao);
+            if (children.Count < index - 1)
+            {
+                return;
+            }
+
+            RemoveChild(Children[index]);
         }
 
         /// <summary>
