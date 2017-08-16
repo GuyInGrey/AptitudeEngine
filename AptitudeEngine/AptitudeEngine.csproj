@@ -62,6 +62,7 @@
     <Compile Include="AptInput.cs" />
     <Compile Include="Asset.cs" />
     <Compile Include="ComponentEventChain.cs" />
+    <Compile Include="Components\TileScreen.cs" />
     <Compile Include="DisplayDevice.cs" />
     <Compile Include="Enums\GameWindowFlags.cs" />
     <Compile Include="Enums\KeyCode.cs" />
