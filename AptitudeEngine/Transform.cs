@@ -76,9 +76,7 @@ namespace AptitudeEngine
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate by.</param>
         public void Rotate(float degrees)
-        {
             // lmao p simple right
-            Rotation += degrees;
-        }
+            => Rotation += degrees;
     }
 }
