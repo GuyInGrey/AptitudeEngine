@@ -15,9 +15,9 @@ namespace AptitudeEngine.Components
 
         public override void Render(FrameEventArgs a)
         {
-            var thisSize = new Rectangle(Transform.Position, Transform.Size);
+            var thisWindow = new Rectangle(Transform.Position, Transform.Size);
             
-            ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
+            ScreenHandler.Tex(Sprite.Texture, thisWindow, Sprite.Frame);
         }
     }
 }

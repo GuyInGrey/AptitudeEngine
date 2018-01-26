@@ -93,7 +93,7 @@
     <Compile Include="Logging\Modules\LoggerModule.cs" />
     <Compile Include="Logging\Modules\ModuleManager.cs" />
     <Compile Include="OrderedHashSet.cs" />
-    <Compile Include="ScreenManager.cs" />
+    <Compile Include="ScreenHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Texture2D.cs" />
     <Compile Include="Rectangle.cs" />

@@ -41,9 +41,9 @@ namespace AptitudeEngine
             GL.End();
         }
 
-        public static void Tex(Texture2D tex, Rectangle pos, Rectangle frame)
+        public static void Tex(Texture2D tex, Rectangle window, Rectangle frame)
         {
-            var posVectors = ConvertRectangle(pos);
+            var posVectors = ConvertRectangle(window);
             var frameVectors = ConvertRectangle(frame);
 
             GL.Enable(EnableCap.Texture2D);
