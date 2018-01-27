@@ -39,14 +39,23 @@ namespace AptitudeEngine.Tests
             camera.SetAsMain();
             camera.Owner.AddComponent<MoveController>();
             camera.Owner.Transform.Size = new Vector2(2, 2);
-            camera.Owner.Transform.Position = new Vector2(0.5f, 0.5f);
+            camera.Owner.Transform.Position = new Vector2(-0.5f, -0.5f);
 
             //var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
             //someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/arrow.png");
-            //someSprite.Transform.Position = new Vector2(0f, 0f);
+            //someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
 
-            ScreenHandler.SelectedVectors = new List<Vector2>(ScreenHandler.ConvertRectangle(new Rectangle(0, 0, 1, 1)));
-            ScreenHandler.Poly();
+            var x = -0.25f;
+            for (var i = 0; i < 500; i++)
+            {
+                x += 0.001f;
+                var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
+                somePoly.Points = new PolyPoint[3] {
+                new PolyPoint(new Vector2(x-0.25f,-0.25f), Color.Red),
+                new PolyPoint(new Vector2(x+0.25f, -0.25f), Color.White),
+                new PolyPoint(new Vector2(x, 0.25f), Color.Blue),
+                };
+            }
         }
 
         public Rectangle Rec(float x, float y, float width, float height) =>
