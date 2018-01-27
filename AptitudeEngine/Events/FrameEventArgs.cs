@@ -26,7 +26,7 @@ namespace AptitudeEngine.Events
         }
 
         /// <summary>
-        /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous event.
+        /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous frame.
         /// </summary>
         public double Time
         {
