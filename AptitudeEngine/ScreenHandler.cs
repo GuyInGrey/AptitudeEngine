@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-
-using OpenTK;
+﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine
@@ -15,7 +11,10 @@ namespace AptitudeEngine
         /// <param name="SelectedPoints">The selected points.</param>
         public static void Poly(PolyPoint[] SelectedPoints)
         {
-            if (SelectedPoints == null) { return; }
+            if (SelectedPoints == null)
+            {
+                return;
+            }
 
             GL.Disable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Polygon);

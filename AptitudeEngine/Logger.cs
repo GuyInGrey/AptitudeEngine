@@ -91,7 +91,7 @@ namespace AptitudeEngine
         public static void Log<TClass>(Exception exception) where TClass : class
         {
             var message = string.Format("Log exception -> Message: {0}\nStackTrace: {1}", exception.Message,
-                                        exception.StackTrace);
+                exception.StackTrace);
             Log<TClass>(Level.Error, message);
         }
 
@@ -127,7 +127,8 @@ namespace AptitudeEngine
         private static MethodBase GetCallingMethodBase(StackFrame stackFrame)
         {
             return stackFrame == null
-                ? MethodBase.GetCurrentMethod() : stackFrame.GetMethod();
+                ? MethodBase.GetCurrentMethod()
+                : stackFrame.GetMethod();
         }
 
         private static StackFrame FindStackFrame()
@@ -140,6 +141,7 @@ namespace AptitudeEngine
                 if (!methodBase.Name.Equals("Log") && !methodBase.Name.Equals(name))
                     return new StackFrame(i, true);
             }
+
             return null;
         }
 
@@ -188,17 +190,17 @@ namespace AptitudeEngine
         {
             public static bool ByLevelHigher(Level logMessLevel, Level filterLevel)
             {
-                return ((int)logMessLevel >= (int)filterLevel);
+                return ((int) logMessLevel >= (int) filterLevel);
             }
 
             public static bool ByLevelLower(Level logMessLevel, Level filterLevel)
             {
-                return ((int)logMessLevel <= (int)filterLevel);
+                return ((int) logMessLevel <= (int) filterLevel);
             }
 
             public static bool ByLevelExactly(Level logMessLevel, Level filterLevel)
             {
-                return ((int)logMessLevel == (int)filterLevel);
+                return ((int) logMessLevel == (int) filterLevel);
             }
 
             public static bool ByLevel(LogMessage logMessage, Level filterLevel, Func<Level, Level, bool> filterPred)
@@ -230,15 +232,15 @@ namespace AptitudeEngine
             {
                 get
                 {
-                    return delegate (LogMessage logMessage)
+                    return delegate(LogMessage logMessage)
                     {
-                        return FilterPredicates.ByLevel(logMessage, FilteredLevel, delegate (Level lm, Level fl)
+                        return FilterPredicates.ByLevel(logMessage, FilteredLevel, delegate(Level lm, Level fl)
                         {
-                            return ExactlyLevel ?
-                                FilterPredicates.ByLevelExactly(lm, fl) :
-                                (OnlyHigherLevel ?
-                                    FilterPredicates.ByLevelHigher(lm, fl) :
-                                    FilterPredicates.ByLevelLower(lm, fl)
+                            return ExactlyLevel
+                                ? FilterPredicates.ByLevelExactly(lm, fl)
+                                : (OnlyHigherLevel
+                                    ? FilterPredicates.ByLevelHigher(lm, fl)
+                                    : FilterPredicates.ByLevelLower(lm, fl)
                                 );
                         });
                     };

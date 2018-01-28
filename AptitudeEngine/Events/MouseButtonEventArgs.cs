@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AptitudeEngine.Enums;
+﻿using AptitudeEngine.Enums;
 
 namespace AptitudeEngine.Events
 {
     public class MouseButtonEventArgs : OpenTK.Input.MouseEventArgs
     {
-
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
         /// </summary>
@@ -34,9 +28,7 @@ namespace AptitudeEngine.Events
         /// </summary>
         /// <param name="args">The <see cref="MouseButtonEventArgs"/> instance to clone.</param>
         public MouseButtonEventArgs(MouseButtonEventArgs args)
-            : this(args.X, args.Y, args.Key, args.IsPressed)
-        {
-        }
+            : this(args.X, args.Y, args.Key, args.IsPressed) { }
 
         /// <summary>
         /// The mouse button for the event.
