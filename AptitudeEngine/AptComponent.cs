@@ -30,10 +30,7 @@ namespace AptitudeEngine
                 return;
             }
 
-            if (disposing)
-            {
-
-            }
+            if (disposing) { }
 
             owner = null;
 

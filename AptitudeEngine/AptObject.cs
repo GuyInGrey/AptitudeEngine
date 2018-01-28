@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using AptitudeEngine;
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
@@ -36,8 +35,7 @@ namespace AptitudeEngine
             {
                 // get a 32 digit GUID for this object.
                 Guid = System.Guid.NewGuid().ToString("N");
-            }
-            while (context.objectTable.ContainsKey(Guid));
+            } while (context.objectTable.ContainsKey(Guid));
 
             context.objectTable.Add(Guid, this);
 
@@ -78,6 +76,7 @@ namespace AptitudeEngine
                         {
                             child.Dispose();
                         }
+
                         children.Clear();
                     }
 
@@ -87,6 +86,7 @@ namespace AptitudeEngine
                         {
                             comp.Dispose();
                         }
+
                         components.Clear();
                     }
                 }
@@ -243,10 +243,7 @@ namespace AptitudeEngine
 
         public override void PreUpdate()
         {
-            IterateComponents(compsToStart.ToArray(), comp =>
-            {
-                comp.InternalStart();
-            });
+            IterateComponents(compsToStart.ToArray(), comp => { comp.InternalStart(); });
 
             IterateComponents(component =>
             {

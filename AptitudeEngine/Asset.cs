@@ -13,6 +13,7 @@ namespace AptitudeEngine
         public string Path { get; private set; }
 
         public abstract void Load(FileStream file);
+
         public static T Load<T>(string path)
             where T : Asset, new()
         {

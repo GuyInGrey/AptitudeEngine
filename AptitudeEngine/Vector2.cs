@@ -12,7 +12,7 @@ namespace AptitudeEngine
 
         public float SquareMagnitude => (X * X) + (Y * Y);
 
-        public float Magnitude => (float)Math.Sqrt(SquareMagnitude);
+        public float Magnitude => (float) Math.Sqrt(SquareMagnitude);
 
         public Vector2 Normalized => this * (1f / Magnitude);
 
@@ -35,6 +35,7 @@ namespace AptitudeEngine
             {
                 toReturn += vecs[i];
             }
+
             return toReturn;
         }
 
@@ -128,8 +129,10 @@ namespace AptitudeEngine
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 Clamp(Vector2 vec, Vector2 min, Vector2 max)
         {
-            vec.X = vec.X < min.X ? min.X : vec.X > max.X ? max.X : vec.X;
-            vec.Y = vec.Y < min.Y ? min.Y : vec.Y > max.Y ? max.Y : vec.Y;
+            vec.X = vec.X < min.X ? min.X :
+                vec.X > max.X ? max.X : vec.X;
+            vec.Y = vec.Y < min.Y ? min.Y :
+                vec.Y > max.Y ? max.Y : vec.Y;
             return vec;
         }
 
@@ -153,6 +156,7 @@ namespace AptitudeEngine
 
         public static implicit operator OpenTK.Vector2(Vector2 vec)
             => new OpenTK.Vector2(vec.X, vec.Y);
+
         public static implicit operator OpenTK.Vector3(Vector2 vec)
             => new OpenTK.Vector3(vec.X, vec.Y, 0f);
     }

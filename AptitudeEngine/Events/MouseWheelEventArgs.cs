@@ -46,21 +46,19 @@ namespace AptitudeEngine.Events
         /// </summary>
         /// <param name="args">The <see cref="MouseWheelEventArgs"/> instance to clone.</param>
         public MouseWheelEventArgs(MouseWheelEventArgs args)
-            : this(args.X, args.Y, args.Value, args.Delta)
-        {
-        }
+            : this(args.X, args.Y, args.Value, args.Delta) { }
 
         /// <summary>
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value => (int)Math.Round(ValuePrecise, MidpointRounding.AwayFromZero);
+        public int Value => (int) Math.Round(ValuePrecise, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta => (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
+        public int Delta => (int) Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.

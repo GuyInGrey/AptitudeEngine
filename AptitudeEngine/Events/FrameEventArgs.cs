@@ -13,8 +13,7 @@ namespace AptitudeEngine.Events
         /// <summary>
         /// Constructs a new FrameEventArgs instance. 
         /// </summary>
-        public FrameEventArgs()
-        { }
+        public FrameEventArgs() { }
 
         /// <summary>
         /// Constructs a new FrameEventArgs instance. 
@@ -37,6 +36,7 @@ namespace AptitudeEngine.Events
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+
                 elapsed = value;
             }
         }

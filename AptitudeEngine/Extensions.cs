@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using AptitudeEngine.Enums;
 
 namespace AptitudeEngine
@@ -33,6 +32,6 @@ namespace AptitudeEngine
         }
 
         public static KeyCode ToApt(this OpenTK.Input.Key key)
-            => (KeyCode)key;
+            => (KeyCode) key;
     }
 }

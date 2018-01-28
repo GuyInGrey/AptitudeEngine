@@ -32,9 +32,7 @@ namespace AptitudeEngine.Events
         /// </summary>
         /// <param name="args">The <see cref="MouseMoveEventArgs"/> instance to clone.</param>
         public MouseMoveEventArgs(MouseMoveEventArgs args)
-            : this(args.X, args.Y, args.XDelta, args.YDelta)
-        {
-        }
+            : this(args.X, args.Y, args.XDelta, args.YDelta) { }
 
         /// <summary>
         /// Gets the change in X position produced by this event.

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
@@ -21,10 +20,12 @@ namespace AptitudeEngine
         /// Called immediately after instantiation.
         /// </summary>
         public virtual void Awake() { }
+
         /// <summary>
         /// Called at the start of the first frame after being awoken.
         /// </summary>
         public virtual void Start() { }
+
         public virtual void PreUpdate() { }
         public virtual void Update() { }
         public virtual void PostUpdate() { }

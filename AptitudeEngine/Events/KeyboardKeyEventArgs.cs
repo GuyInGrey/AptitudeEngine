@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using AptitudeEngine;
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
@@ -39,6 +38,6 @@ namespace AptitudeEngine.Events
         }
 
         public static implicit operator KeyboardKeyEventArgs(OpenTK.Input.KeyboardKeyEventArgs args)
-            => new KeyboardKeyEventArgs { Key = (KeyCode)args.Key };
+            => new KeyboardKeyEventArgs {Key = (KeyCode) args.Key};
     }
 }

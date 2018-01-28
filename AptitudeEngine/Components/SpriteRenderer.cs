@@ -1,5 +1,4 @@
 ﻿using System;
-
 using AptitudeEngine;
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
@@ -16,7 +15,7 @@ namespace AptitudeEngine.Components
         public override void Render(FrameEventArgs a)
         {
             var thisWindow = new Rectangle(Transform.Position, Transform.Size);
-            
+
             ScreenHandler.Tex(Sprite.Texture, thisWindow, Sprite.Frame);
         }
     }

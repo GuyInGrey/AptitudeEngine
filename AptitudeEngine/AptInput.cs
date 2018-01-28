@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using AptitudeEngine;
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
@@ -88,6 +87,7 @@ namespace AptitudeEngine
                 keysWaitingUp.RemoveAt(i);
                 i--;
             }
+
             for (var i = 0; i < keysWaitingDown.Count; i++)
             {
                 var key = keysWaitingDown[i];
