@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 using AptitudeEngine.Assets;
 
 namespace AptitudeEngine.Components
@@ -34,7 +31,8 @@ namespace AptitudeEngine.Components
                 Frames = frames,
             };
 
-            var tileObjectIndex = new List<AptObject>(Owner.Children).FindIndex(a => a.GetHashCode() == tileObject.GetHashCode());
+            var tileObjectIndex =
+                new List<AptObject>(Owner.Children).FindIndex(a => a.GetHashCode() == tileObject.GetHashCode());
             return tileObjectIndex;
         }
 
@@ -45,8 +43,8 @@ namespace AptitudeEngine.Components
         /// <param name="row">Which row the tile is placed on.</param>
         /// <param name="tilePath">The path of the texture the tile uses.</param>
         /// <returns>Returns the index in the row where the tile is.</returns>
-        public int AddTileToRow(int layer, int row, string tilePath) 
-            => AddTileToRow(layer, row, tilePath, new List<Rectangle>() { new Rectangle(0, 0, 1, 1) }, 1);
+        public int AddTileToRow(int layer, int row, string tilePath)
+            => AddTileToRow(layer, row, tilePath, new List<Rectangle>() {new Rectangle(0, 0, 1, 1)}, 1);
 
         /// <summary>
         /// Removes a tile from the TileScreen.
@@ -54,7 +52,7 @@ namespace AptitudeEngine.Components
         /// <param name="layer">Which layer the tile is removed from.</param>
         /// <param name="row">Which row the tile is removed from.</param>
         /// <param name="tile">Index of the tile to be removed.</param>
-        public void RemoveTile(int layer, int row, int tile) 
+        public void RemoveTile(int layer, int row, int tile)
             => Owner.Children[layer].Children[row].RemoveChild(tile);
     }
 }

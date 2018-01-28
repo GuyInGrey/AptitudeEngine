@@ -1,8 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-using AptitudeEngine;
-
 namespace AptitudeEngine.Components
 {
     public class Camera : AptComponent
@@ -34,7 +32,7 @@ namespace AptitudeEngine.Components
             GL.Translate(Transform.Position);
         }
 
-        public void SetAsMain() 
+        public void SetAsMain()
             => Context.MainCamera = this;
     }
 }

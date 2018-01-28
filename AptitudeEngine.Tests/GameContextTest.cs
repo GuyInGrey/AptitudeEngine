@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Collections.Generic;
-
-using AptitudeEngine;
 using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
 
 namespace AptitudeEngine.Tests
 {
@@ -19,21 +15,21 @@ namespace AptitudeEngine.Tests
     }
 
     public class GameTest : IDisposable
-	{
-		private bool disposed;
+    {
+        private bool disposed;
 
-		private AptContext context;
-        
+        private AptContext context;
+
         public void GameTestStart()
         {
-			context = new AptContext("Test Context",600);
-			context.Load += Context_Load;
+            context = new AptContext("Test Context", 600);
+            context.Load += Context_Load;
             context.Begin();
-		}
+        }
 
         private void Context_Load(object sender, EventArgs e)
         {
-			context.ClearColor = Color.Fuchsia;
+            context.ClearColor = Color.Fuchsia;
             ScreenHandler.Blending(true);
 
             var camera = context.Instantiate().AddComponent<Camera>();
@@ -45,12 +41,13 @@ namespace AptitudeEngine.Tests
             var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
             someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/arrow.png");
             someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
-            
+
             var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
-            somePoly.Points = new PolyPoint[3] {
-            new PolyPoint(new Vector2(-0.25f,-0.25f), Color.FromArgb(0,255,0,0)),
-            new PolyPoint(new Vector2(0.25f, -0.25f), Color.White),
-            new PolyPoint(new Vector2(0, 0.25f), Color.Blue),
+            somePoly.Points = new PolyPoint[3]
+            {
+                new PolyPoint(new Vector2(-0.25f, -0.25f), Color.FromArgb(0, 255, 0, 0)),
+                new PolyPoint(new Vector2(0.25f, -0.25f), Color.White),
+                new PolyPoint(new Vector2(0, 0.25f), Color.Blue),
             };
         }
 
@@ -64,20 +61,20 @@ namespace AptitudeEngine.Tests
         }
 
         private void Dispose(bool disposing)
-		{
-			if (disposed)
-			{
-				return;
-			}
+        {
+            if (disposed)
+            {
+                return;
+            }
 
-			if (disposing)
-			{
-				context.Dispose();
-			}
+            if (disposing)
+            {
+                context.Dispose();
+            }
 
-			context = null;
+            context = null;
 
-			disposed = true;
-		}
-	}
+            disposed = true;
+        }
+    }
 }

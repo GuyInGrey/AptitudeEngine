@@ -315,16 +315,10 @@ namespace SpritesheetTester
             }
         }
 
-        private void SingleExport_Click(object sender, EventArgs e)
-        {
-        }
+        private void SingleExport_Click(object sender, EventArgs e) { }
 
-        private void DrawPnl_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
+        private void DrawPnl_MouseDown(object sender, MouseEventArgs e) { }
 
-        private void DrawPnl_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
+        private void DrawPnl_MouseUp(object sender, MouseEventArgs e) { }
     }
 }

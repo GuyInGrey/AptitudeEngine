@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace AptitudeEngine
 {
@@ -13,6 +8,7 @@ namespace AptitudeEngine
         public string Path { get; private set; }
 
         public abstract void Load(FileStream file);
+
         public static T Load<T>(string path)
             where T : Asset, new()
         {
