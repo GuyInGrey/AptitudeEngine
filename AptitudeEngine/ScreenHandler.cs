@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine

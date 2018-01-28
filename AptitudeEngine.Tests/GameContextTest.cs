@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Collections.Generic;
-using AptitudeEngine;
-using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
 
 namespace AptitudeEngine.Tests
 {

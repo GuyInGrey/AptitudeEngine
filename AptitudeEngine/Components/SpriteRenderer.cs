@@ -1,10 +1,5 @@
-﻿using System;
-using AptitudeEngine;
-using AptitudeEngine.Assets;
-using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
+﻿using AptitudeEngine.Assets;
 using AptitudeEngine.Events;
-using AptitudeEngine.Logging;
 
 namespace AptitudeEngine.Components
 {

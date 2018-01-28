@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.ComponentModel;
-using System.Diagnostics;
 using OpenTK.Graphics.OpenGL;
-using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
-using AptitudeEngine.Logging;
 using AptitudeEngine.Logging.Formatters;
 using AptitudeEngine.Logging.Handlers;
-using AptitudeEngine.Logging.Modules;
 using LogLevel = AptitudeEngine.Logger.Level;
 
 namespace AptitudeEngine

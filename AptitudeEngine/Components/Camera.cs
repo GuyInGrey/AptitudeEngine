@@ -1,6 +1,5 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using AptitudeEngine;
 
 namespace AptitudeEngine.Components
 {
