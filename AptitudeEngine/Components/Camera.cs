@@ -1,8 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-using AptitudeEngine;
-
 namespace AptitudeEngine.Components
 {
     public class Camera : AptComponent
@@ -35,8 +33,6 @@ namespace AptitudeEngine.Components
         }
 
         public void SetAsMain()
-        {
-            Context.MainCamera = this;
-        }
+            => Context.MainCamera = this;
     }
 }

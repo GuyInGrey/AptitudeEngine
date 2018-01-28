@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace AptitudeEngine
 {
@@ -27,9 +26,9 @@ namespace AptitudeEngine
 
         public bool IntersectsWith(Rectangle rect)
             => rect.X < X + Width &&
-                X < rect.X + rect.Width &&
-                rect.Y < Y + Height &&
-                Y < rect.Y + rect.Height;
+               X < rect.X + rect.Width &&
+               rect.Y < Y + Height &&
+               Y < rect.Y + rect.Height;
 
         public Rectangle Intersect(Rectangle rect)
         {
@@ -42,6 +41,7 @@ namespace AptitudeEngine
             {
                 return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
+
             return Empty;
         }
     }

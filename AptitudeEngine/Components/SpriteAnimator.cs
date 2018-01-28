@@ -1,11 +1,4 @@
-﻿using System;
-
-using AptitudeEngine;
-using AptitudeEngine.Assets;
-using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
-using AptitudeEngine.Events;
-using AptitudeEngine.Logging;
+﻿using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Components
 {
@@ -19,6 +12,7 @@ namespace AptitudeEngine.Components
         public override void Awake() => base.Awake();
         public override void Start() => base.Start();
         public override void PreRender(FrameEventArgs a) => base.PreRender(a);
+
         public override void Render(FrameEventArgs a)
         {
             var r = Owner.GetComponentOfType<SpriteRenderer>();
@@ -34,7 +28,7 @@ namespace AptitudeEngine.Components
 
             timeSinceLastAnimationFrame += Owner.Context.DeltaTime;
 
-            if (timeSinceLastAnimationFrame >= 1 / (float)Animation.FrameRate)
+            if (timeSinceLastAnimationFrame >= 1 / (float) Animation.FrameRate)
             {
                 frameIndex++;
                 timeSinceLastAnimationFrame = 0;
@@ -48,6 +42,7 @@ namespace AptitudeEngine.Components
             var fp = Animation.Frames[frameIndex];
             r.Sprite.Frame = fp;
         }
+
         public override void PostRender(FrameEventArgs a) => base.PostRender(a);
     }
 }

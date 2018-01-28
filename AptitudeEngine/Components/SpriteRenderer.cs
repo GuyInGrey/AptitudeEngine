@@ -1,11 +1,5 @@
-﻿using System;
-
-using AptitudeEngine;
-using AptitudeEngine.Assets;
-using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
+﻿using AptitudeEngine.Assets;
 using AptitudeEngine.Events;
-using AptitudeEngine.Logging;
 
 namespace AptitudeEngine.Components
 {
@@ -15,12 +9,9 @@ namespace AptitudeEngine.Components
 
         public override void Render(FrameEventArgs a)
         {
-            var thisSize = new Rectangle(Transform.Position, Transform.Size);
+            var thisWindow = new Rectangle(Transform.Position, Transform.Size);
 
-            if (Context.MainCamera.Transform.Bounds.IntersectsWith(thisSize))
-            {
-                ScreenHandler.Tex(Sprite.Texture, thisSize, Sprite.Frame);
-            }
+            ScreenHandler.Tex(Sprite.Texture, thisWindow, Sprite.Frame);
         }
     }
 }

@@ -3,19 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.ComponentModel;
-using System.Diagnostics;
-
 using OpenTK.Graphics.OpenGL;
-
-using AptitudeEngine.Assets;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
-using AptitudeEngine.Logging;
 using AptitudeEngine.Logging.Formatters;
 using AptitudeEngine.Logging.Handlers;
-using AptitudeEngine.Logging.Modules;
-
 using LogLevel = AptitudeEngine.Logger.Level;
 
 namespace AptitudeEngine
@@ -69,19 +62,16 @@ namespace AptitudeEngine
             VSyncMode bufferMode = VSyncMode.Off,
             GameWindowFlags flags = GameWindowFlags.FixedWindow,
             DisplayIndex display = DisplayIndex.Primary
-            ) : this(
-                GraphicsMode.Default,
-                title,
-                width,
-                height,
-                maxUpdates,
-                maxFrames,
-                bufferMode,
-                flags,
-                display)
-        {
-
-        }
+        ) : this(
+            GraphicsMode.Default,
+            title,
+            width,
+            height,
+            maxUpdates,
+            maxFrames,
+            bufferMode,
+            flags,
+            display) { }
 
         /// <summary>
         /// Initialize a new Aptitude Context, capturing a OpenTK context internally.
@@ -105,30 +95,30 @@ namespace AptitudeEngine
             VSyncMode bufferMode = VSyncMode.Off,
             GameWindowFlags flags = GameWindowFlags.FixedWindow,
             DisplayIndex display = DisplayIndex.Primary
-            )
+        )
         {
             Logger.LoggerHandlerManager
                 .AddHandler(new ConsoleLoggerHandler(new DefaultLoggerFormatter()));
-            
+
             Logger.Log<AptContext>("Setting up OpenTK Context and GameWindow.");
             gameWindow = new OpenTK.GameWindow(
                 width,
                 height,
                 graphicsMode,
                 title,
-                (OpenTK.GameWindowFlags)flags,
-                OpenTK.DisplayDevice.GetDisplay((OpenTK.DisplayIndex)display))
+                (OpenTK.GameWindowFlags) flags,
+                OpenTK.DisplayDevice.GetDisplay((OpenTK.DisplayIndex) display))
             {
-                VSync = (OpenTK.VSyncMode)bufferMode,
+                VSync = (OpenTK.VSyncMode) bufferMode,
                 TargetRenderFrequency = maxFrames,
                 TargetUpdateFrequency = maxUpdates,
             };
-            
+
             Load += GameContext_Load;
             UpdateFrame += GameContext_UpdateFrame;
             RenderFrame += GameContext_RenderFrame;
             Unload += GameContext_Unload;
-            
+
             gameWindow.RenderFrame += GameWindow_RenderFrame;
             gameWindow.UpdateFrame += GameWindow_UpdateFrame;
             gameWindow.MouseWheel += GameWindow_MouseWheel;
@@ -138,12 +128,12 @@ namespace AptitudeEngine
             gameWindow.MouseMove += GameWindow_MouseMove;
             gameWindow.MouseDown += GameWindow_MouseDown;
             gameWindow.MouseUp += GameWindow_MouseUp;
-            
+
             // Initialize anything not context sensitive.
             hierarchy = new List<AptObject>();
             toBeInitialized = new List<AptObject>();
             objectTable = new Dictionary<string, AptObject>();
-            
+
             Logger.Log<AptContext>("Setting up input handling.");
             Input = new AptInput(this);
         }
@@ -200,8 +190,8 @@ namespace AptitudeEngine
 
             // we also dont want any disposed objects being referenced in our table, so lets clean that right up.
             var removalQueue = from val in objectTable.Values
-                               where val.Disposed
-                               select val.Guid;
+                where val.Disposed
+                select val.Guid;
             foreach (var item in removalQueue)
             {
                 objectTable.Remove(item);
@@ -222,7 +212,7 @@ namespace AptitudeEngine
             PreRenderFrame?.Invoke(this, e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            DeltaTime = (float)e.Time;
+            DeltaTime = (float) e.Time;
             timeSinceLastFrameLog += DeltaTime;
 
             if (timeSinceLastFrameLog > 1)
@@ -259,6 +249,7 @@ namespace AptitudeEngine
                 RecurseGameObjects(go.Children, action);
             }
         }
+
         public void Begin()
             => gameWindow.Run();
 
@@ -335,6 +326,7 @@ namespace AptitudeEngine
                     {
                         go.Dispose();
                     }
+
                     hierarchy.Clear();
                 }
 
