@@ -26,7 +26,7 @@ namespace AptitudeEngine.Tests
         
         public void GameTestStart()
         {
-			context = new AptContext("Test Context");
+			context = new AptContext("Test Context",600);
 			context.Load += Context_Load;
             context.Begin();
 		}
@@ -34,19 +34,24 @@ namespace AptitudeEngine.Tests
         private void Context_Load(object sender, EventArgs e)
         {
 			context.ClearColor = Color.Fuchsia;
+            ScreenHandler.Blending(true);
 
             var camera = context.Instantiate().AddComponent<Camera>();
             camera.SetAsMain();
             camera.Owner.AddComponent<MoveController>();
             camera.Owner.Transform.Size = new Vector2(2, 2);
-            camera.Owner.Transform.Position = new Vector2(0.5f, 0.5f);
+            camera.Owner.Transform.Position = new Vector2(-0.5f, -0.5f);
 
-            //var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
-            //someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/arrow.png");
-            //someSprite.Transform.Position = new Vector2(0f, 0f);
-
-            ScreenHandler.SelectedVectors = new List<Vector2>(ScreenHandler.ConvertRectangle(new Rectangle(0, 0, 1, 1)));
-            ScreenHandler.Poly();
+            var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
+            someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/arrow.png");
+            someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
+            
+            var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
+            somePoly.Points = new PolyPoint[3] {
+            new PolyPoint(new Vector2(-0.25f,-0.25f), Color.FromArgb(0,255,0,0)),
+            new PolyPoint(new Vector2(0.25f, -0.25f), Color.White),
+            new PolyPoint(new Vector2(0, 0.25f), Color.Blue),
+            };
         }
 
         public Rectangle Rec(float x, float y, float width, float height) =>

@@ -9,33 +9,21 @@ namespace AptitudeEngine
 {
     public static class ScreenHandler // The draw class is for all GL calls for rendering
     {
-        public static List<Vector2> SelectedVectors = new List<Vector2>();
-        public static List<Color> SelectedColors = new List<Color>();
-
-        public static void Poly() // Draws a polygon based on the SelectedVectors and SelectedColors
+        /// <summary>
+        /// Draws the specified selected points.
+        /// </summary>
+        /// <param name="SelectedPoints">The selected points.</param>
+        public static void Poly(PolyPoint[] SelectedPoints)
         {
-            if (SelectedVectors.Count == 0 || SelectedColors.Count == 0)
-            {
-                return;
-            }
+            if (SelectedPoints == null) { return; }
 
             GL.Disable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Polygon);
 
-            var loopColor = Color.White;
-
-            var currentIndex = 0;
-            foreach (var v in SelectedVectors)
+            for (var i = 0; i < SelectedPoints.Length; i++)
             {
-                if (currentIndex <= SelectedColors.Count - 1)
-                {
-                    loopColor = SelectedColors[currentIndex];
-                }
-
-                GL.Color4(loopColor);
-                GL.Vertex2(v.X, v.Y);
-
-                currentIndex++;
+                GL.Color4(SelectedPoints[i].Color);
+                GL.Vertex2(SelectedPoints[i].Position.X, SelectedPoints[i].Position.Y);
             }
 
             GL.End();

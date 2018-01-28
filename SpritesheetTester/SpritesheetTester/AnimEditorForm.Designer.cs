@@ -1,6 +1,6 @@
 ﻿namespace SpritesheetTester
 {
-    partial class animationEditor
+    partial class AnimEditorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -88,9 +88,9 @@
             this.browseBtn.Name = "browseBtn";
             this.browseBtn.Size = new System.Drawing.Size(75, 23);
             this.browseBtn.TabIndex = 2;
-            this.browseBtn.Text = "Browse";
+            this.browseBtn.Text = "&Browse";
             this.browseBtn.UseVisualStyleBackColor = true;
-            this.browseBtn.Click += new System.EventHandler(this.browseBtn_Click);
+            this.browseBtn.Click += new System.EventHandler(this.BrowseBtn_Click);
             // 
             // xBx
             // 
@@ -168,9 +168,9 @@
             this.viewBtn.Name = "viewBtn";
             this.viewBtn.Size = new System.Drawing.Size(113, 23);
             this.viewBtn.TabIndex = 13;
-            this.viewBtn.Text = "View";
+            this.viewBtn.Text = "&View";
             this.viewBtn.UseVisualStyleBackColor = true;
-            this.viewBtn.Click += new System.EventHandler(this.selectBtn_Click);
+            this.viewBtn.Click += new System.EventHandler(this.SelectBtn_Click);
             // 
             // okBtn
             // 
@@ -179,9 +179,9 @@
             this.okBtn.Name = "okBtn";
             this.okBtn.Size = new System.Drawing.Size(75, 23);
             this.okBtn.TabIndex = 14;
-            this.okBtn.Text = "Ok";
+            this.okBtn.Text = "&Ok";
             this.okBtn.UseVisualStyleBackColor = true;
-            this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
+            this.okBtn.Click += new System.EventHandler(this.OkBtn_Click);
             // 
             // g1
             // 
@@ -254,7 +254,7 @@
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(79, 17);
             this.checkBox2.TabIndex = 26;
-            this.checkBox2.Text = "Reverse";
+            this.checkBox2.Text = "&Reverse";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox1
@@ -265,7 +265,7 @@
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(79, 17);
             this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Formatted";
+            this.checkBox1.Text = "&Formatted";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label9
@@ -310,9 +310,9 @@
             this.genAnimationBtn.Name = "genAnimationBtn";
             this.genAnimationBtn.Size = new System.Drawing.Size(113, 23);
             this.genAnimationBtn.TabIndex = 21;
-            this.genAnimationBtn.Text = "Generate Animation";
+            this.genAnimationBtn.Text = "&Generate Animation";
             this.genAnimationBtn.UseVisualStyleBackColor = true;
-            this.genAnimationBtn.Click += new System.EventHandler(this.genAnimationBtn_Click);
+            this.genAnimationBtn.Click += new System.EventHandler(this.GenAnimationBtn_Click);
             // 
             // label7
             // 
@@ -413,7 +413,7 @@
             this.button1.TabIndex = 18;
             this.button1.Text = "Play Animation";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // drawPnl
             // 
@@ -424,10 +424,10 @@
             this.drawPnl.Name = "drawPnl";
             this.drawPnl.Size = new System.Drawing.Size(500, 500);
             this.drawPnl.TabIndex = 0;
-            this.drawPnl.Paint += new System.Windows.Forms.PaintEventHandler(this.drawPnl_Paint);
-            this.drawPnl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.drawPnl_MouseDown);
-            this.drawPnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.drawPnl_MouseMove);
-            this.drawPnl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.drawPnl_MouseUp);
+            this.drawPnl.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawPnl_Paint);
+            this.drawPnl.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DrawPnl_MouseDown);
+            this.drawPnl.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DrawPnl_MouseMove);
+            this.drawPnl.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DrawPnl_MouseUp);
             // 
             // button2
             // 
@@ -439,7 +439,7 @@
             this.button2.TabIndex = 28;
             this.button2.Text = "Play Once";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // spritesheetBx
             // 
@@ -465,9 +465,9 @@
             this.exportBtn.Name = "exportBtn";
             this.exportBtn.Size = new System.Drawing.Size(105, 23);
             this.exportBtn.TabIndex = 29;
-            this.exportBtn.Text = "Export";
+            this.exportBtn.Text = "&Export";
             this.exportBtn.UseVisualStyleBackColor = true;
-            this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
+            this.exportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
             // 
             // animationNameBx
             // 
@@ -485,7 +485,7 @@
             this.label13.TabIndex = 31;
             this.label13.Text = "Animation Name";
             // 
-            // animationEditor
+            // AnimEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -505,10 +505,12 @@
             this.Controls.Add(this.browseBtn);
             this.Controls.Add(this.pathBx);
             this.Controls.Add(this.drawPnl);
-            this.Name = "animationEditor";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "AnimEditorForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Animation Editor";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.animationEditor_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AnimationEditor_FormClosing);
             this.g1.ResumeLayout(false);
             this.g1.PerformLayout();
             this.g2.ResumeLayout(false);
