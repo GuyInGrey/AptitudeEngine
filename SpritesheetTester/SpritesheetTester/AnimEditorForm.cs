@@ -315,7 +315,7 @@ namespace SpritesheetTester
             }
         }
 
-        private void singleExport_Click(object sender, EventArgs e)
+        private void SingleExport_Click(object sender, EventArgs e)
         {
         }
 
