@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AptitudeEngine.Enums;
+﻿using AptitudeEngine.Enums;
 
 namespace AptitudeEngine.Events
 {
     public class MouseButtonEventArgs : OpenTK.Input.MouseEventArgs
     {
-
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.
         /// </summary>
-        public MouseButtonEventArgs() { }
+        public MouseButtonEventArgs()
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="MouseButtonEventArgs"/> instance.

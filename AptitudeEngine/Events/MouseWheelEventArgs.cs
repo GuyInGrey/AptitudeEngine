@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AptitudeEngine.Events
 {
@@ -11,7 +7,9 @@ namespace AptitudeEngine.Events
         /// <summary>
         /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
         /// </summary>
-        public MouseWheelEventArgs() { }
+        public MouseWheelEventArgs()
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="MouseWheelEventArgs"/> instance.
@@ -54,13 +52,13 @@ namespace AptitudeEngine.Events
         /// Gets the value of the wheel in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="ValuePrecise"/> instead.
         /// </summary>
-        public int Value => (int)Math.Round(ValuePrecise, MidpointRounding.AwayFromZero);
+        public int Value => (int) Math.Round(ValuePrecise, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the change in value of the wheel for this event in integer units.
         /// To support high-precision mice, it is recommended to use <see cref="DeltaPrecise"/> instead.
         /// </summary>
-        public int Delta => (int)Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
+        public int Delta => (int) Math.Round(DeltaPrecise, MidpointRounding.AwayFromZero);
 
         /// <summary>
         /// Gets the precise value of the wheel in floating-point units.

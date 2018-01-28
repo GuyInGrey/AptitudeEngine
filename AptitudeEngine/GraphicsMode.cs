@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AptitudeEngine
+﻿namespace AptitudeEngine
 {
     public class GraphicsMode : OpenTK.Graphics.GraphicsMode
     {
@@ -19,7 +13,8 @@ namespace AptitudeEngine
                 {
                     if (defaultMode != null)
                     {
-                        defaultMode = new GraphicsMode(OpenTK.DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2, false);
+                        defaultMode = new GraphicsMode(OpenTK.DisplayDevice.Default.BitsPerPixel, 16, 0, 0, 0, 2,
+                            false);
                     }
 
                     return defaultMode;
@@ -35,9 +30,8 @@ namespace AptitudeEngine
             OpenTK.Graphics.ColorFormat accum,
             int buffers,
             bool stereo
-            ) : base(color, depth, stencil, samples, accum, buffers, stereo)
+        ) : base(color, depth, stencil, samples, accum, buffers, stereo)
         {
-
         }
     }
 }

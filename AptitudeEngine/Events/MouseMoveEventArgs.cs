@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AptitudeEngine.Events
+﻿namespace AptitudeEngine.Events
 {
     public class MouseMoveEventArgs : OpenTK.Input.MouseEventArgs
     {
         /// <summary>
         /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.
         /// </summary>
-        public MouseMoveEventArgs() { }
+        public MouseMoveEventArgs()
+        {
+        }
 
         /// <summary>
         /// Constructs a new <see cref="MouseMoveEventArgs"/> instance.

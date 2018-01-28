@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SpritesheetTester
 {
@@ -8,12 +7,10 @@ namespace SpritesheetTester
         public string Name { get; set; }
         public List<AnimatedFramePosition> Frames = new List<AnimatedFramePosition>();
         public int FrameDelay;
+
         public int FrameCount
         {
-            get
-            {
-                return Frames.Count;
-            }
+            get { return Frames.Count; }
         }
 
         public float CellWidth;

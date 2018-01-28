@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AptitudeEngine.Events
 {
@@ -14,7 +10,8 @@ namespace AptitudeEngine.Events
         /// Constructs a new FrameEventArgs instance. 
         /// </summary>
         public FrameEventArgs()
-        { }
+        {
+        }
 
         /// <summary>
         /// Constructs a new FrameEventArgs instance. 
@@ -37,6 +34,7 @@ namespace AptitudeEngine.Events
                 {
                     throw new ArgumentOutOfRangeException();
                 }
+
                 elapsed = value;
             }
         }

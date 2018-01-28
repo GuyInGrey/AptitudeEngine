@@ -37,9 +37,9 @@ namespace SpritesheetTester
             InitializeComponent();
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            drawPnl, new object[] { true });
-            
+                                                         | BindingFlags.Instance | BindingFlags.NonPublic, null,
+                drawPnl, new object[] {true});
+
 
             var t = new Thread(AnimationHandler);
             t.Start();
@@ -48,7 +48,7 @@ namespace SpritesheetTester
         private void browseBtn_Click(object sender, EventArgs e)
         {
             var f = new OpenFileDialog();
-            
+
             if (f.ShowDialog() == DialogResult.OK)
             {
                 pathBx.Text = f.FileName;
@@ -67,7 +67,6 @@ namespace SpritesheetTester
                         {
                             lock (locker)
                             {
-
                                 if (a.Index == currentIndex)
                                 {
                                     x = a.X;
@@ -75,17 +74,17 @@ namespace SpritesheetTester
                                     width = animation.CellWidth;
                                     height = animation.CellHeight;
 
-                                    intX = (int)((float)buffer.Width * x);
-                                    intY = (int)((float)buffer.Height * y);
-                                    intWidth = (int)((float)buffer.Width * width);
-                                    intHeight = (int)((float)buffer.Height * height);
+                                    intX = (int) ((float) buffer.Width * x);
+                                    intY = (int) ((float) buffer.Height * y);
+                                    intWidth = (int) ((float) buffer.Width * width);
+                                    intHeight = (int) ((float) buffer.Height * height);
 
                                     using (var g = Graphics.FromImage(buffer))
                                     {
                                         g.FillRectangle(Brushes.Gray, new Rectangle(0, 0, buffer.Width, buffer.Height));
                                         g.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height),
-                                                         new Rectangle(intX, intY, intWidth, intHeight),
-                                                         GraphicsUnit.Pixel);
+                                            new Rectangle(intX, intY, intWidth, intHeight),
+                                            GraphicsUnit.Pixel);
                                     }
                                 }
                             }
@@ -141,10 +140,10 @@ namespace SpritesheetTester
             width = float.Parse(widthBx.Text);
             height = float.Parse(heightBx.Text);
 
-            intX = (int)((float)buffer.Width * x);
-            intY = (int)((float)buffer.Height * y);
-            intWidth = (int)((float)buffer.Width * width);
-            intHeight = (int)((float)buffer.Height * height);
+            intX = (int) ((float) buffer.Width * x);
+            intY = (int) ((float) buffer.Height * y);
+            intWidth = (int) ((float) buffer.Width * width);
+            intHeight = (int) ((float) buffer.Height * height);
 
             loaded = false;
             try
@@ -161,9 +160,10 @@ namespace SpritesheetTester
             {
                 g.InterpolationMode = mode;
                 g.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height),
-                                 new Rectangle(intX, intY, intWidth, intHeight),
-                                 GraphicsUnit.Pixel);
+                    new Rectangle(intX, intY, intWidth, intHeight),
+                    GraphicsUnit.Pixel);
             }
+
             loaded = true;
         }
 
@@ -179,6 +179,7 @@ namespace SpritesheetTester
             {
                 return;
             }
+
             buffer = new Bitmap(loadedSheet.Width, loadedSheet.Height);
             var buffergraphics = Graphics.FromImage(buffer);
             buffergraphics.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height));
@@ -194,13 +195,13 @@ namespace SpritesheetTester
 
         private void genAnimationBtn_Click(object sender, EventArgs e)
         {
-			var a = new Animation
-			{
-				FrameDelay = int.Parse(frameDelayBx.Text),
-				Spritesheet = spritesheetBx.Text,
-				Name = animationNameBx.Text
-			};
-			var rowCnt = int.Parse(rowCntBx.Text);
+            var a = new Animation
+            {
+                FrameDelay = int.Parse(frameDelayBx.Text),
+                Spritesheet = spritesheetBx.Text,
+                Name = animationNameBx.Text
+            };
+            var rowCnt = int.Parse(rowCntBx.Text);
             var columnCnt = int.Parse(columnCntBx.Text);
 
             var startX = float.Parse(startXBx.Text);
@@ -224,9 +225,11 @@ namespace SpritesheetTester
                     currentX += columnWidth;
                     CurrentIndex++;
                 }
+
                 currentX = startX;
                 currentY += rowHeight;
             }
+
             if (checkBox2.Checked)
             {
                 var framesReversed = DuplicateFrames(a.Frames);
@@ -253,6 +256,7 @@ namespace SpritesheetTester
             {
                 json = JsonConvert.SerializeObject(a, Formatting.None);
             }
+
             JSonBx.Text = json;
             button1.Enabled = true;
             button2.Enabled = true;
@@ -278,16 +282,16 @@ namespace SpritesheetTester
             var mouseX = e.X;
             var mouseY = e.Y;
 
-            var mouseXF = (float)decimal.Divide(mouseX, drawPnl.Width);
-            var mouseYF = (float)decimal.Divide(mouseY, drawPnl.Height);
-            mouseXF = (float)Math.Round(mouseXF, 2);
-            mouseYF = (float)Math.Round(mouseYF, 2);
+            var mouseXF = (float) decimal.Divide(mouseX, drawPnl.Width);
+            var mouseYF = (float) decimal.Divide(mouseY, drawPnl.Height);
+            mouseXF = (float) Math.Round(mouseXF, 2);
+            mouseYF = (float) Math.Round(mouseYF, 2);
             mousePosLbl.Text = "X: " + mouseXF + "; Y: " + mouseYF;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var jo = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(JSonBx.Text);
+            var jo = (Newtonsoft.Json.Linq.JObject) JsonConvert.DeserializeObject(JSonBx.Text);
             animation = jo.ToObject<Animation>();
             playingAnimation = true;
         }
@@ -299,7 +303,7 @@ namespace SpritesheetTester
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var jo = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(JSonBx.Text);
+            var jo = (Newtonsoft.Json.Linq.JObject) JsonConvert.DeserializeObject(JSonBx.Text);
             animation = jo.ToObject<Animation>();
             playOnce = true;
             playingAnimation = true;
@@ -307,11 +311,11 @@ namespace SpritesheetTester
 
         private void exportBtn_Click(object sender, EventArgs e)
         {
-			var s = new SaveFileDialog
-			{
-				Filter = "JSON (.json)|*json"
-			};
-			if (s.ShowDialog() == DialogResult.OK)
+            var s = new SaveFileDialog
+            {
+                Filter = "JSON (.json)|*json"
+            };
+            if (s.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllText(s.FileName + ".json", JSonBx.Text);
                 MessageBox.Show("Save Complete!", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -320,17 +324,14 @@ namespace SpritesheetTester
 
         private void singleExport_Click(object sender, EventArgs e)
         {
-            
         }
 
         private void drawPnl_MouseDown(object sender, MouseEventArgs e)
         {
-
         }
 
         private void drawPnl_MouseUp(object sender, MouseEventArgs e)
         {
-
         }
     }
 }
