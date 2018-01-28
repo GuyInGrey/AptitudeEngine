@@ -5,6 +5,7 @@ namespace AptitudeEngine
 {
     public static class ScreenHandler // The draw class is for all GL calls for rendering
     {
+        public static bool Blend { get; private set; }
         /// <summary>
         /// Draws the specified selected points.
         /// </summary>
@@ -30,6 +31,13 @@ namespace AptitudeEngine
 
         public static void Tex(Texture2D tex, Rectangle window, Rectangle frame)
         {
+            var needToReenableBlending = false;
+            if (Blend)
+            {
+                needToReenableBlending = true;
+                Blending(false);
+            }
+
             var posVectors = ConvertRectangle(window);
             var frameVectors = ConvertRectangle(frame);
 
@@ -38,19 +46,18 @@ namespace AptitudeEngine
             GL.Color4(Color.Transparent);
             GL.Begin(PrimitiveType.Polygon);
 
-            GL.TexCoord2(frameVectors[0].X, frameVectors[0].Y);
-            GL.Vertex2(posVectors[0].X, posVectors[0].Y);
-
-            GL.TexCoord2(frameVectors[1].X, frameVectors[1].Y);
-            GL.Vertex2(posVectors[1].X, posVectors[1].Y);
-
-            GL.TexCoord2(frameVectors[2].X, frameVectors[2].Y);
-            GL.Vertex2(posVectors[2].X, posVectors[2].Y);
-
-            GL.TexCoord2(frameVectors[3].X, frameVectors[3].Y);
-            GL.Vertex2(posVectors[3].X, posVectors[3].Y);
+            for (var i = 0; i < 4; i++)
+            {
+                GL.TexCoord2(frameVectors[i].X, frameVectors[i].Y);
+                GL.Vertex2(posVectors[i].X, posVectors[i].Y);
+            }
 
             GL.End();
+
+            if (needToReenableBlending)
+            {
+                Blending(true);
+            }
         }
 
         /// <summary>
@@ -84,6 +91,7 @@ namespace AptitudeEngine
         /// <param name="toggle"></param>
         public static void Blending(bool toggle)
         {
+            Blend = toggle;
             if (toggle)
             {
                 GL.Enable(EnableCap.Blend);
