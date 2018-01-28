@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SpritesheetTester
+﻿namespace SpritesheetTester
 {
     public class AnimatedFramePosition
     {
