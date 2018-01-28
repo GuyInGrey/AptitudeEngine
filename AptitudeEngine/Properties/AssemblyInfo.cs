@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AptitudeEngine")]
-[assembly: AssemblyDescription("A 2D Engine.")]
+[assembly: AssemblyDescription("A 2D Engine")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Phoenix Game Development ")]
 [assembly: AssemblyProduct("AptitudeEngine")]
-[assembly: AssemblyCopyright("Copyright © Phoenix Game Development 2017")]
+[assembly: AssemblyCopyright("Copyright © Phoenix Game Development 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
