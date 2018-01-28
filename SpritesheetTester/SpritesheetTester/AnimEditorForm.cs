@@ -10,45 +10,45 @@ using System.IO;
 
 namespace SpritesheetTester
 {
-    public partial class animationEditor : Form
+    public partial class AnimEditorForm : Form
     {
-        Bitmap loadedSheet;
-        Bitmap buffer;
-        object locker = new object();
-        bool formLoaded = true;
-        bool playOnce = false;
+        private Bitmap loadedSheet;
+        private Bitmap buffer;
+        private object locker = new object();
+        private bool formLoaded = true;
+        private bool playOnce = false;
 
-        float x = 0;
-        float y = 0;
-        float width = 1;
-        float height = 1;
+        private float x = 0;
+        private float y = 0;
+        private float width = 1;
+        private float height = 1;
 
-        int intX = 0;
-        int intY = 0;
-        int intWidth = 0;
-        int intHeight = 0;
+        private int intX = 0;
+        private int intY = 0;
+        private int intWidth = 0;
+        private int intHeight = 0;
 
-        bool playingAnimation = false;
+        private bool playingAnimation = false;
 
-        bool loaded = false;
+        private bool loaded = false;
 
-        public animationEditor()
+        public AnimEditorForm()
         {
             InitializeComponent();
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            drawPnl, new object[] { true });
-            
+                                                         | BindingFlags.Instance | BindingFlags.NonPublic, null,
+                drawPnl, new object[] {true});
+
 
             var t = new Thread(AnimationHandler);
             t.Start();
         }
 
-        private void browseBtn_Click(object sender, EventArgs e)
+        private void BrowseBtn_Click(object sender, EventArgs e)
         {
             var f = new OpenFileDialog();
-            
+
             if (f.ShowDialog() == DialogResult.OK)
             {
                 pathBx.Text = f.FileName;
@@ -61,13 +61,12 @@ namespace SpritesheetTester
             {
                 if (playingAnimation)
                 {
-                    if (MSTimer >= animation.FrameDelay)
+                    if (msTimer >= animation.FrameDelay)
                     {
                         foreach (var a in animation.Frames)
                         {
                             lock (locker)
                             {
-
                                 if (a.Index == currentIndex)
                                 {
                                     x = a.X;
@@ -75,24 +74,24 @@ namespace SpritesheetTester
                                     width = animation.CellWidth;
                                     height = animation.CellHeight;
 
-                                    intX = (int)((float)buffer.Width * x);
-                                    intY = (int)((float)buffer.Height * y);
-                                    intWidth = (int)((float)buffer.Width * width);
-                                    intHeight = (int)((float)buffer.Height * height);
+                                    intX = (int) ((float) buffer.Width * x);
+                                    intY = (int) ((float) buffer.Height * y);
+                                    intWidth = (int) ((float) buffer.Width * width);
+                                    intHeight = (int) ((float) buffer.Height * height);
 
                                     using (var g = Graphics.FromImage(buffer))
                                     {
                                         g.FillRectangle(Brushes.Gray, new Rectangle(0, 0, buffer.Width, buffer.Height));
                                         g.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height),
-                                                         new Rectangle(intX, intY, intWidth, intHeight),
-                                                         GraphicsUnit.Pixel);
+                                            new Rectangle(intX, intY, intWidth, intHeight),
+                                            GraphicsUnit.Pixel);
                                     }
                                 }
                             }
                         }
 
                         currentIndex++;
-                        MSTimer = 0;
+                        msTimer = 0;
                     }
 
                     if (playOnce)
@@ -106,19 +105,19 @@ namespace SpritesheetTester
                         currentIndex = 0;
                     }
 
-                    MSTimer++;
+                    msTimer++;
                     Thread.Sleep(1);
                 }
             }
         }
 
-        int MSTimer = 0;
-        int currentIndex = 0;
-        Animation animation = new Animation();
+        private int msTimer = 0;
+        private int currentIndex = 0;
+        private Animation animation = new Animation();
 
-        InterpolationMode mode = InterpolationMode.NearestNeighbor;
+        private InterpolationMode mode = InterpolationMode.NearestNeighbor;
 
-        private void drawPnl_Paint(object sender, PaintEventArgs e)
+        private void DrawPnl_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.InterpolationMode = mode;
             e.Graphics.FillRectangle(Brushes.Gray, new Rectangle(0, 0, drawPnl.Width, drawPnl.Height));
@@ -133,7 +132,7 @@ namespace SpritesheetTester
             drawPnl.Invalidate();
         }
 
-        private void selectBtn_Click(object sender, EventArgs e)
+        private void SelectBtn_Click(object sender, EventArgs e)
         {
             playingAnimation = false;
             x = float.Parse(xBx.Text);
@@ -141,10 +140,10 @@ namespace SpritesheetTester
             width = float.Parse(widthBx.Text);
             height = float.Parse(heightBx.Text);
 
-            intX = (int)((float)buffer.Width * x);
-            intY = (int)((float)buffer.Height * y);
-            intWidth = (int)((float)buffer.Width * width);
-            intHeight = (int)((float)buffer.Height * height);
+            intX = (int) ((float) buffer.Width * x);
+            intY = (int) ((float) buffer.Height * y);
+            intWidth = (int) ((float) buffer.Width * width);
+            intHeight = (int) ((float) buffer.Height * height);
 
             loaded = false;
             try
@@ -161,13 +160,14 @@ namespace SpritesheetTester
             {
                 g.InterpolationMode = mode;
                 g.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height),
-                                 new Rectangle(intX, intY, intWidth, intHeight),
-                                 GraphicsUnit.Pixel);
+                    new Rectangle(intX, intY, intWidth, intHeight),
+                    GraphicsUnit.Pixel);
             }
+
             loaded = true;
         }
 
-        private void okBtn_Click(object sender, EventArgs e)
+        private void OkBtn_Click(object sender, EventArgs e)
         {
             playingAnimation = false;
             loaded = false;
@@ -179,6 +179,7 @@ namespace SpritesheetTester
             {
                 return;
             }
+
             buffer = new Bitmap(loadedSheet.Width, loadedSheet.Height);
             var buffergraphics = Graphics.FromImage(buffer);
             buffergraphics.DrawImage(loadedSheet, new Rectangle(0, 0, buffer.Width, buffer.Height));
@@ -192,15 +193,15 @@ namespace SpritesheetTester
             animationNameBx.Text = Path.GetFileNameWithoutExtension(pathBx.Text);
         }
 
-        private void genAnimationBtn_Click(object sender, EventArgs e)
+        private void GenAnimationBtn_Click(object sender, EventArgs e)
         {
-			var a = new Animation
-			{
-				FrameDelay = int.Parse(frameDelayBx.Text),
-				Spritesheet = spritesheetBx.Text,
-				Name = animationNameBx.Text
-			};
-			var rowCnt = int.Parse(rowCntBx.Text);
+            var a = new Animation
+            {
+                FrameDelay = int.Parse(frameDelayBx.Text),
+                Spritesheet = spritesheetBx.Text,
+                Name = animationNameBx.Text
+            };
+            var rowCnt = int.Parse(rowCntBx.Text);
             var columnCnt = int.Parse(columnCntBx.Text);
 
             var startX = float.Parse(startXBx.Text);
@@ -224,19 +225,21 @@ namespace SpritesheetTester
                     currentX += columnWidth;
                     CurrentIndex++;
                 }
+
                 currentX = startX;
                 currentY += rowHeight;
             }
+
             if (checkBox2.Checked)
             {
                 var framesReversed = DuplicateFrames(a.Frames);
                 framesReversed.Reverse();
 
-                var CIndex = a.FrameCount;
+                var cIndex = a.FrameCount;
                 foreach (var afp in framesReversed)
                 {
-                    afp.Index = CIndex;
-                    CIndex++;
+                    afp.Index = cIndex;
+                    cIndex++;
                 }
 
                 framesReversed.AddRange(a.Frames);
@@ -245,14 +248,8 @@ namespace SpritesheetTester
 
             var json = "";
 
-            if (checkBox1.Checked)
-            {
-                json = JsonConvert.SerializeObject(a, Formatting.Indented);
-            }
-            else
-            {
-                json = JsonConvert.SerializeObject(a, Formatting.None);
-            }
+            json = JsonConvert.SerializeObject(a, checkBox1.Checked ? Formatting.Indented : Formatting.None);
+
             JSonBx.Text = json;
             button1.Enabled = true;
             button2.Enabled = true;
@@ -273,45 +270,45 @@ namespace SpritesheetTester
             return toReturn;
         }
 
-        private void drawPnl_MouseMove(object sender, MouseEventArgs e)
+        private void DrawPnl_MouseMove(object sender, MouseEventArgs e)
         {
             var mouseX = e.X;
             var mouseY = e.Y;
 
-            var mouseXF = (float)decimal.Divide(mouseX, drawPnl.Width);
-            var mouseYF = (float)decimal.Divide(mouseY, drawPnl.Height);
-            mouseXF = (float)Math.Round(mouseXF, 2);
-            mouseYF = (float)Math.Round(mouseYF, 2);
+            var mouseXF = (float) decimal.Divide(mouseX, drawPnl.Width);
+            var mouseYF = (float) decimal.Divide(mouseY, drawPnl.Height);
+            mouseXF = (float) Math.Round(mouseXF, 2);
+            mouseYF = (float) Math.Round(mouseYF, 2);
             mousePosLbl.Text = "X: " + mouseXF + "; Y: " + mouseYF;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
-            var jo = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(JSonBx.Text);
+            var jo = (Newtonsoft.Json.Linq.JObject) JsonConvert.DeserializeObject(JSonBx.Text);
             animation = jo.ToObject<Animation>();
             playingAnimation = true;
         }
 
-        private void animationEditor_FormClosing(object sender, FormClosingEventArgs e)
+        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             formLoaded = false;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
-            var jo = (Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(JSonBx.Text);
+            var jo = (Newtonsoft.Json.Linq.JObject) JsonConvert.DeserializeObject(JSonBx.Text);
             animation = jo.ToObject<Animation>();
             playOnce = true;
             playingAnimation = true;
         }
 
-        private void exportBtn_Click(object sender, EventArgs e)
+        private void ExportBtn_Click(object sender, EventArgs e)
         {
-			var s = new SaveFileDialog
-			{
-				Filter = "JSON (.json)|*json"
-			};
-			if (s.ShowDialog() == DialogResult.OK)
+            var s = new SaveFileDialog
+            {
+                Filter = "JSON (.json)|*json"
+            };
+            if (s.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllText(s.FileName + ".json", JSonBx.Text);
                 MessageBox.Show("Save Complete!", "Save", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -320,17 +317,14 @@ namespace SpritesheetTester
 
         private void singleExport_Click(object sender, EventArgs e)
         {
-            
         }
 
-        private void drawPnl_MouseDown(object sender, MouseEventArgs e)
+        private void DrawPnl_MouseDown(object sender, MouseEventArgs e)
         {
-
         }
 
-        private void drawPnl_MouseUp(object sender, MouseEventArgs e)
+        private void DrawPnl_MouseUp(object sender, MouseEventArgs e)
         {
-
         }
     }
 }
