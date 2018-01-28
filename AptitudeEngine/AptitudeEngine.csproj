@@ -76,7 +76,6 @@
     <Compile Include="Events\MouseMoveEventArgs.cs" />
     <Compile Include="Events\MouseWheelEventArgs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="GameSettings.cs" />
     <Compile Include="Components\Camera.cs" />
     <Compile Include="AptObject.cs" />
     <Compile Include="GraphicsMode.cs" />
