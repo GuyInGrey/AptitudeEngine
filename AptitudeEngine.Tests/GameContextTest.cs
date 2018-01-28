@@ -45,9 +45,9 @@ namespace AptitudeEngine.Tests
             var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
             somePoly.Points = new PolyPoint[3]
             {
-                new PolyPoint(new Vector2(-0.25f, -0.25f), Color.FromArgb(0, 255, 0, 0)),
-                new PolyPoint(new Vector2(0.25f, -0.25f), Color.White),
-                new PolyPoint(new Vector2(0, 0.25f), Color.Blue),
+                new PolyPoint(new Vector2(-0.25f, -0.25f), Color.FromArgb(0, 0, 0, 0)),
+                new PolyPoint(new Vector2(0.25f, -0.25f), Color.FromArgb(0, 0, 0, 0)),
+                new PolyPoint(new Vector2(0, 0.25f), Color.Black),
             };
         }
 
