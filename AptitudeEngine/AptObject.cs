@@ -215,7 +215,7 @@ namespace AptitudeEngine
             => components.Where(comp => comp is T).ToArray() as T[];
 
         public override void Awake()
-        {
+        =>
             IterateComponents(component =>
             {
                 if (!component.Awoken)
@@ -223,10 +223,9 @@ namespace AptitudeEngine
                     component.InternalAwake();
                 }
             });
-        }
 
         public override void Start()
-        {
+        =>
             IterateComponents(component =>
             {
                 if (!component.Started && component.Awoken)
@@ -234,7 +233,6 @@ namespace AptitudeEngine
                     component.InternalStart();
                 }
             });
-        }
 
         public override void PreUpdate()
         {
@@ -250,7 +248,7 @@ namespace AptitudeEngine
         }
 
         public override void Update()
-        {
+        =>
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -258,10 +256,9 @@ namespace AptitudeEngine
                     component.InternalUpdate();
                 }
             });
-        }
 
         public override void PostUpdate()
-        {
+        =>
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -269,10 +266,9 @@ namespace AptitudeEngine
                     component.InternalPostUpdate();
                 }
             });
-        }
 
         public override void PreRender(FrameEventArgs a)
-        {
+        =>
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -280,10 +276,9 @@ namespace AptitudeEngine
                     component.InternalPreRender(a);
                 }
             });
-        }
 
         public override void Render(FrameEventArgs a)
-        {
+        =>
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -291,10 +286,9 @@ namespace AptitudeEngine
                     component.InternalRender(a);
                 }
             });
-        }
 
         public override void PostRender(FrameEventArgs a)
-        {
+        =>
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -302,6 +296,5 @@ namespace AptitudeEngine
                     component.InternalPostRender(a);
                 }
             });
-        }
     }
 }
