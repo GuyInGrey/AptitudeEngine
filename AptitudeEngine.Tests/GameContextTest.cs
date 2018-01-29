@@ -49,6 +49,13 @@ namespace AptitudeEngine.Tests
                 new PolyPoint(new Vector2(0.25f, -0.25f), Color.FromArgb(0, 0, 0, 0)),
                 new PolyPoint(new Vector2(0, 0.25f), Color.Black),
             };
+
+            var someCanvas = context.Instantiate().AddComponent<FlairCanvas>();
+            var someFlair = context.Instantiate().AddComponent<Flair>();
+            someFlair.Transform.Size = new Vector2(0.25f, 0.25f);
+            someFlair.Owner.SetParent(someCanvas.Owner);
+
+            Console.WriteLine(someFlair.GetCanvas());
         }
 
         public Rectangle Rec(float x, float y, float width, float height) =>
