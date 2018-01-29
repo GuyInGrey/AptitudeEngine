@@ -11,7 +11,9 @@ namespace AptitudeEngine.Logging
         public void Publish(LogMessage logMessage)
         {
             if (Filter(logMessage))
+            {
                 Handler.Publish(logMessage);
+            }
         }
     }
 
@@ -37,22 +39,32 @@ namespace AptitudeEngine.Logging
         public void Publish(LogMessage logMessage)
         {
             if (StoreLogMessages)
+            {
                 _messages.Add(logMessage);
+            }
+
             foreach (var loggerHandler in _loggerHandlers)
+            {
                 loggerHandler.Publish(logMessage);
+            }
         }
 
         public ILoggerHandlerManager AddHandler(ILoggerHandler loggerHandler)
         {
             if (loggerHandler != null)
+            {
                 _loggerHandlers.Add(loggerHandler);
+            }
+
             return this;
         }
 
         public ILoggerHandlerManager AddHandler(ILoggerHandler loggerHandler, Predicate<LogMessage> filter)
         {
             if ((filter == null) || loggerHandler == null)
+            {
                 return this;
+            }
 
             return AddHandler(new FilteredHandler()
             {
@@ -61,15 +73,9 @@ namespace AptitudeEngine.Logging
             });
         }
 
-        public bool RemoveHandler(ILoggerHandler loggerHandler)
-        {
-            return _loggerHandlers.Remove(loggerHandler);
-        }
+        public bool RemoveHandler(ILoggerHandler loggerHandler) => _loggerHandlers.Remove(loggerHandler);
 
-        public IEnumerable<LogMessage> Messages
-        {
-            get { return _messages; }
-        }
+        public IEnumerable<LogMessage> Messages => _messages;
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="AptitudeEngine.Logging.LogPublisher"/> store log messages.

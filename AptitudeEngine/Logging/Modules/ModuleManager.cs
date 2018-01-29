@@ -7,27 +7,30 @@ namespace AptitudeEngine.Logging.Modules
     {
         private readonly IDictionary<string, LoggerModule> _modules;
 
-        public ModuleManager()
-        {
-            _modules = new Dictionary<string, LoggerModule>();
-        }
+        public ModuleManager() => _modules = new Dictionary<string, LoggerModule>();
 
         public void BeforeLog()
         {
             foreach (var loggerModule in _modules.Values)
+            {
                 loggerModule.BeforeLog();
+            }
         }
 
         public void AfterLog(LogMessage logMessage)
         {
             foreach (var loggerModule in _modules.Values)
+            {
                 loggerModule.AfterLog(logMessage);
+            }
         }
 
         public void ExceptionLog(Exception exception)
         {
             foreach (var loggerModule in _modules.Values)
+            {
                 loggerModule.ExceptionLog(exception);
+            }
         }
 
         public void Install(LoggerModule module)
@@ -48,13 +51,17 @@ namespace AptitudeEngine.Logging.Modules
         public void Uninstall(LoggerModule module)
         {
             if (_modules.ContainsKey(module.Name))
+            {
                 _modules.Remove(module.Name);
+            }
         }
 
         public void Uninstall(string moduleName)
         {
             if (_modules.ContainsKey(moduleName))
+            {
                 _modules.Remove(moduleName);
+            }
         }
     }
 }

@@ -25,9 +25,6 @@ namespace AptitudeEngine.Logging
             LineNumber = lineNumber;
         }
 
-        public override string ToString()
-        {
-            return new DefaultLoggerFormatter().ApplyFormat(this);
-        }
+        public override string ToString() => new DefaultLoggerFormatter().ApplyFormat(this);
     }
 }

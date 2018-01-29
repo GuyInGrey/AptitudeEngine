@@ -289,10 +289,7 @@ namespace SpritesheetTester
             playingAnimation = true;
         }
 
-        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            formLoaded = false;
-        }
+        private void AnimationEditor_FormClosing(object sender, FormClosingEventArgs e) => formLoaded = false;
 
         private void Button2_Click(object sender, EventArgs e)
         {

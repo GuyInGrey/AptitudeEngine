@@ -52,24 +52,15 @@ namespace AptitudeEngine
 
         public static Level DefaultLevel
         {
-            get { return _defaultLevel; }
-            set { _defaultLevel = value; }
+            get => _defaultLevel;
+            set => _defaultLevel = value;
         }
 
-        public static ILoggerHandlerManager LoggerHandlerManager
-        {
-            get { return logPublisher; }
-        }
+        public static ILoggerHandlerManager LoggerHandlerManager => logPublisher;
 
-        public static void Log()
-        {
-            Log("There is no message");
-        }
+        public static void Log() => Log("There is no message");
 
-        public static void Log(string message)
-        {
-            Log(_defaultLevel, message);
-        }
+        public static void Log(string message) => Log(_defaultLevel, message);
 
         public static void Log(Level level, string message)
         {
@@ -95,10 +86,7 @@ namespace AptitudeEngine
             Log<TClass>(Level.Error, message);
         }
 
-        public static void Log<TClass>(string message) where TClass : class
-        {
-            Log<TClass>(_defaultLevel, message);
-        }
+        public static void Log<TClass>(string message) where TClass : class => Log<TClass>(_defaultLevel, message);
 
         public static void Log<TClass>(Level level, string message) where TClass : class
         {
@@ -114,7 +102,9 @@ namespace AptitudeEngine
         private static void Log(Level level, string message, string callingClass, string callingMethod, int lineNumber)
         {
             if (!_isTurned || (!_isTurnedDebug && level == Level.Debug))
+            {
                 return;
+            }
 
             var currentDateTime = DateTime.Now;
 
@@ -125,11 +115,7 @@ namespace AptitudeEngine
         }
 
         private static MethodBase GetCallingMethodBase(StackFrame stackFrame)
-        {
-            return stackFrame == null
-                ? MethodBase.GetCurrentMethod()
-                : stackFrame.GetMethod();
-        }
+        => stackFrame == null ? MethodBase.GetCurrentMethod() : stackFrame.GetMethod();
 
         private static StackFrame FindStackFrame()
         {
@@ -139,74 +125,43 @@ namespace AptitudeEngine
                 var methodBase = stackTrace.GetFrame(i).GetMethod();
                 var name = MethodBase.GetCurrentMethod().Name;
                 if (!methodBase.Name.Equals("Log") && !methodBase.Name.Equals(name))
+                {
                     return new StackFrame(i, true);
+                }
             }
 
             return null;
         }
 
-        public static void On()
-        {
-            _isTurned = true;
-        }
+        public static void On() => _isTurned = true;
 
-        public static void Off()
-        {
-            _isTurned = false;
-        }
+        public static void Off() => _isTurned = false;
 
-        public static void DebugOn()
-        {
-            _isTurnedDebug = true;
-        }
+        public static void DebugOn() => _isTurnedDebug = true;
 
-        public static void DebugOff()
-        {
-            _isTurnedDebug = false;
-        }
+        public static void DebugOff() => _isTurnedDebug = false;
 
-        public static IEnumerable<LogMessage> Messages
-        {
-            get { return logPublisher.Messages; }
-        }
+        public static IEnumerable<LogMessage> Messages => logPublisher.Messages;
 
-        public static DebugLogger Debug
-        {
-            get { return debugLogger; }
-        }
+        public static DebugLogger Debug => debugLogger;
 
-        public static ModuleManager Modules
-        {
-            get { return moduleManager; }
-        }
+        public static ModuleManager Modules => moduleManager;
 
         public static bool StoreLogMessages
         {
-            get { return logPublisher.StoreLogMessages; }
-            set { logPublisher.StoreLogMessages = value; }
+            get => logPublisher.StoreLogMessages;
+            set => logPublisher.StoreLogMessages = value;
         }
 
         static class FilterPredicates
         {
-            public static bool ByLevelHigher(Level logMessLevel, Level filterLevel)
-            {
-                return ((int) logMessLevel >= (int) filterLevel);
-            }
+            public static bool ByLevelHigher(Level logMessLevel, Level filterLevel) => ((int)logMessLevel >= (int)filterLevel);
 
-            public static bool ByLevelLower(Level logMessLevel, Level filterLevel)
-            {
-                return ((int) logMessLevel <= (int) filterLevel);
-            }
+            public static bool ByLevelLower(Level logMessLevel, Level filterLevel) => ((int)logMessLevel <= (int)filterLevel);
 
-            public static bool ByLevelExactly(Level logMessLevel, Level filterLevel)
-            {
-                return ((int) logMessLevel == (int) filterLevel);
-            }
+            public static bool ByLevelExactly(Level logMessLevel, Level filterLevel) => ((int)logMessLevel == (int)filterLevel);
 
-            public static bool ByLevel(LogMessage logMessage, Level filterLevel, Func<Level, Level, bool> filterPred)
-            {
-                return filterPred(logMessage.Level, filterLevel);
-            }
+            public static bool ByLevel(LogMessage logMessage, Level filterLevel, Func<Level, Level, bool> filterPred) => filterPred(logMessage.Level, filterLevel);
         }
 
         public class FilterByLevel
@@ -228,24 +183,18 @@ namespace AptitudeEngine
                 OnlyHigherLevel = true;
             }
 
-            public Predicate<LogMessage> Filter
-            {
-                get
-                {
-                    return delegate(LogMessage logMessage)
-                    {
-                        return FilterPredicates.ByLevel(logMessage, FilteredLevel, delegate(Level lm, Level fl)
-                        {
-                            return ExactlyLevel
-                                ? FilterPredicates.ByLevelExactly(lm, fl)
-                                : (OnlyHigherLevel
-                                    ? FilterPredicates.ByLevelHigher(lm, fl)
-                                    : FilterPredicates.ByLevelLower(lm, fl)
-                                );
-                        });
-                    };
-                }
-            }
+            public Predicate<LogMessage> Filter => delegate (LogMessage logMessage)                 
+                                                    {                 
+                                                        return FilterPredicates.ByLevel(logMessage, FilteredLevel, delegate (Level lm, Level fl)                 
+                                                        {                 
+                                                            return ExactlyLevel                 
+                                                                ? FilterPredicates.ByLevelExactly(lm, fl)                 
+                                                                : (OnlyHigherLevel                 
+                                                                    ? FilterPredicates.ByLevelHigher(lm, fl)                 
+                                                                    : FilterPredicates.ByLevelLower(lm, fl)                 
+                                                                );                 
+                                                        });                 
+                                                    };                 
         }
     }
 }

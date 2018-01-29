@@ -10,10 +10,7 @@ namespace AptitudeEngine.Tests
 
         public float Speed { get; set; } = 0.5f;
 
-        public override void Start()
-        {
-            camera = Owner.GetComponentOfType<Camera>();
-        }
+        public override void Start() => camera = Owner.GetComponentOfType<Camera>();
 
         public override void Update()
         {

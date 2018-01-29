@@ -15,10 +15,7 @@ namespace AptitudeEngine.Events
         /// Constructs a new FrameEventArgs instance. 
         /// </summary>
         /// <param name="elapsed">The amount of time that has elapsed since the previous event, in seconds.</param>
-        public FrameEventArgs(double elapsed)
-        {
-            Time = elapsed;
-        }
+        public FrameEventArgs(double elapsed) => Time = elapsed;
 
         /// <summary>
         /// Gets a <see cref="System.Double"/> that indicates how many seconds of time elapsed since the previous frame.

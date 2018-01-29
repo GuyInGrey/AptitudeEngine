@@ -8,14 +8,8 @@ namespace AptitudeEngine.Logging.Handlers
 
         public DebugConsoleLoggerHandler() : this(new DefaultLoggerFormatter()) { }
 
-        public DebugConsoleLoggerHandler(ILoggerFormatter loggerFormatter)
-        {
-            _loggerFormatter = loggerFormatter;
-        }
+        public DebugConsoleLoggerHandler(ILoggerFormatter loggerFormatter) => _loggerFormatter = loggerFormatter;
 
-        public void Publish(LogMessage logMessage)
-        {
-            System.Diagnostics.Debug.WriteLine(_loggerFormatter.ApplyFormat(logMessage));
-        }
+        public void Publish(LogMessage logMessage) => System.Diagnostics.Debug.WriteLine(_loggerFormatter.ApplyFormat(logMessage));
     }
 }
