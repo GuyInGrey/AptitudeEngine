@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using AptitudeEngine.Assets;
 using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Components
@@ -34,33 +35,22 @@ namespace AptitudeEngine.Components
         public Color BackColor { get; set; }
         public Color ForeColor { get; set; }
         public Rectangle Bounds => new Rectangle(Position, Size);
+        public SpriteAsset BackImage { get; set; }
 
         public override void Render(FrameEventArgs a)
         {
-            var fc = GetCanvas();
-
-            if (fc == null)
+            ScreenHandler.Poly(new PolyPoint[]
             {
-                ScreenHandler.Poly(new PolyPoint[]
-{
-                new PolyPoint(Position + fc.Transform.Position, BackColor),
-                new PolyPoint(new Vector2(Position.X + Size.X, Position.Y) + fc.Transform.Position, BackColor),
-                new PolyPoint(Position + Size + fc.Transform.Position, BackColor),
-                new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y) + fc.Transform.Position, BackColor),
-                });
-            }
-            else
-            {
-                ScreenHandler.Poly(new PolyPoint[]
-{
-                new PolyPoint(Position, BackColor),
-                new PolyPoint(new Vector2(Position.X + Size.X, Position.Y), BackColor),
-                new PolyPoint(Position + Size, BackColor),
-                new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y), BackColor),
-                });
-            }
+                new PolyPoint(Position + GetCanvas()?.Transform.Position, BackColor),
+                new PolyPoint(new Vector2(Position.X + Size.X, Position.Y) + GetCanvas()?.Transform.Position, BackColor),
+                new PolyPoint(Position + Size + GetCanvas()?.Transform.Position, BackColor),
+                new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y) + GetCanvas()?.Transform.Position, BackColor),
+            });
 
-            return;
+            if (BackImage != null)
+            {
+                ScreenHandler.Tex(BackImage.Texture, Transform.Bounds, BackImage.Frame);
+            }
         }
     }
 }
