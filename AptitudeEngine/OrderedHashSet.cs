@@ -24,10 +24,7 @@ namespace AptitudeEngine
                 Remove(item);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         protected override T GetKeyForItem(T item)
