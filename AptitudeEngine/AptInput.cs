@@ -143,7 +143,7 @@ namespace AptitudeEngine
         {
             var key = e.Key;
 
-            //If time between the mouse button goes and and goes up is less than 750 ms, count it as a click.
+            //If time between the mouse button going down and going up is less than 750 ms, count it as a click.
             if (downTime != null)
             {
                 var a = DateTime.Now - downTime;
