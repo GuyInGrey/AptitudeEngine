@@ -99,7 +99,7 @@
     <Compile Include="ScreenHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Texture2D.cs" />
-    <Compile Include="CoordinateSystem\Rectangle.cs" />
+    <Compile Include="CoordinateSystem\AptRectangle.cs" />
     <Compile Include="Assets\SpriteAsset.cs" />
     <Compile Include="Components\Visuals\SpriteAnimator.cs" />
     <Compile Include="Components\Visuals\SpriteRenderer.cs" />
