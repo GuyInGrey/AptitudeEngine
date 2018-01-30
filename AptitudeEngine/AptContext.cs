@@ -8,6 +8,7 @@ using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Logger;
 
 namespace AptitudeEngine
 {
@@ -95,6 +96,8 @@ namespace AptitudeEngine
             DisplayIndex display = DisplayIndex.Primary
         )
         {
+            LoggingHandler.Boot();
+
             gameWindow = new OpenTK.GameWindow(
                 width,
                 height,

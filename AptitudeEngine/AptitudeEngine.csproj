@@ -81,6 +81,10 @@
     <Compile Include="Components\Visuals\Camera.cs" />
     <Compile Include="AptObject.cs" />
     <Compile Include="GraphicsMode.cs" />
+    <Compile Include="Logger\LoggingHandler.cs" />
+    <Compile Include="Logger\LogMessage.cs" />
+    <Compile Include="Logger\LogMessageSource.cs" />
+    <Compile Include="Logger\LogMessageType.cs" />
     <Compile Include="OrderedHashSet.cs" />
     <Compile Include="CoordinateSystem\PolyPoint.cs" />
     <Compile Include="ScreenHandler.cs" />
