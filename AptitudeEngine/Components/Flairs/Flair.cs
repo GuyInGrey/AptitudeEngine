@@ -40,7 +40,7 @@ namespace AptitudeEngine.Components.Flairs
         public Vector2 Size => Transform.Size;
         public Color BackColor { get; set; }
         public Color ForeColor { get; set; }
-        public CoordinateSystem.AptRectangle Bounds => new CoordinateSystem.AptRectangle(Position, Size);
+        public AptRectangle Bounds => new AptRectangle(Position, Size);
         public SpriteAsset BackImage { get; set; }
 
         public override void Render(FrameEventArgs a)
