@@ -19,12 +19,12 @@ namespace AptitudeEngine
 
         public bool TryRemove(T item)
         {
-            try
+            if (Contains(item))
             {
                 Remove(item);
                 return true;
             }
-            catch
+            else
             {
                 return false;
             }
