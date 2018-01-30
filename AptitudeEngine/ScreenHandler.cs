@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using AptitudeEngine.CoordinateSystem;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine
 {
-    public static class ScreenHandler // The draw class is for all GL calls for rendering
+    public static class ScreenHandler // The ScreenHandler class is for all GL calls for rendering
     {
         public static bool Blend { get; private set; }
         /// <summary>
@@ -43,7 +43,7 @@ namespace AptitudeEngine
 
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, tex.ID);
-            GL.Color4(Color.Transparent);
+            GL.Color4(System.Drawing.Color.Transparent);
             GL.Begin(PrimitiveType.Polygon);
 
             for (var i = 0; i < 4; i++)
@@ -69,14 +69,14 @@ namespace AptitudeEngine
         /// <param name="width"></param>
         /// <param name="height"></param>
         public static void Tex(Texture2D tex, float x, float y, float width, float height)
-            => Tex(tex, new Rectangle(x, y, width, height), new Rectangle(0, 0, 1, 1));
+            => Tex(tex, new AptRectangle(x, y, width, height), new AptRectangle(0, 0, 1, 1));
 
         /// <summary>
         /// Converts a rectangle into a Vector2 list
         /// </summary>
         /// <param name="r"></param>
         /// <returns></returns>
-        public static Vector2[] ConvertRectangle(Rectangle r)
+        public static Vector2[] ConvertRectangle(AptRectangle r)
             => new[]
             {
                 new Vector2(r.X, r.Y),

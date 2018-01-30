@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace AptitudeEngine
+namespace AptitudeEngine.CoordinateSystem
 {
     public class Transform
     {
         /// <summary>
         /// The Bounds of the <see cref="Transform"/>, as per <see cref="Transform.Position"/> and <see cref="Transform.Size"/>.
         /// </summary>
-        public Rectangle Bounds => new Rectangle(Position, Size);
+        public AptRectangle Bounds => new AptRectangle(Position, Size);
 
         /// <summary>
         /// World space position, relative to the world's origin (0, 0).

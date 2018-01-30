@@ -1,6 +1,7 @@
-﻿using AptitudeEngine.Events;
+﻿using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Events;
 
-namespace AptitudeEngine.Components
+namespace AptitudeEngine.Components.Visuals
 {
     public class PolyRenderer : AptComponent
     {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using AptitudeEngine.Assets;
-using AptitudeEngine.Components;
+using AptitudeEngine.Components.Visuals;
+using AptitudeEngine.Components.Flairs;
+using AptitudeEngine.CoordinateSystem;
 
 namespace AptitudeEngine.Tests
 {
@@ -54,12 +56,10 @@ namespace AptitudeEngine.Tests
             var someFlair = context.Instantiate().AddComponent<Flair>();
             someFlair.Transform.Size = new Vector2(0.25f, 0.25f);
             someFlair.Owner.SetParent(someCanvas.Owner);
-
-            Console.WriteLine(someFlair.GetCanvas());
         }
 
-        public Rectangle Rec(float x, float y, float width, float height) =>
-            new Rectangle(x, y, width, height);
+        public AptRectangle Rec(float x, float y, float width, float height) =>
+            new AptRectangle(x, y, width, height);
 
         public void Dispose()
         {

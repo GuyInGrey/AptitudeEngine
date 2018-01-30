@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace AptitudeEngine
+namespace AptitudeEngine.CoordinateSystem
 {
     public struct Vector2
     {

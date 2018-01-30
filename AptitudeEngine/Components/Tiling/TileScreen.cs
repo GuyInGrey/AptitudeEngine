@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using AptitudeEngine.Assets;
+using AptitudeEngine.Components.Visuals;
+using AptitudeEngine.CoordinateSystem;
 
-namespace AptitudeEngine.Components
+namespace AptitudeEngine.Components.Tiling
 {
     public class TileScreen : AptComponent
     {
@@ -16,7 +18,7 @@ namespace AptitudeEngine.Components
         /// <param name="frames">The frames in the tile's animation.</param>
         /// <param name="frameRate">The framerate of the tile's animation.</param>
         /// <returns>Returns the index in the row where the tile is.</returns>
-        public int AddTileToRow(int layer, int row, string tilePath, List<Rectangle> frames, int frameRate)
+        public int AddTileToRow(int layer, int row, string tilePath, List<AptRectangle> frames, int frameRate)
         {
             var tileObject = Context.Instantiate(Owner.Children[layer].Children[row]);
             tileObject.Transform.Position = new Vector2();
@@ -44,7 +46,7 @@ namespace AptitudeEngine.Components
         /// <param name="tilePath">The path of the texture the tile uses.</param>
         /// <returns>Returns the index in the row where the tile is.</returns>
         public int AddTileToRow(int layer, int row, string tilePath)
-            => AddTileToRow(layer, row, tilePath, new List<Rectangle>() {new Rectangle(0, 0, 1, 1)}, 1);
+            => AddTileToRow(layer, row, tilePath, new List<AptRectangle>() {new AptRectangle(0, 0, 1, 1)}, 1);
 
         /// <summary>
         /// Removes a tile from the TileScreen.

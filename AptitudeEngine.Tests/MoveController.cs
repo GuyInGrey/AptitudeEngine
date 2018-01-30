@@ -1,6 +1,7 @@
 ﻿using System;
 using AptitudeEngine.Enums;
-using AptitudeEngine.Components;
+using AptitudeEngine.Components.Visuals;
+using AptitudeEngine.CoordinateSystem;
 
 namespace AptitudeEngine.Tests
 {

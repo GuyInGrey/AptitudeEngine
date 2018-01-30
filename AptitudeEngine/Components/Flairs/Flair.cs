@@ -1,13 +1,19 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using AptitudeEngine.Assets;
+using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
 
-namespace AptitudeEngine.Components
+namespace AptitudeEngine.Components.Flairs
 {
     //https://github.com/PhoenixGameDevelopmentTeam/AptitudeEngine/issues/15
     public class Flair : AptComponent
     {
+        public Flair()
+        {
+            ForeColor = DefaultForeColor;
+            BackColor = DefaultBackColor;
+        }
+
         public FlairCanvas GetCanvas() => GetCanvasLooper(owner);
 
         private FlairCanvas GetCanvasLooper(AptObject b)
@@ -27,14 +33,14 @@ namespace AptitudeEngine.Components
         }
 
         public static Color DefaultForeColor { get; set; } = Color.White;
-        public static Color DefaultBackColor { get; set; } = Color.FromArgb(128,0,0,0);
+        public static Color DefaultBackColor { get; set; } = Color.Black;
         public string Name { get; set; }
         public object Tag { get; set; }
         public Vector2 Position => Transform.Position;
         public Vector2 Size => Transform.Size;
         public Color BackColor { get; set; }
         public Color ForeColor { get; set; }
-        public Rectangle Bounds => new Rectangle(Position, Size);
+        public CoordinateSystem.AptRectangle Bounds => new CoordinateSystem.AptRectangle(Position, Size);
         public SpriteAsset BackImage { get; set; }
 
         public override void Render(FrameEventArgs a)

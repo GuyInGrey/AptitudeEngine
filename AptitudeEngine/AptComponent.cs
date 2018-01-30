@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AptitudeEngine.CoordinateSystem;
+using System;
 
 namespace AptitudeEngine
 {

@@ -62,10 +62,10 @@
     <Compile Include="AptInput.cs" />
     <Compile Include="Asset.cs" />
     <Compile Include="ComponentEventChain.cs" />
-    <Compile Include="Components\Flair.cs" />
-    <Compile Include="Components\FlairCanvas.cs" />
-    <Compile Include="Components\PolyRenderer.cs" />
-    <Compile Include="Components\TileScreen.cs" />
+    <Compile Include="Components\Flairs\Flair.cs" />
+    <Compile Include="Components\Flairs\FlairCanvas.cs" />
+    <Compile Include="Components\Visuals\PolyRenderer.cs" />
+    <Compile Include="Components\Tiling\TileScreen.cs" />
     <Compile Include="DisplayDevice.cs" />
     <Compile Include="Enums\GameWindowFlags.cs" />
     <Compile Include="Enums\KeyCode.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="Events\MouseMoveEventArgs.cs" />
     <Compile Include="Events\MouseWheelEventArgs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Components\Camera.cs" />
+    <Compile Include="Components\Visuals\Camera.cs" />
     <Compile Include="AptObject.cs" />
     <Compile Include="GraphicsMode.cs" />
     <Compile Include="Logger.cs" />
@@ -95,16 +95,16 @@
     <Compile Include="Logging\Modules\LoggerModule.cs" />
     <Compile Include="Logging\Modules\ModuleManager.cs" />
     <Compile Include="OrderedHashSet.cs" />
-    <Compile Include="PolyPoint.cs" />
+    <Compile Include="CoordinateSystem\PolyPoint.cs" />
     <Compile Include="ScreenHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Texture2D.cs" />
-    <Compile Include="Rectangle.cs" />
+    <Compile Include="CoordinateSystem\Rectangle.cs" />
     <Compile Include="Assets\SpriteAsset.cs" />
-    <Compile Include="Components\SpriteAnimator.cs" />
-    <Compile Include="Components\SpriteRenderer.cs" />
-    <Compile Include="Transform.cs" />
-    <Compile Include="Vector2.cs" />
+    <Compile Include="Components\Visuals\SpriteAnimator.cs" />
+    <Compile Include="Components\Visuals\SpriteRenderer.cs" />
+    <Compile Include="CoordinateSystem\Transform.cs" />
+    <Compile Include="CoordinateSystem\Vector2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

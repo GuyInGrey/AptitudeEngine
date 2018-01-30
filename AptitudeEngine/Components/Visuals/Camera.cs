@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace AptitudeEngine.Components
+namespace AptitudeEngine.Components.Visuals
 {
     public class Camera : AptComponent
     {
@@ -12,7 +12,7 @@ namespace AptitudeEngine.Components
 
         public void SetPosition(float x, float y)
         {
-            Transform.Position = new Vector2(x, y);
+            Transform.Position = new CoordinateSystem.Vector2(x, y);
             GL.LoadMatrix(ref projection);
             GL.Translate(new Vector3(-x, y, 0));
         }

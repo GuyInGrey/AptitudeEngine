@@ -1,7 +1,7 @@
 ﻿using AptitudeEngine.Assets;
 using AptitudeEngine.Events;
 
-namespace AptitudeEngine.Components
+namespace AptitudeEngine.Components.Visuals
 {
     public class SpriteRenderer : AptComponent
     {

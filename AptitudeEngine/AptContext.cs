@@ -4,12 +4,12 @@ using System.Linq;
 using System.Drawing;
 using System.ComponentModel;
 using OpenTK.Graphics.OpenGL;
-using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 using AptitudeEngine.Logging.Formatters;
 using AptitudeEngine.Logging.Handlers;
-using LogLevel = AptitudeEngine.Logger.Level;
+using AptitudeEngine.Components.Visuals;
+using AptitudeEngine.CoordinateSystem;
 
 namespace AptitudeEngine
 {
