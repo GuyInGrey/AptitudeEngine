@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using AptitudeEngine.Events;
 using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Enums;
 
 namespace AptitudeEngine
 {
@@ -295,6 +296,36 @@ namespace AptitudeEngine
                 if (component.Started)
                 {
                     component.InternalPostRender(a);
+                }
+            });
+
+        public override void MouseDown(InputCode mouseCode)
+        =>
+            IterateComponents(component =>
+            {
+                if (component.Started)
+                {
+                    component.MouseDown(mouseCode);
+                }
+            });
+
+        public override void MouseUp(InputCode mouseCode)
+        =>
+            IterateComponents(component =>
+            {
+                if (component.Started)
+                {
+                    component.MouseUp(mouseCode);
+                }
+            });
+
+        public override void MouseClick(InputCode mouseCode)
+        =>
+            IterateComponents(component =>
+            {
+                if (component.Started)
+                {
+                    component.MouseClick(mouseCode);
                 }
             });
     }

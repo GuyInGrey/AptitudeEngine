@@ -15,10 +15,10 @@ namespace AptitudeEngine.Tests
 
         public override void Update()
         {
-            var up = Input.GetKeyDown(KeyCode.W);
-            var left = Input.GetKeyDown(KeyCode.A);
-            var down = Input.GetKeyDown(KeyCode.S);
-            var right = Input.GetKeyDown(KeyCode.D);
+            var up = Input.GetKeyDown(InputCode.W);
+            var left = Input.GetKeyDown(InputCode.A);
+            var down = Input.GetKeyDown(InputCode.S);
+            var right = Input.GetKeyDown(InputCode.D);
 
             var speed = Vector2.Zero;
             if (up)

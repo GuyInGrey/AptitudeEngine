@@ -16,7 +16,7 @@ namespace AptitudeEngine.Events
         /// <param name="y">The Y position.</param>
         /// <param name="button">The mouse button for the event.</param>
         /// <param name="pressed">The current state of the button.</param>
-        public MouseButtonEventArgs(int x, int y, KeyCode key, bool pressed)
+        public MouseButtonEventArgs(int x, int y, InputCode key, bool pressed)
             : base(x, y)
         {
             Key = key;
@@ -33,7 +33,7 @@ namespace AptitudeEngine.Events
         /// <summary>
         /// The mouse button for the event.
         /// </summary>
-        public KeyCode Key { get; internal set; }
+        public InputCode Key { get; internal set; }
 
         /// <summary>
         /// Gets a System.Boolean representing the state of the mouse button for the event.

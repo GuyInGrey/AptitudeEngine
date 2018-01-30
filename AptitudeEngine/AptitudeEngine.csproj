@@ -68,8 +68,8 @@
     <Compile Include="Components\Tiling\TileScreen.cs" />
     <Compile Include="DisplayDevice.cs" />
     <Compile Include="Enums\GameWindowFlags.cs" />
-    <Compile Include="Enums\KeyCode.cs" />
-    <Compile Include="Enums\KeyState.cs" />
+    <Compile Include="Enums\InputCode.cs" />
+    <Compile Include="Enums\InputState.cs" />
     <Compile Include="Enums\VSyncMode.cs" />
     <Compile Include="Events\FrameEventArgs.cs" />
     <Compile Include="Events\KeyboardKeyEventArgs.cs" />

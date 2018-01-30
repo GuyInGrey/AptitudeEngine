@@ -5,7 +5,7 @@ namespace AptitudeEngine.Events
 {
     public class KeyboardKeyEventArgs : EventArgs
     {
-        KeyCode key;
+        InputCode key;
 
         /// <summary>
         /// Constructs a new KeyboardEventArgs instance.
@@ -22,13 +22,13 @@ namespace AptitudeEngine.Events
         /// <summary>
         /// Gets the <see cref="Key"/> that generated this event.
         /// </summary>
-        public KeyCode Key
+        public InputCode Key
         {
             get => key;
             internal set => key = value;
         }
 
         public static implicit operator KeyboardKeyEventArgs(OpenTK.Input.KeyboardKeyEventArgs args)
-            => new KeyboardKeyEventArgs {Key = (KeyCode) args.Key};
+            => new KeyboardKeyEventArgs {Key = (InputCode) args.Key};
     }
 }

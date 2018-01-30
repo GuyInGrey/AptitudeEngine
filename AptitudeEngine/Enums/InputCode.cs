@@ -1,6 +1,6 @@
 ﻿namespace AptitudeEngine.Enums
 {
-    public enum KeyCode
+    public enum InputCode
     {
         //
         // Summary:
@@ -662,7 +662,7 @@
         //     Indicates the last available keyboard key.
         LastKey = 131,
 
-        // Mouse garbage
+        // Mouse Buttons
         Mouse0,
         Mouse1,
         Mouse2,
@@ -677,7 +677,7 @@
         Mouse11,
         Mouse12,
 
-        // Gamepad garbage
+        // Gamepad Buttons
         GamePadRightStick,
         GamePadRightShoulder,
         GamePadLeftStick,

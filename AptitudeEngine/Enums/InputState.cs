@@ -1,6 +1,6 @@
 ﻿namespace AptitudeEngine.Enums
 {
-    public enum KeyState
+    public enum InputState
     {
         Up = 0,
         DownThisFrame = 1,

@@ -8,9 +8,10 @@ namespace AptitudeEngine
 {
     public class AptInput : IDisposable
     {
-        private Dictionary<KeyCode, KeyState> keyStates;
-        private OrderedHashSet<KeyCode> keysWaitingDown;
-        private OrderedHashSet<KeyCode> keysWaitingUp;
+        private Dictionary<InputCode, InputState> keyStates;
+        private OrderedHashSet<InputCode> keysWaitingDown;
+        private OrderedHashSet<InputCode> keysWaitingUp;
+
         private AptContext context;
         private bool disposed;
 
@@ -23,19 +24,19 @@ namespace AptitudeEngine
             context.MouseUp += Context_MouseUp;
             context.PreUpdateFrame += Context_PreUpdateFrame;
 
-            keyStates = new Dictionary<KeyCode, KeyState>();
-            foreach (var key in Enum.GetValues(typeof(KeyCode)).Cast<KeyCode>())
+            keyStates = new Dictionary<InputCode, InputState>();
+            foreach (var key in Enum.GetValues(typeof(InputCode)).Cast<InputCode>())
             {
-                keyStates.Add(key, KeyState.Up);
+                keyStates.Add(key, InputState.Up);
             }
 
-            keysWaitingDown = new OrderedHashSet<KeyCode>();
-            keysWaitingUp = new OrderedHashSet<KeyCode>();
+            keysWaitingDown = new OrderedHashSet<InputCode>();
+            keysWaitingUp = new OrderedHashSet<InputCode>();
         }
 
         private void Context_PreUpdateFrame(object sender, FrameEventArgs e)
         {
-            var alter = new Dictionary<KeyCode, KeyState>();
+            var alter = new Dictionary<InputCode, InputState>();
 
             // If the state of a key was already DownThisFrame or UpThisFrame state since the last frame
             // then we should push it to the non-ThisFrame equivelent, indicating that it wasnt just pressed
@@ -44,11 +45,11 @@ namespace AptitudeEngine
             {
                 switch (kvp.Value)
                 {
-                    case KeyState.DownThisFrame:
-                        alter.Add(kvp.Key, KeyState.Down);
+                    case InputState.DownThisFrame:
+                        alter.Add(kvp.Key, InputState.Down);
                         break;
-                    case KeyState.UpThisFrame:
-                        alter.Add(kvp.Key, KeyState.Up);
+                    case InputState.UpThisFrame:
+                        alter.Add(kvp.Key, InputState.Up);
                         break;
                 }
             }
@@ -72,9 +73,9 @@ namespace AptitudeEngine
 
                 switch (keyStates[key])
                 {
-                    case KeyState.Down:
-                    case KeyState.DownThisFrame:
-                        keyStates[key] = KeyState.UpThisFrame;
+                    case InputState.Down:
+                    case InputState.DownThisFrame:
+                        keyStates[key] = InputState.UpThisFrame;
                         break;
                 }
 
@@ -88,9 +89,9 @@ namespace AptitudeEngine
 
                 switch (keyStates[key])
                 {
-                    case KeyState.Up:
-                    case KeyState.UpThisFrame:
-                        keyStates[key] = KeyState.DownThisFrame;
+                    case InputState.Up:
+                    case InputState.UpThisFrame:
+                        keyStates[key] = InputState.DownThisFrame;
                         break;
                 }
 
@@ -119,86 +120,119 @@ namespace AptitudeEngine
             keysWaitingDown.TryAdd(key);
         }
 
-        private void Context_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            // if the button is pressed and then lifted in a single frame
-            // then ensure that it wont be processed as being down
-            // and queue it to be processed as being up.
-            var key = e.Key;
-            keysWaitingDown.TryRemove(key);
-            keysWaitingUp.TryAdd(key);
-        }
-
+        DateTime downTime;
         private void Context_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            var key = e.Key;
+
             // if the button is lifted and then pressed in a single frame
             // then ensure that it wont be processed as being up
             // and queue it to be processed as being down.
-            var key = e.Key;
             keysWaitingUp.TryRemove(key);
             keysWaitingDown.TryAdd(key);
+            downTime = DateTime.Now;
+
+            //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
+            context.RecurseGameObjects(delegate (AptObject i)
+            {
+                i.MouseDown(key);
+            });
         }
 
+        private void Context_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var key = e.Key;
+
+            //If time between the mouse button goes and and goes up is less than 750 ms, count it as a click.
+            if (downTime != null)
+            {
+                var a = DateTime.Now - downTime;
+                if (a.TotalMilliseconds < 750)
+                {
+                    Context_MouseClick(key);
+                }
+            }
+
+            // if the button is pressed and then lifted in a single frame
+            // then ensure that it wont be processed as being down
+            // and queue it to be processed as being up.
+            keysWaitingDown.TryRemove(key);
+            keysWaitingUp.TryAdd(key);
+
+            //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
+            context.RecurseGameObjects(delegate (AptObject i)
+            {
+                i.MouseUp(key);
+            });
+        }
+
+        private void Context_MouseClick(InputCode i) =>
+            //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
+            context.RecurseGameObjects(delegate (AptObject b)
+            {
+                b.MouseClick(i);
+            });
+
         /// <summary>
-        /// Gets whether the state of <paramref name="key"/> is <see cref="KeyState.Down"/> or <see cref="KeyState.DownThisFrame"/> or not.
+        /// Gets whether the state of <paramref name="key"/> is <see cref="InputState.Down"/> or <see cref="InputState.DownThisFrame"/> or not.
         /// </summary>
         /// <param name="key">The key to check the down state of.</param>
         /// <returns>
-        /// <para>True if the state of <paramref name="key"/> is <see cref="KeyState.Down"/> or <see cref="KeyState.DownThisFrame"/>.</para>
+        /// <para>True if the state of <paramref name="key"/> is <see cref="InputState.Down"/> or <see cref="InputState.DownThisFrame"/>.</para>
         /// 
         /// <para>False otherwise.</para>
         /// </returns>
-        public bool GetKeyDown(KeyCode key)
+        public bool GetKeyDown(InputCode key)
         {
             var state = GetKeyState(key);
-            return state == KeyState.Down || state == KeyState.DownThisFrame;
+            return state == InputState.Down || state == InputState.DownThisFrame;
         }
 
         /// <summary>
-        /// Gets whether the state of <paramref name="key"/> is <see cref="KeyState.Up"/> or <see cref="KeyState.UpThisFrame"/> or not.
+        /// Gets whether the state of <paramref name="key"/> is <see cref="InputState.Up"/> or <see cref="InputState.UpThisFrame"/> or not.
         /// </summary>
         /// <param name="key">The key to check the up state of.</param>
         /// <returns>
-        /// <para>True if the state of <paramref name="key"/> is <see cref="KeyState.Up"/> or <see cref="KeyState.UpThisFrame"/>.</para>
+        /// <para>True if the state of <paramref name="key"/> is <see cref="InputState.Up"/> or <see cref="InputState.UpThisFrame"/>.</para>
         /// 
         /// <para>False otherwise.</para>
         /// </returns>
-        public bool GetKeyUp(KeyCode key)
+        public bool GetKeyUp(InputCode key)
         {
             var state = GetKeyState(key);
-            return state == KeyState.Up || state == KeyState.UpThisFrame;
+            return state == InputState.Up || state == InputState.UpThisFrame;
         }
 
         /// <summary>
-        /// Gets whether the state of <paramref name="key"/> is <see cref="KeyState.DownThisFrame"/> or not.
+        /// Gets whether the state of <paramref name="key"/> is <see cref="InputState.DownThisFrame"/> or not.
         /// </summary>
         /// <param name="key">The key to check the up state of.</param>
         /// <returns>
-        /// <para>True if the state of <paramref name="key"/> is <see cref="KeyState.DownThisFrame"/>.</para>
+        /// <para>True if the state of <paramref name="key"/> is <see cref="InputState.DownThisFrame"/>.</para>
         /// 
         /// <para>False otherwise.</para>
         /// </returns>
-        public bool GetKeyDownThisFrame(KeyCode key)
-            => GetKeyState(key) == KeyState.DownThisFrame;
+        public bool GetKeyDownThisFrame(InputCode key)
+            => GetKeyState(key) == InputState.DownThisFrame;
 
         /// <summary>
-        /// Gets whether the state of <paramref name="key"/> is <see cref="KeyState.UpThisFrame"/> or not.
+        /// Gets whether the state of <paramref name="key"/> is <see cref="InputState.UpThisFrame"/> or not.
         /// </summary>
         /// <param name="key">The key to check the up state of.</param>
         /// <returns>
-        /// <para>True if the state of <paramref name="key"/> is <see cref="KeyState.UpThisFrame"/>.</para>
+        /// <para>True if the state of <paramref name="key"/> is <see cref="InputState.UpThisFrame"/>.</para>
         /// 
         /// <para>False otherwise.</para>
         /// </returns>
-        public bool GetKeyUpThisFrame(KeyCode key)
-            => GetKeyState(key) == KeyState.UpThisFrame;
+        public bool GetKeyUpThisFrame(InputCode key)
+            => GetKeyState(key) == InputState.UpThisFrame;
 
         /// <summary>
         /// Gets the state of <paramref name="key"/>.
         /// </summary>
         /// <param name="key">The key to get the state of.</param>
         /// <returns>The state of <paramref name="key"/></returns>
-        public KeyState GetKeyState(KeyCode key)
+        public InputState GetKeyState(InputCode key)
             => keyStates[key];
 
         public void Dispose()

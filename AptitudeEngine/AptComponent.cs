@@ -5,10 +5,12 @@ namespace AptitudeEngine
 {
     public class AptComponent : ComponentEventChain, IDisposable
     {
+
+
         /// <summary>
-        /// Global Identification for <see cref="AptComponent"/>, not unique because the component is not stored in a table.
+        /// Global Identification for <see cref="AptComponent"/>
         /// </summary>
-        public string Gid { get; }
+        public string Guid { get; }
 
         /// <summary>
         /// The private owner <see cref="AptObject"/> of the <see cref="AptComponent"/>
@@ -68,14 +70,14 @@ namespace AptitudeEngine
         public AptComponent() =>
             // We're not ensuring Guid is totally unique like in AptObject
             // because its not going to be in a table.
-            Gid = System.Guid.NewGuid().ToString("N");
+            Guid = System.Guid.NewGuid().ToString("N");
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" />, is equal to this object by comparing Gid.
         /// </summary>
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
         public override bool Equals(object obj)
-            => obj is AptComponent comp && Gid.Equals(comp.Gid);
+            => obj is AptComponent comp && Guid.Equals(comp.Guid);
 
         /// <summary>
         /// Returns a hash code for this instance.
@@ -83,7 +85,7 @@ namespace AptitudeEngine
         public override int GetHashCode()
         {
             var hash = 269;
-            hash = (hash * 47) + Gid.GetHashCode();
+            hash = (hash * 47) + Guid.GetHashCode();
             return hash;
         }
     }
