@@ -29,7 +29,7 @@ namespace AptitudeEngine
             GL.End();
         }
 
-        public static void Tex(Texture2D tex, Rectangle window, Rectangle frame)
+        public static void Tex(Texture2D tex, AptRectangle window, AptRectangle frame)
         {
             var needToReenableBlending = false;
             if (Blend)
