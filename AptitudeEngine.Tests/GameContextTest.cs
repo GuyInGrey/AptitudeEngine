@@ -4,6 +4,7 @@ using AptitudeEngine.Assets;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.Components.Flairs;
 using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Enums;
 
 namespace AptitudeEngine.Tests
 {
@@ -56,6 +57,8 @@ namespace AptitudeEngine.Tests
             var someFlair = context.Instantiate().AddComponent<Flair>();
             someFlair.Transform.Size = new Vector2(0.25f, 0.25f);
             someFlair.Owner.SetParent(someCanvas.Owner);
+
+            camera.Owner.AddComponent<CustomTestingComponent>();
         }
 
         public AptRectangle Rec(float x, float y, float width, float height) =>
@@ -83,5 +86,17 @@ namespace AptitudeEngine.Tests
 
             disposed = true;
         }
+    }
+
+    public class CustomTestingComponent : AptComponent
+    {
+        public override void MouseDown(InputCode mouseCode) =>
+            Console.WriteLine("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString());
+
+        public override void MouseUp(InputCode mouseCode) =>
+            Console.WriteLine("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString());
+
+        public override void MouseClick(InputCode mouseCode) =>
+            Console.WriteLine("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString());
     }
 }
