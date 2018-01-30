@@ -212,7 +212,7 @@ namespace AptitudeEngine
             PreRenderFrame?.Invoke(this, e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
-            DeltaTime = (float) e.Time;
+            DeltaTime = (float) e.Delta;
             timeSinceLastFrameLog += DeltaTime;
 
             if (timeSinceLastFrameLog > 1)
@@ -237,7 +237,7 @@ namespace AptitudeEngine
         private void GameContext_Unload(object sender, EventArgs e) =>
             Dispose();
 
-        private void RecurseGameObjects(Action<AptObject> action)
+        internal void RecurseGameObjects(Action<AptObject> action)
             => RecurseGameObjects(hierarchy.ToArray(), action);
 
         private void RecurseGameObjects(AptObject[] objects, Action<AptObject> action)
