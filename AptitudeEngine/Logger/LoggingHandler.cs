@@ -7,6 +7,7 @@ using AptitudeEngine;
 
 namespace AptitudeEngine.Logger
 {
+    [Obsolete("Not used anymore", true)]
     public static class LoggingHandler
     {
         private static List<LogMessage> Messages { get; set; }
@@ -51,9 +52,7 @@ namespace AptitudeEngine.Logger
             {
                 
             }
-
-            Ready = false;
-
+            
             var trace = new StackTrace(2, true);
             var frame = new StackFrame(2, true);
             var timeSent = DateTime.Now;
@@ -105,8 +104,6 @@ namespace AptitudeEngine.Logger
                 Console.ForegroundColor = foreColor;
                 Console.Write(" " + content.ToString() + "\n");
             }
-
-            Ready = true;
         }
     }
 }

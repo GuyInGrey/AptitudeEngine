@@ -60,11 +60,6 @@ namespace AptitudeEngine.Tests
             someFlair.Owner.SetParent(someCanvas.Owner);
 
             camera.Owner.AddComponent<CustomTestingComponent>();
-
-            for (var i = 0; i < 7; i++)
-            {
-                LoggingHandler.LogMessage("TESTING COLORING: " + (LogMessageType)i, (LogMessageType)i);
-            }
         }
 
         public AptRectangle Rec(float x, float y, float width, float height) =>
@@ -96,13 +91,13 @@ namespace AptitudeEngine.Tests
 
     public class CustomTestingComponent : AptComponent
     {
-        public override void MouseDown(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
+        //public override void MouseDown(InputCode mouseCode) =>
+        //    LoggingHandler.LogMessage("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
 
-        public override void MouseUp(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString(), LogMessageType.Info);
+        //public override void MouseUp(InputCode mouseCode) =>
+        //    LoggingHandler.LogMessage("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString(), LogMessageType.Info);
 
-        public override void MouseClick(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString(), LogMessageType.Info);
+        //public override void MouseClick(InputCode mouseCode) =>
+        //    LoggingHandler.LogMessage("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString(), LogMessageType.Info);
     }
 }

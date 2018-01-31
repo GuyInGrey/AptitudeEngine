@@ -96,8 +96,6 @@ namespace AptitudeEngine
             DisplayIndex display = DisplayIndex.Primary
         )
         {
-            LoggingHandler.Boot();
-
             gameWindow = new OpenTK.GameWindow(
                 width,
                 height,

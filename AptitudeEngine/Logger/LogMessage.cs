@@ -3,6 +3,7 @@ using System.Diagnostics;
 
 namespace AptitudeEngine.Logger
 {
+    [Obsolete("Not used anymore", true)]
     public class LogMessage
     {
         public readonly object Content;
