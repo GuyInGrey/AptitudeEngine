@@ -27,6 +27,13 @@ namespace AptitudeEngine
         public bool Disposed { get; private set; }
         public float DeltaTime { get; private set; }
 
+        public bool ShowCursor
+        {
+            set => gameWindow.CursorVisible = value;
+        }
+
+        public void Exit() => gameWindow.Close();
+
         public Vector2 WindowPixelSize { get; private set; }
 
         public Color ClearColor

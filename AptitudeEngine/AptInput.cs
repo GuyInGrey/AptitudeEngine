@@ -116,6 +116,11 @@ namespace AptitudeEngine
                 keysWaitingDown.RemoveAt(i);
                 i--;
             }
+
+            if (GetKeyDown(InputCode.AltLeft) && GetKeyDown(InputCode.F4))
+            {
+                context.Exit();
+            }
         }
 
         private void Context_KeyUp(object sender, KeyboardKeyEventArgs e)
