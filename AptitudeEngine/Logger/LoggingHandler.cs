@@ -36,14 +36,14 @@ namespace AptitudeEngine.Logger
             ConsoleLogBlacklist = new List<LogMessageType>();
 
             Ready = true;
-            InternalLogMessage("LOG FILE STARTING", LogMessageType.Info);
+            IntLog("LOG FILE STARTING", LogMessageType.Info);
         }
 
         public static LogMessage[] LogMessages => Messages.ToArray();
 
-        internal static void InternalLogMessage(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
+        internal static void IntLog(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
         
-        public static void LogMessage(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Game);
+        public static void ExtLog(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Game);
 
         private static void _LogMessage(object content, LogMessageType type, LogMessageSource source)
         {

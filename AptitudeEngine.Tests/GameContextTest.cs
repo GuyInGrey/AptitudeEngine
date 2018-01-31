@@ -63,7 +63,7 @@ namespace AptitudeEngine.Tests
 
             for (var i = 0; i < 7; i++)
             {
-                LoggingHandler.LogMessage("TESTING COLORING: " + (LogMessageType)i, (LogMessageType)i);
+                LoggingHandler.ExtLog("TESTING COLORING: " + (LogMessageType)i, (LogMessageType)i);
             }
         }
 
@@ -97,12 +97,12 @@ namespace AptitudeEngine.Tests
     public class CustomTestingComponent : AptComponent
     {
         public override void MouseDown(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
+            LoggingHandler.ExtLog("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
 
         public override void MouseUp(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString(), LogMessageType.Info);
+            LoggingHandler.ExtLog("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString(), LogMessageType.Info);
 
         public override void MouseClick(InputCode mouseCode) =>
-            LoggingHandler.LogMessage("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString(), LogMessageType.Info);
+            LoggingHandler.ExtLog("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString(), LogMessageType.Info);
     }
 }
