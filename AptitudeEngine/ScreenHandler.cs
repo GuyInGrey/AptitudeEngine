@@ -31,19 +31,12 @@ namespace AptitudeEngine
 
         public static void Tex(Texture2D tex, AptRectangle window, AptRectangle frame)
         {
-            var needToReenableBlending = false;
-            if (Blend)
-            {
-                needToReenableBlending = true;
-                Blending(false);
-            }
-
             var posVectors = ConvertRectangle(window);
             var frameVectors = ConvertRectangle(frame);
 
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, tex.ID);
-            GL.Color4(System.Drawing.Color.Transparent);
+            GL.Color3(System.Drawing.Color.White);
             GL.Begin(PrimitiveType.Polygon);
 
             for (var i = 0; i < 4; i++)
@@ -53,11 +46,6 @@ namespace AptitudeEngine
             }
 
             GL.End();
-
-            if (needToReenableBlending)
-            {
-                Blending(true);
-            }
         }
 
         /// <summary>
