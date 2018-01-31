@@ -51,7 +51,7 @@ namespace AptitudeEngine.Components.Flairs
                 new PolyPoint(new Vector2(Position.X + Size.X, Position.Y) + GetCanvas()?.Transform.Position, BackColor),
                 new PolyPoint(Position + Size + GetCanvas()?.Transform.Position, BackColor),
                 new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y) + GetCanvas()?.Transform.Position, BackColor),
-            });
+            }, Transform);
 
             if (BackImage != null)
             {

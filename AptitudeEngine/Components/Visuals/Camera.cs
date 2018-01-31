@@ -12,13 +12,13 @@ namespace AptitudeEngine.Components.Visuals
 
         public void SetPosition(float x, float y)
         {
-            Transform.Position = new CoordinateSystem.Vector2(x, y);
+            Transform.Position = new CoordinateSystem.Vector2(Transform.Position.X + x, Transform.Position.Y + y);
             GL.LoadMatrix(ref projection);
-            GL.Translate(new Vector3(-x, y, 0));
+            GL.Translate(new Vector3(-Transform.Position.X, -Transform.Position.Y, 0));
         }
 
         public void Move(float x, float y)
-            => SetPosition(Transform.Position.X + x, Transform.Position.Y + y);
+            => SetPosition(x, y);
 
         public void Move(Vector2 vec)
             => Move(vec.X, vec.Y);

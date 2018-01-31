@@ -10,7 +10,7 @@ namespace AptitudeEngine
         /// Draws the specified selected points.
         /// </summary>
         /// <param name="SelectedPoints">The selected points.</param>
-        public static void Poly(PolyPoint[] SelectedPoints)
+        public static void Poly(PolyPoint[] SelectedPoints, Transform f)
         {
             if (SelectedPoints == null)
             {
@@ -23,7 +23,7 @@ namespace AptitudeEngine
             for (var i = 0; i < SelectedPoints.Length; i++)
             {
                 GL.Color4(SelectedPoints[i].Color);
-                GL.Vertex2(SelectedPoints[i].Position.X, SelectedPoints[i].Position.Y);
+                GL.Vertex2(SelectedPoints[i].Position.X + f.Position.X, SelectedPoints[i].Position.Y + f.Position.Y);
             }
 
             GL.End();

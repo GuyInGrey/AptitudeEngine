@@ -27,6 +27,8 @@ namespace AptitudeEngine
         public bool Disposed { get; private set; }
         public float DeltaTime { get; private set; }
 
+        public Vector2 WindowPixelSize { get; private set; }
+
         public Color ClearColor
         {
             get
@@ -97,6 +99,7 @@ namespace AptitudeEngine
         )
         {
             LoggingHandler.Boot();
+            WindowPixelSize = new Vector2(width, height);
 
             gameWindow = new OpenTK.GameWindow(
                 width,

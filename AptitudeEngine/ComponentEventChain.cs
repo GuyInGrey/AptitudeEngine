@@ -60,6 +60,7 @@ namespace AptitudeEngine
         /// </summary>
         /// <param name="mouseCode">The mouse button that clicked.</param>
         public virtual void MouseClick(InputCode mouseCode) { }
+        public bool MouseStateDown { get; private set; }
 
         internal void InternalAwake()
         {
@@ -77,8 +78,16 @@ namespace AptitudeEngine
         internal void InternalPreRender(FrameEventArgs a) => PreRender(a);
         internal void InternalRender(FrameEventArgs a) => Render(a);
         internal void InternalPostRender(FrameEventArgs a) => PostRender(a);
-        internal void InternalMouseDown(InputCode mouseCode) => MouseDown(mouseCode);
-        internal void InternalMouseUp(InputCode mouseCode) => MouseDown(mouseCode);
-        internal void InternalMouseClick(InputCode mouseCode) => MouseDown(mouseCode);
+        internal void InternalMouseDown(InputCode mouseCode)
+        {
+            MouseStateDown = true;
+            MouseDown(mouseCode);
+        }
+        internal void InternalMouseUp(InputCode mouseCode)
+        {
+            MouseStateDown = false;
+            MouseUp(mouseCode);
+        }
+        internal void InternalMouseClick(InputCode mouseCode) => MouseClick(mouseCode);
     }
 }

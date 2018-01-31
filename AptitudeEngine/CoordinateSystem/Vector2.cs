@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.CompilerServices;
 
 namespace AptitudeEngine.CoordinateSystem
@@ -20,6 +21,12 @@ namespace AptitudeEngine.CoordinateSystem
         {
             X = x;
             Y = y;
+        }
+
+        public Vector2(Point p)
+        {
+            X = p.X;
+            Y = p.Y;
         }
 
         public Vector2(OpenTK.Vector2 v)

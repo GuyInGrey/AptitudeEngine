@@ -305,7 +305,7 @@ namespace AptitudeEngine
             {
                 if (component.Started)
                 {
-                    component.MouseDown(mouseCode);
+                    component.InternalMouseDown(mouseCode);
                 }
             });
 
@@ -315,7 +315,7 @@ namespace AptitudeEngine
             {
                 if (component.Started)
                 {
-                    component.MouseUp(mouseCode);
+                    component.InternalMouseUp(mouseCode);
                 }
             });
 
@@ -325,7 +325,7 @@ namespace AptitudeEngine
             {
                 if (component.Started)
                 {
-                    component.MouseClick(mouseCode);
+                    component.InternalMouseClick(mouseCode);
                 }
             });
     }

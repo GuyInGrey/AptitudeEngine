@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 
@@ -12,6 +13,10 @@ namespace AptitudeEngine
         private OrderedHashSet<InputCode> keysWaitingDown;
         private OrderedHashSet<InputCode> keysWaitingUp;
 
+        public Vector2 MouseScreenPosition { get; private set; } = Vector2.Zero;
+        public Vector2 MouseScreenPixelPosition { get; private set; } = Vector2.Zero;
+        public Vector2 MouseWorldPosition { get; private set; } = Vector2.Zero;
+ 
         private AptContext context;
         private bool disposed;
 
@@ -23,6 +28,7 @@ namespace AptitudeEngine
             context.MouseDown += Context_MouseDown;
             context.MouseUp += Context_MouseUp;
             context.PreUpdateFrame += Context_PreUpdateFrame;
+            context.MouseMove += Context_MouseMove;
 
             keyStates = new Dictionary<InputCode, InputState>();
             foreach (var key in Enum.GetValues(typeof(InputCode)).Cast<InputCode>())
@@ -32,6 +38,18 @@ namespace AptitudeEngine
 
             keysWaitingDown = new OrderedHashSet<InputCode>();
             keysWaitingUp = new OrderedHashSet<InputCode>();
+        }
+
+        private void Context_MouseMove(object sender, MouseMoveEventArgs e)
+        {
+            MouseScreenPixelPosition = new Vector2(e.X, e.Y);
+
+            var mouseXPercent = e.X / context.WindowPixelSize.X;
+            var mouseYPercent = e.Y / context.WindowPixelSize.Y;
+
+            MouseWorldPosition = new Vector2((mouseXPercent - 0.5f) + context.MainCamera.Transform.Position.X,
+                (mouseYPercent - 0.5f) + context.MainCamera.Transform.Position.Y);
+            MouseScreenPosition = new Vector2((mouseXPercent - 0.5f), (mouseYPercent - 0.5f));
         }
 
         private void Context_PreUpdateFrame(object sender, FrameEventArgs e)

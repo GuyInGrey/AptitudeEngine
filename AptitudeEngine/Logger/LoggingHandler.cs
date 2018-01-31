@@ -41,9 +41,9 @@ namespace AptitudeEngine.Logger
 
         public static LogMessage[] LogMessages => Messages.ToArray();
 
-        internal static void IntLog(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
+        public static void IntLog(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
         
-        public static void ExtLog(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Game);
+        public static void Log(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Game);
 
         private static void _LogMessage(object content, LogMessageType type, LogMessageSource source)
         {
