@@ -14,28 +14,78 @@ namespace AptitudeEngine
 {
     public class AptContext : IDisposable
     {
+        /// <summary>
+        /// All the <see cref="AptObject"/>s in 1 table with a Guid each.
+        /// </summary>
         internal Dictionary<string, AptObject> objectTable;
+
+        /// <summary>
+        /// The hierarchy of <see cref="AptObject"/>
+        /// </summary>
         private List<AptObject> hierarchy;
+
+        /// <summary>
+        /// All the <see cref="AptObject"/> that have been created but not initialized yet.
+        /// </summary>
         private List<AptObject> toBeInitialized;
 
+        /// <summary>
+        /// The <see cref="OpenTK.GameWindow"/> that is being used for this context.
+        /// </summary>
         private readonly OpenTK.GameWindow gameWindow;
+
+        /// <summary>
+        /// The frames that have been drawn since the last time the framerate had been updated to the console.
+        /// </summary>
         private int frameCount;
+
+        /// <summary>
+        /// The time since the last time the framerate had been updated to the console.
+        /// </summary>
         private float timeSinceLastFrameLog;
 
+        /// <summary>
+        /// The <see cref="AptInput"/> for the context.
+        /// </summary>
         public AptInput Input { get; }
-        public Camera MainCamera { get; internal set; }
-        public bool Disposed { get; private set; }
-        public float DeltaTime { get; private set; }
 
+        /// <summary>
+        /// The currently active <see cref="Camera"/> in the context.
+        /// </summary>
+        public Camera MainCamera { get; internal set; }
+
+        /// <summary>
+        /// Whether the context has been disposed or not.
+        /// </summary>
+        public bool Disposed { get; private set; }
+
+        /// <summary>
+        /// The time since the last frame rendered.
+        /// </summary>
+        public float DeltaTime { get; private set; }
+        
+        /// <summary>
+        /// Whether the standard Windows cursor is being drawn.
+        /// </summary>
         public bool ShowCursor
         {
             set => gameWindow.CursorVisible = value;
+            get => gameWindow.CursorVisible;
         }
 
+        /// <summary>
+        /// Exit the engine context safely.
+        /// </summary>
         public void Exit() => gameWindow.Close();
 
+        /// <summary>
+        /// The size of <see cref="gameWindow"/> in pixels.
+        /// </summary>
         public Vector2 WindowPixelSize { get; private set; }
 
+        /// <summary>
+        /// The color used for the clearing the background of each new frame.
+        /// </summary>
         public Color ClearColor
         {
             get
@@ -49,6 +99,8 @@ namespace AptitudeEngine
             }
             set => GL.ClearColor(value);
         }
+
+        #region Constructors
 
         /// <summary>
         /// Initialize a new Aptitude Context, capturing a OpenTK context internally, using <see cref="GraphicsMode.Default"/>.
@@ -105,9 +157,12 @@ namespace AptitudeEngine
             DisplayIndex display = DisplayIndex.Primary
         )
         {
+            //Begin Logging
             LoggingHandler.Boot();
+            //Setting WindowPixelSize to the gameWindow width and height.
             WindowPixelSize = new Vector2(width, height);
 
+            //Starting the gameWindow with the parameters.
             gameWindow = new OpenTK.GameWindow(
                 width,
                 height,
@@ -121,6 +176,7 @@ namespace AptitudeEngine
                 TargetUpdateFrequency = maxUpdates,
             };
 
+            //Events
             Load += GameContext_Load;
             UpdateFrame += GameContext_UpdateFrame;
             RenderFrame += GameContext_RenderFrame;
@@ -136,45 +192,103 @@ namespace AptitudeEngine
             gameWindow.MouseDown += GameWindow_MouseDown;
             gameWindow.MouseUp += GameWindow_MouseUp;
 
-            // Initialize anything not context sensitive.
+            // Initialize lists and dictionaries
             hierarchy = new List<AptObject>();
             toBeInitialized = new List<AptObject>();
             objectTable = new Dictionary<string, AptObject>();
             
+            //Begin Input management
             Input = new AptInput(this);
         }
 
+        #endregion
+
+        /// <summary>
+        /// When a mouse button goes up.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_MouseUp(object sender, OpenTK.Input.MouseButtonEventArgs e)
             => MouseUp?.Invoke(sender, e);
 
+        /// <summary>
+        /// When a mouse button goes down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_MouseDown(object sender, OpenTK.Input.MouseButtonEventArgs e)
             => MouseDown?.Invoke(sender, e);
 
+        /// <summary>
+        /// When the mouse moves over the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_MouseMove(object sender, OpenTK.Input.MouseMoveEventArgs e)
             => MouseMove?.Invoke(sender, e);
 
+        /// <summary>
+        /// When a key is depressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_KeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
             => KeyUp?.Invoke(sender, e);
 
+        /// <summary>
+        /// When a key is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_KeyPress(object sender, OpenTK.KeyPressEventArgs e)
             => KeyPress?.Invoke(sender, e);
 
+        /// <summary>
+        /// When a key is pressed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
             => KeyDown?.Invoke(sender, e);
 
+        /// <summary>
+        /// When the mouse wheel gets scrolled.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_MouseWheel(object sender, OpenTK.Input.MouseWheelEventArgs e)
             => MouseWheel?.Invoke(sender, e);
 
+        /// <summary>
+        /// When an UpdateFrame occurs in <see cref="gameWindow"/>.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_UpdateFrame(object sender, OpenTK.FrameEventArgs e)
             => UpdateFrame?.Invoke(sender, e);
 
+        /// <summary>
+        /// When an RenderFrame occurs in <see cref="gameWindow"/>.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameWindow_RenderFrame(object sender, OpenTK.FrameEventArgs e)
             => RenderFrame?.Invoke(sender, e);
 
+        /// <summary>
+        /// When the context is loaded, start all game objects.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameContext_Load(object sender, EventArgs e) =>
             // Initialize anything context sensitive
             RecurseGameObjects(go => go.InternalStart());
 
+        /// <summary>
+        /// When an UpdateFrame occurs in <see cref="gameWindow"/>.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameContext_UpdateFrame(object sender, FrameEventArgs e)
         {
             PreUpdateFrame?.Invoke(this, e);
@@ -213,6 +327,11 @@ namespace AptitudeEngine
             PostUpdateFrame?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// When an RenderFrame occurs in <see cref="gameWindow"/>.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameContext_RenderFrame(object sender, FrameEventArgs e)
         {
             PreRenderFrame?.Invoke(this, e);
@@ -240,12 +359,26 @@ namespace AptitudeEngine
             PostRenderFrame?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// When the context is loaded.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GameContext_Unload(object sender, EventArgs e) =>
             Dispose();
 
+        /// <summary>
+        /// Loop through all gameobjects in heirarchy.
+        /// </summary>
+        /// <param name="action"></param>
         internal void RecurseGameObjects(Action<AptObject> action)
             => RecurseGameObjects(hierarchy.ToArray(), action);
 
+        /// <summary>
+        /// Loop through all gameobjects in heirarchy.
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <param name="action"></param>
         private void RecurseGameObjects(AptObject[] objects, Action<AptObject> action)
         {
             for (var i = 0; i < objects.Length; i++)
@@ -256,12 +389,24 @@ namespace AptitudeEngine
             }
         }
 
+        /// <summary>
+        /// Start rendering the window.
+        /// </summary>
         public void Begin()
             => gameWindow.Run();
 
+        /// <summary>
+        /// Create a new <see cref="AptObject"/>.
+        /// </summary>
+        /// <returns></returns>
         public AptObject Instantiate()
             => Instantiate(null);
 
+        /// <summary>
+        /// Create a new <see cref="AptObject"/>.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
         public AptObject Instantiate(AptObject parent)
         {
             var go = new AptObject(this);
@@ -283,15 +428,34 @@ namespace AptitudeEngine
             return go;
         }
 
+        /// <summary>
+        /// Find the <see cref="AptObject"/> by it's Guid.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         public AptObject FindObjectByGuid(string guid)
             => objectTable.TryGetValue(guid, out var go) ? go : null;
 
+        /// <summary>
+        /// Find the <see cref="AptObject"/> by it's name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public AptObject FindObjectWithName(string name)
             => objectTable.Values.FirstOrDefault(go => name.Equals(go.Name));
 
+        /// <summary>
+        /// Find the <see cref="AptObject"/>s by their name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public AptObject[] FindObjectsWithName(string name)
             => objectTable.Values.Where(go => name.Equals(go.Name)).ToArray();
 
+        /// <summary>
+        /// Add an AptObject to the base of the hierarchy.
+        /// </summary>
+        /// <param name="obj"></param>
         public void AddToHierarchyRoot(AptObject obj)
         {
             if (obj == null)
@@ -307,12 +471,19 @@ namespace AptitudeEngine
             hierarchy.Add(obj);
         }
 
+        /// <summary>
+        /// Dispose the context.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Dispose the context.
+        /// </summary>
+        /// <param name="disposing"></param>
         private void Dispose(bool disposing)
         {
             if (Disposed)
@@ -353,13 +524,15 @@ namespace AptitudeEngine
 
         ~AptContext()
             => Dispose(false);
+        
+        //Event Handlers
 
         public event EventHandler<EventArgs> Load
         {
             add => gameWindow.Load += value;
             remove => gameWindow.Load -= value;
         }
-
+        
         public event EventHandler<FrameEventArgs> PreRenderFrame;
 
         public event EventHandler<FrameEventArgs> RenderFrame;
