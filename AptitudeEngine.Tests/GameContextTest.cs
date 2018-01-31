@@ -6,8 +6,7 @@ using AptitudeEngine.Components.Flairs;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Logger;
-using AptitudeEngine.Events;
-using System.Threading;
+using AptitudeEngine.Components.Input;
 
 namespace AptitudeEngine.Tests
 {
@@ -43,18 +42,22 @@ namespace AptitudeEngine.Tests
             camera.Owner.AddComponent<MoveController>();
             camera.Owner.Transform.Size = new Vector2(2, 2);
             camera.Owner.Transform.Position = new Vector2(0, 0);
-            camera.Move(0f, 0f);
+            camera.ArrowMovement = true;
 
             var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
-            someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/arrow.png");
+            someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/testingImage.png");
             someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
+
+            var cursor = context.Instantiate().AddComponent<CursorComponent>();
+            cursor.CursorAsset = Asset.Load<SpriteAsset>("./assets/cursor.png");
+            cursor.Transform.Size = new Vector2(0.075f, 0.075f);
 
             var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
             somePoly.Points = new PolyPoint[3]
             {
-                new PolyPoint(new Vector2(-0.5f, -0.5f), Color.FromArgb(0, 0, 0, 0)),
-                new PolyPoint(new Vector2(0.5f, -0.5f), Color.FromArgb(0, 0, 0, 0)),
-                new PolyPoint(new Vector2(0, 0.5f), Color.Black),
+                new PolyPoint(new Vector2(-0.5f, -0.5f), Color.FromArgb(0,255,0,0)),
+                new PolyPoint(new Vector2(0.5f, -0.5f), Color.FromArgb(128,255,255,255)),
+                new PolyPoint(new Vector2(0, 0.5f), Color.FromArgb(128,0,0,255)),
             };
 
             var someCanvas = context.Instantiate().AddComponent<FlairCanvas>();
@@ -63,7 +66,6 @@ namespace AptitudeEngine.Tests
             someFlair.Owner.SetParent(someCanvas.Owner);
 
             var ctc = somePoly.Owner.AddComponent<CustomTestingComponent>();
-            ctc.c = camera;
 
             for (var i = 0; i < 7; i++)
             {
@@ -100,30 +102,6 @@ namespace AptitudeEngine.Tests
 
     public class CustomTestingComponent : AptComponent
     {
-        public Camera c;
-
-        public override void Render(FrameEventArgs a)
-        {
-            Transform.Position = Context.Input.MouseWorldPosition;
-
-            if (Input.GetKeyDown(InputCode.Right))
-            {
-                c.Move(0.005f, 0f);
-            }
-            if (Input.GetKeyDown(InputCode.Left))
-            {
-                c.Move(-0.005f, 0f);
-            }
-            if (Input.GetKeyDown(InputCode.Up))
-            {
-                c.Move(0f, -0.005f);
-            }
-            if (Input.GetKeyDown(InputCode.Down))
-            {
-                c.Move(0f, 0.005f);
-            }
-        }
-
         public override void MouseDown(InputCode mouseCode) =>
             LoggingHandler.Log("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
 

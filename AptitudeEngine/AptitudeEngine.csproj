@@ -64,6 +64,7 @@
     <Compile Include="ComponentEventChain.cs" />
     <Compile Include="Components\Flairs\Flair.cs" />
     <Compile Include="Components\Flairs\FlairCanvas.cs" />
+    <Compile Include="Components\Input\CursorComponent.cs" />
     <Compile Include="Components\Visuals\PolyRenderer.cs" />
     <Compile Include="Components\Tiling\TileScreen.cs" />
     <Compile Include="DisplayDevice.cs" />
