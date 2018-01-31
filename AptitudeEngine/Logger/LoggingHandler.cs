@@ -3,12 +3,13 @@ using System.Diagnostics;
 using System;
 using System.IO;
 using System.Text;
+using AptitudeEngine;
 
 namespace AptitudeEngine.Logger
 {
     public static class LoggingHandler
     {
-        public static List<LogMessage> Messages { get; private set; }
+        private static List<LogMessage> Messages { get; set; }
         public static List<LogMessageType> ConsoleLogBlacklist { get; set; }
         public static string CurrentlyWritingLogFile = "";
         private static bool Ready = false;
@@ -38,6 +39,8 @@ namespace AptitudeEngine.Logger
             InternalLogMessage("LOG FILE STARTING", LogMessageType.Info);
         }
 
+        public static List<LogMessage> GetLogMessages() => Messages.GetRange(0, Messages.Count);
+
         internal static void InternalLogMessage(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
         
         public static void LogMessage(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Game);
@@ -48,6 +51,8 @@ namespace AptitudeEngine.Logger
             {
                 
             }
+
+            Ready = false;
 
             var trace = new StackTrace(2, true);
             var frame = new StackFrame(2, true);
@@ -64,7 +69,7 @@ namespace AptitudeEngine.Logger
             var finalOutFile = finalOutConsole + content.ToString() + "\n";
 
             var info = new UTF8Encoding(true).GetBytes(finalOutFile);
-            LogFileStream.Write(info, 0, info.Length);
+            LogFileStream.WriteAsync(info, 0, info.Length);
             LogFileStream.FlushAsync();
 
             if (!ConsoleLogBlacklist.Contains(type))
@@ -100,6 +105,8 @@ namespace AptitudeEngine.Logger
                 Console.ForegroundColor = foreColor;
                 Console.Write(" " + content.ToString() + "\n");
             }
+
+            Ready = true;
         }
     }
 }
