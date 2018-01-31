@@ -32,6 +32,7 @@ namespace AptitudeEngine.Logger
 
             LogFileStream = File.Create(CurrentlyWritingLogFile);
             Messages = new List<LogMessage>();
+            ConsoleLogBlacklist = new List<LogMessageType>();
 
             Ready = true;
             InternalLogMessage("LOG FILE STARTING", LogMessageType.Info);
@@ -65,13 +66,15 @@ namespace AptitudeEngine.Logger
             var info = new UTF8Encoding(true).GetBytes(finalOutFile);
             LogFileStream.Write(info, 0, info.Length);
 
-
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(finalOutConsole);
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(" " + content.ToString() + "\n");
+            if (!ConsoleLogBlacklist.Contains(type))
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(finalOutConsole);
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(" " + content.ToString() + "\n");
+            }
         }
     }
 }
