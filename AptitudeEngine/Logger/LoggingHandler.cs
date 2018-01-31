@@ -39,7 +39,7 @@ namespace AptitudeEngine.Logger
             InternalLogMessage("LOG FILE STARTING", LogMessageType.Info);
         }
 
-        public static List<LogMessage> GetLogMessages() => Messages.GetRange(0, Messages.Count);
+        public static LogMessage[] LogMessages => Messages.ToArray();
 
         internal static void InternalLogMessage(object content, LogMessageType type) => _LogMessage(content, type, LogMessageSource.Engine);
         
