@@ -56,7 +56,7 @@ namespace AptitudeEngine.Logger
             
             Messages.Add(tpFinal);
 
-            var finalOutConsole = "[" + timeSent.ToString() + "]:" +
+            var finalOutConsole = "[" + timeSent.ToString() + "]{" + source + "}:" +
                 frame.GetFileLineNumber() +
                 ": " + frame.GetMethod().ReflectedType.Name + "." + frame.GetMethod().Name +
                 " >>";
