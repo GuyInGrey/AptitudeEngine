@@ -5,6 +5,7 @@ using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.Components.Flairs;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
+using AptitudeEngine.Logger;
 
 namespace AptitudeEngine.Tests
 {
@@ -59,6 +60,11 @@ namespace AptitudeEngine.Tests
             someFlair.Owner.SetParent(someCanvas.Owner);
 
             camera.Owner.AddComponent<CustomTestingComponent>();
+
+            for (var i = 0; i < 7; i++)
+            {
+                LoggingHandler.LogMessage("TESTING COLORING: " + (LogMessageType)i, (LogMessageType)i);
+            }
         }
 
         public AptRectangle Rec(float x, float y, float width, float height) =>
@@ -91,12 +97,12 @@ namespace AptitudeEngine.Tests
     public class CustomTestingComponent : AptComponent
     {
         public override void MouseDown(InputCode mouseCode) =>
-            Console.WriteLine("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString());
+            LoggingHandler.LogMessage("CustomTestingComponent: MouseDown, Button " + mouseCode.ToString(), LogMessageType.Info);
 
         public override void MouseUp(InputCode mouseCode) =>
-            Console.WriteLine("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString());
+            LoggingHandler.LogMessage("CustomTestingComponent: MouseUp, Button " + mouseCode.ToString(), LogMessageType.Info);
 
         public override void MouseClick(InputCode mouseCode) =>
-            Console.WriteLine("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString());
+            LoggingHandler.LogMessage("CustomTestingComponent: MouseClick, Button " + mouseCode.ToString(), LogMessageType.Info);
     }
 }

@@ -56,23 +56,48 @@ namespace AptitudeEngine.Logger
             
             Messages.Add(tpFinal);
 
-            var finalOutConsole = "[" + timeSent.ToString() + "]{" + source + "}:" +
+            var finalOutConsole = "[" + timeSent.ToString() + "]{" + source + "}{" + type + "}:" +
                 frame.GetFileLineNumber() +
-                ": " + frame.GetMethod().ReflectedType.Name + "." + frame.GetMethod().Name +
+                ": " + frame.GetMethod().ReflectedType.Name + "." + frame.GetMethod().Name + "()" +
                 " >>";
 
-            var finalOutFile = finalOutConsole + content.ToString();
+            var finalOutFile = finalOutConsole + content.ToString() + "\n";
 
             var info = new UTF8Encoding(true).GetBytes(finalOutFile);
             LogFileStream.Write(info, 0, info.Length);
+            LogFileStream.FlushAsync();
 
             if (!ConsoleLogBlacklist.Contains(type))
             {
+                var foreColor = ConsoleColor.White;
+
+                switch (type)
+                {
+                    case (LogMessageType)1:
+                        foreColor = ConsoleColor.Cyan;
+                        break;
+                    case (LogMessageType)2:
+                        foreColor = ConsoleColor.Green;
+                        break;
+                    case (LogMessageType)3:
+                        foreColor = ConsoleColor.DarkYellow;
+                        break;
+                    case (LogMessageType)4:
+                        foreColor = ConsoleColor.Yellow;
+                        break;
+                    case (LogMessageType)5:
+                        foreColor = ConsoleColor.Red;
+                        break;
+                    case (LogMessageType)6:
+                        foreColor = ConsoleColor.Magenta;
+                        break;
+                }
+
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = foreColor;
                 Console.Write(finalOutConsole);
                 Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = foreColor;
                 Console.Write(" " + content.ToString() + "\n");
             }
         }
