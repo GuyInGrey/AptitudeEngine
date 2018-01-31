@@ -11,7 +11,7 @@ namespace AptitudeEngine.Tests
             var latestState = Input.GetKeyState(InputCode.A);
             if (keyState != null && keyState.Value != latestState)
             {
-                Logger.Log<InputWriter>(latestState.ToString());
+
             }
 
             keyState = latestState;

@@ -6,10 +6,9 @@ using System.ComponentModel;
 using OpenTK.Graphics.OpenGL;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
-using AptitudeEngine.Logging.Formatters;
-using AptitudeEngine.Logging.Handlers;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Logger;
 
 namespace AptitudeEngine
 {
@@ -97,10 +96,8 @@ namespace AptitudeEngine
             DisplayIndex display = DisplayIndex.Primary
         )
         {
-            Logger.LoggerHandlerManager
-                .AddHandler(new ConsoleLoggerHandler(new DefaultLoggerFormatter()));
+            LoggingHandler.Boot();
 
-            Logger.Log<AptContext>("Setting up OpenTK Context and GameWindow.");
             gameWindow = new OpenTK.GameWindow(
                 width,
                 height,
@@ -133,8 +130,7 @@ namespace AptitudeEngine
             hierarchy = new List<AptObject>();
             toBeInitialized = new List<AptObject>();
             objectTable = new Dictionary<string, AptObject>();
-
-            Logger.Log<AptContext>("Setting up input handling.");
+            
             Input = new AptInput(this);
         }
 
