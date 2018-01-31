@@ -9,6 +9,8 @@ namespace AptitudeEngine.Components.Input
     {
         public SpriteAsset CursorAsset { get; set; }
 
+        public override void Awake() => Context.ShowCursor = false;
+
         public override void Render(FrameEventArgs a)
         {
             Transform.Position = Context.Input.MouseWorldPosition;
