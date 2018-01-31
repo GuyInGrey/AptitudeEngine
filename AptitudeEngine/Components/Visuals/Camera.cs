@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using AptitudeEngine.Enums;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine.Components.Visuals
@@ -6,6 +7,8 @@ namespace AptitudeEngine.Components.Visuals
     public class Camera : AptComponent
     {
         private Matrix4 projection;
+        public bool ArrowMovement { get; set; }
+        public float ArrowMovementSpeed { get; set; } = 5f;
 
         public void SetPosition(Vector2 pos) =>
             SetPosition(pos.X, pos.Y);
@@ -30,6 +33,29 @@ namespace AptitudeEngine.Components.Visuals
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
             GL.Translate(Transform.Position);
+        }
+
+        public override void Render(Events.FrameEventArgs a)
+        {
+            if (ArrowMovement)
+            {
+                if (Input.GetKeyDown(InputCode.Right))
+                {
+                    Move(0.001f * ArrowMovementSpeed, 0f);
+                }
+                if (Input.GetKeyDown(InputCode.Left))
+                {
+                    Move(-0.001f * ArrowMovementSpeed, 0f);
+                }
+                if (Input.GetKeyDown(InputCode.Up))
+                {
+                    Move(0f, -0.001f * ArrowMovementSpeed);
+                }
+                if (Input.GetKeyDown(InputCode.Down))
+                {
+                    Move(0f, 0.001f * ArrowMovementSpeed);
+                }
+            }
         }
 
         public void SetAsMain()
