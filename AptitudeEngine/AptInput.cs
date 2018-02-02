@@ -158,7 +158,10 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                i.MouseDown(key);
+                if (i.Transform.ContainsPoint(MouseWorldPosition))
+                {
+                    i.MouseDown(e);
+                }
             });
         }
 
@@ -172,7 +175,7 @@ namespace AptitudeEngine
                 var a = DateTime.Now - downTime;
                 if (a.TotalMilliseconds < 750)
                 {
-                    Context_MouseClick(key);
+                    Context_MouseClick(e);
                 }
             }
 
@@ -185,15 +188,21 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                i.MouseUp(key);
+                if (i.Transform.ContainsPoint(MouseWorldPosition))
+                {
+                    i.MouseUp(e);
+                }
             });
         }
 
-        private void Context_MouseClick(InputCode i) =>
+        private void Context_MouseClick(MouseButtonEventArgs i) =>
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject b)
             {
-                b.MouseClick(i);
+                if (b.Transform.ContainsPoint(MouseWorldPosition))
+                {
+                    b.MouseClick(i);
+                }
             });
 
         /// <summary>

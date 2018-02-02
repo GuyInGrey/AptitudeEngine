@@ -299,7 +299,7 @@ namespace AptitudeEngine
                 }
             });
 
-        public override void MouseDown(InputCode mouseCode)
+        public override void MouseDown(MouseButtonEventArgs mouseCode)
         =>
             IterateComponents(component =>
             {
@@ -309,7 +309,7 @@ namespace AptitudeEngine
                 }
             });
 
-        public override void MouseUp(InputCode mouseCode)
+        public override void MouseUp(MouseButtonEventArgs mouseCode)
         =>
             IterateComponents(component =>
             {
@@ -319,7 +319,7 @@ namespace AptitudeEngine
                 }
             });
 
-        public override void MouseClick(InputCode mouseCode)
+        public override void MouseClick(MouseButtonEventArgs mouseCode)
         =>
             IterateComponents(component =>
             {

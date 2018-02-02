@@ -48,18 +48,18 @@ namespace AptitudeEngine
         /// <summary>
         /// Called when a mouse button goes down over the transform of the <see cref="AptComponent.Owner"/>.
         /// </summary>
-        /// <param name="mouseCode">The MouseButton that went down.</param>
-        public virtual void MouseDown(InputCode mouseCode) { }
+        /// <param name="e">The MouseButton that went down.</param>
+        public virtual void MouseDown(MouseButtonEventArgs e) { }
         /// <summary>
         /// Called when a mouse button goes up over the transform of the <see cref="AptComponent.Owner"/>.
         /// </summary>
-        /// <param name="mouseCode">The MouseButton that went up.</param>
-        public virtual void MouseUp(InputCode mouseCode) { }
+        /// <param name="e">The MouseButton that went up.</param>
+        public virtual void MouseUp(MouseButtonEventArgs e) { }
         /// <summary>
         /// Called when a mouse button clicks over the transform of the <see cref="AptComponent.Owner"/>. Clicking is when the mouse goes down and up again within 750 milliseconds.
         /// </summary>
-        /// <param name="mouseCode">The mouse button that clicked.</param>
-        public virtual void MouseClick(InputCode mouseCode) { }
+        /// <param name="e">The mouse button that clicked.</param>
+        public virtual void MouseClick(MouseButtonEventArgs e) { }
         public bool MouseStateDown { get; private set; }
 
         internal void InternalAwake()
@@ -78,16 +78,16 @@ namespace AptitudeEngine
         internal void InternalPreRender(FrameEventArgs a) => PreRender(a);
         internal void InternalRender(FrameEventArgs a) => Render(a);
         internal void InternalPostRender(FrameEventArgs a) => PostRender(a);
-        internal void InternalMouseDown(InputCode mouseCode)
+        internal void InternalMouseDown(MouseButtonEventArgs e)
         {
             MouseStateDown = true;
-            MouseDown(mouseCode);
+            MouseDown(e);
         }
-        internal void InternalMouseUp(InputCode mouseCode)
+        internal void InternalMouseUp(MouseButtonEventArgs e)
         {
             MouseStateDown = false;
-            MouseUp(mouseCode);
+            MouseUp(e);
         }
-        internal void InternalMouseClick(InputCode mouseCode) => MouseClick(mouseCode);
+        internal void InternalMouseClick(MouseButtonEventArgs e) => MouseClick(e);
     }
 }

@@ -71,5 +71,8 @@ namespace AptitudeEngine.CoordinateSystem
         public void Rotate(float degrees)
             // lmao p simple right
             => Rotation += degrees;
+
+        public bool ContainsPoint(Vector2 p) =>
+            p.X > Position.X && p.Y > Position.Y && p.X < Position.X + Size.X && p.Y < Position.Y + Size.Y;
     }
 }
