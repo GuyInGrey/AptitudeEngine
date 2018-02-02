@@ -4,9 +4,7 @@ using AptitudeEngine.Assets;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.Components.Flairs;
 using AptitudeEngine.CoordinateSystem;
-using AptitudeEngine.Enums;
 using AptitudeEngine.Logger;
-using AptitudeEngine.Components.Input;
 using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Tests
@@ -51,10 +49,6 @@ namespace AptitudeEngine.Tests
             var someSprite = context.Instantiate().AddComponent<SpriteRenderer>();
             someSprite.Sprite = Asset.Load<SpriteAsset>("./assets/testingImage.png");
             someSprite.Transform.Position = new Vector2(-0.5f, -0.5f);
-
-            //var cursor = context.Instantiate().AddComponent<CursorComponent>();
-            //cursor.CursorAsset = Asset.Load<SpriteAsset>("./assets/cursor.png");
-            //cursor.Transform.Size = new Vector2(0.075f, 0.075f);
 
             var somePoly = context.Instantiate().AddComponent<PolyRenderer>();
             somePoly.Points = new PolyPoint[3]
