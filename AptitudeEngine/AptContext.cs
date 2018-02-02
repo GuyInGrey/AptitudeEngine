@@ -100,6 +100,59 @@ namespace AptitudeEngine
             set => GL.ClearColor(value);
         }
 
+        private bool _CustomCursor = false;
+        public bool CustomCursor
+        {
+            get => _CustomCursor;
+            set
+            {
+                _CustomCursor = value;
+
+                if (value)
+                {
+                    Bitmap b;
+
+                    try
+                    {
+                        b = new Bitmap(CustomCursorPath);
+                    }
+                    catch
+                    {
+                        _CustomCursor = false;
+                        return;
+                    }
+
+                    var size = b.Size;
+                    var bytes = new byte[size.Width * size.Height * 4];
+
+                    var index = 0;
+                    for (var y = 0; y < size.Height; y++)
+                    {
+                        for (var x = 0; x < size.Width; x++)
+                        {
+                            var c = b.GetPixel(x,y);
+                            bytes[index] = (byte)c.B;
+                            index++;
+                            bytes[index] = (byte)c.G;
+                            index++;
+                            bytes[index] = (byte)c.R;
+                            index++;
+                            bytes[index] = (byte)c.A;
+                            index++;
+                        }
+                    }
+
+                    gameWindow.Cursor = new OpenTK.MouseCursor(0, 0, size.Width, size.Height, bytes);
+                }
+                else
+                {
+                    gameWindow.Cursor = OpenTK.MouseCursor.Default;
+                }
+            }
+        }
+
+        public string CustomCursorPath { get; set; }
+
         #region Constructors
 
         /// <summary>
