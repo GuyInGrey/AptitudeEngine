@@ -169,5 +169,7 @@ namespace AptitudeEngine.CoordinateSystem
 
         public static implicit operator OpenTK.Vector3(Vector2 vec)
             => new OpenTK.Vector3(vec.X, vec.Y, 0f);
+
+        public override string ToString() => "(" + X + "," + Y + ")";
     }
 }
