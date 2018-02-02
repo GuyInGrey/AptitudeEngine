@@ -48,27 +48,19 @@ namespace AptitudeEngine.Components.Flairs
         public Color BackColor { get; set; }
         public Color ForeColor { get; set; }
         public AptRectangle Bounds => new AptRectangle(Position, Size);
-        public SpriteAsset BackImage { get; set; }
         public bool DefaultDraw { get; set; } = true;
 
         public override void Render(FrameEventArgs a)
         {
             if (DefaultDraw)
             {
-                if (BackImage == null)
+                ScreenHandler.Poly(new PolyPoint[]
                 {
-                    ScreenHandler.Poly(new PolyPoint[]
-                    {
-                        new PolyPoint(Position + GetCanvas()?.Transform.Position, BackColor),
-                        new PolyPoint(new Vector2(Position.X + Size.X, Position.Y) + GetCanvas()?.Transform.Position, BackColor),
-                        new PolyPoint(Position + Size + GetCanvas()?.Transform.Position, BackColor),
-                        new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y) + GetCanvas()?.Transform.Position, BackColor),
-                    }, Transform);
-                }
-                else
-                {
-                    ScreenHandler.Tex(BackImage.Texture, Transform.Bounds, BackImage.Frame);
-                }
+                    new PolyPoint(Position + GetCanvas()?.Transform.Position, BackColor),
+                    new PolyPoint(new Vector2(Position.X + Size.X, Position.Y) + GetCanvas()?.Transform.Position, BackColor),
+                    new PolyPoint(Position + Size + GetCanvas()?.Transform.Position, BackColor),
+                    new PolyPoint(new Vector2(Position.X, Position.Y + Size.Y) + GetCanvas()?.Transform.Position, BackColor),
+                }, Transform);
             }
 
             FRender?.Invoke(this, a);

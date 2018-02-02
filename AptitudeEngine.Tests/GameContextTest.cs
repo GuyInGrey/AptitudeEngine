@@ -64,6 +64,13 @@ namespace AptitudeEngine.Tests
             someFlair.Transform.Size = new Vector2(0.25f, 0.25f);
             someFlair.Owner.SetParent(someCanvas.Owner);
             someFlair.FMouseClick += ButtonPressed;
+            someFlair.DefaultDraw = false;
+
+            var flairSpriteRenderer = someFlair.Owner.AddComponent<SpriteRenderer>();
+            flairSpriteRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/deer.png");
+            var flairSpriteAnimator = someFlair.Owner.AddComponent<SpriteAnimator>();
+            var animation = Animation.EasyMake(4, 2, 1f, 1f, 8);
+            flairSpriteAnimator.Animation = animation;
 
             var ctc = somePoly.Owner.AddComponent<CustomTestingComponent>();
 

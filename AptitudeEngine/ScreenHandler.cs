@@ -36,8 +36,8 @@ namespace AptitudeEngine
 
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, tex.ID);
-            GL.Color3(System.Drawing.Color.White);
-            GL.Begin(PrimitiveType.Polygon);
+            GL.Color3(System.Drawing.Color.Transparent);
+            GL.Begin(PrimitiveType.Quads);
 
             for (var i = 0; i < 4; i++)
             {

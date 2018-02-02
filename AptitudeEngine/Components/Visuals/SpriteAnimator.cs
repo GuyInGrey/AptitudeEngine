@@ -21,7 +21,7 @@ namespace AptitudeEngine.Components.Visuals
                 return;
             }
 
-            if (Animation.Frames == null || Animation.Frames.Count == 0)
+            if (Animation.Frames == null || Animation.Frames.Length == 0)
             {
                 return;
             }
@@ -34,7 +34,7 @@ namespace AptitudeEngine.Components.Visuals
                 timeSinceLastAnimationFrame = 0;
             }
 
-            if (frameIndex >= Animation.Frames.Count)
+            if (frameIndex >= Animation.Frames.Length)
             {
                 frameIndex = 0;
             }

@@ -27,11 +27,11 @@ namespace AptitudeEngine.Components.Tiling
             var renderer = tileObject.AddComponent<SpriteRenderer>();
             var animator = tileObject.AddComponent<SpriteAnimator>();
             renderer.Sprite = Asset.Load<SpriteAsset>(tilePath);
-            animator.Animation = new Animation
-            {
-                FrameRate = frameRate,
-                Frames = frames,
-            };
+            //animator.Animation = new Animation
+            //{
+            //    FrameRate = frameRate,
+            //    Frames = frames,
+            //};
 
             var tileObjectIndex =
                 new List<AptObject>(Owner.Children).FindIndex(a => a.GetHashCode() == tileObject.GetHashCode());
