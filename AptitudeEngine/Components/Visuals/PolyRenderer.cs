@@ -6,6 +6,6 @@ namespace AptitudeEngine.Components.Visuals
     public class PolyRenderer : AptComponent
     {
         public PolyPoint[] Points;
-        public override void Render(FrameEventArgs a) => ScreenHandler.Poly(Points, Transform);
+        public override void Render(FrameEventArgs a) => ScreenHandler.Poly(Points, owner);
     }
 }
