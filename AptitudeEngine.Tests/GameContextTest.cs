@@ -88,7 +88,7 @@ namespace AptitudeEngine.Tests
         {
             if (Input.GetKeyDown(ForwardCode))
             {
-                Transform.Position = Transform.Position.Move(Transform.Rotation - 90, Speed);
+                Transform.Position = Transform.Position.Move(Transform.Rotation, Speed);
             }
             if (Input.GetKeyDown(RightCode))
             {
@@ -100,7 +100,7 @@ namespace AptitudeEngine.Tests
             }
             if (Input.GetKeyDown(InputCode.Down))
             {
-                Transform.Position = Transform.Position.Move(Transform.Rotation - 90, -Speed);
+                Transform.Position = Transform.Position.Move(Transform.Rotation, -Speed);
             }
         }
     }
