@@ -7,13 +7,31 @@ namespace AptitudeEngine.Components.Flairs
 {
     public class FButton : AptComponent
     {
+        /// <summary>
+        /// Occurs when the object is clicked. A click is defined as Up and Down within 750 milliseconds.
+        /// </summary>
         public event EventHandler<MouseButtonEventArgs> Click;
+
+        /// <summary>
+        /// Occurs when the object has the mouse go up over it.
+        /// </summary>
         public event EventHandler<MouseButtonEventArgs> Up;
+
+        /// <summary>
+        /// Occurs when the object has the mouse go down over it.
+        /// </summary>
         public event EventHandler<MouseButtonEventArgs> Down;
 
+        /// <summary>
+        /// The color that is normally drawn to the background of the object.
+        /// </summary>
         public Color BackColor { get; set; } = Color.AliceBlue;
-        public Color MouseDownBackColor { get; set; } = Color.Gray;
 
+        /// <summary>
+        /// The color that is drawn to the background of the object when the mouse is down over the object.
+        /// </summary>
+        public Color MouseDownBackColor { get; set; } = Color.Gray;
+        
         public override void Render(FrameEventArgs a)
         {
             var c = BackColor;
@@ -23,11 +41,11 @@ namespace AptitudeEngine.Components.Flairs
                 c = MouseDownBackColor;
             }
 
-            ScreenHandler.Poly(new PolyPoint[] {
-                new PolyPoint(Vector2.Zero, c),
-                new PolyPoint(new Vector2(Transform.Size.X, 0), c),
-                new PolyPoint(new Vector2(Transform.Size.X, Transform.Size.Y), c),
-                new PolyPoint(new Vector2(0, Transform.Size.Y), c),
+            ScreenHandler.Poly(new PolyVector[] {
+                new PolyVector(Vector2.Zero, c),
+                new PolyVector(new Vector2(Transform.Size.X, 0), c),
+                new PolyVector(new Vector2(Transform.Size.X, Transform.Size.Y), c),
+                new PolyVector(new Vector2(0, Transform.Size.Y), c),
             }, owner);
 
             ScreenHandler.Lines(new Vector2[] {

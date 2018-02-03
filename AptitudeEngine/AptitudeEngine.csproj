@@ -65,7 +65,6 @@
     <Compile Include="Components\Flairs\FButton.cs" />
     <Compile Include="Components\Flairs\FPanel.cs" />
     <Compile Include="Components\Visuals\PolyRenderer.cs" />
-    <Compile Include="Components\Tiling\TileScreen.cs" />
     <Compile Include="DisplayDevice.cs" />
     <Compile Include="Enums\GameWindowFlags.cs" />
     <Compile Include="Enums\InputCode.cs" />

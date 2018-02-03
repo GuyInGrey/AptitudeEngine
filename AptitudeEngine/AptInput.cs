@@ -47,8 +47,8 @@ namespace AptitudeEngine
             var mouseXPercent = e.X / context.WindowPixelSize.X;
             var mouseYPercent = e.Y / context.WindowPixelSize.Y;
 
-            MouseWorldPosition = new Vector2((mouseXPercent - 0.5f) + context.MainCamera.Transform.Position.X,
-                (mouseYPercent - 0.5f) + context.MainCamera.Transform.Position.Y);
+            MouseWorldPosition = new Vector2((mouseXPercent - 0.5f) + context.ActiveCamera.Transform.Position.X,
+                (mouseYPercent - 0.5f) + context.ActiveCamera.Transform.Position.Y);
             MouseScreenPosition = new Vector2((mouseXPercent - 0.5f), (mouseYPercent - 0.5f));
         }
 

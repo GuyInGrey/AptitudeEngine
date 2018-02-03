@@ -41,8 +41,7 @@ namespace AptitudeEngine.Tests
             context.CustomCursor = true;
 
             var camera = context.Instantiate().AddComponent<Camera>();
-            camera.SetAsMain();
-            camera.Owner.AddComponent<MoveController>();
+            camera.SetAsActive();
             camera.SetPosition(new Vector2(0.5f, 0.5f));
 
             var buttonObject = context.Instantiate();

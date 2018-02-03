@@ -11,7 +11,7 @@ namespace AptitudeEngine
         /// Draws the specified selected points.
         /// </summary>
         /// <param name="SelectedPoints">The selected points.</param>
-        public static void Poly(PolyPoint[] SelectedPoints, AptObject o)
+        public static void Poly(PolyVector[] SelectedPoints, AptObject o)
         {
             if (SelectedPoints == null)
             {
@@ -38,7 +38,7 @@ namespace AptitudeEngine
             
             for (var i = 0; i < posVectors.Length; i++)
             {
-                posVectors[i] = posVectors[i].Rotate(new Vector2(o.Transform.Position.X + (o.Transform.Size.X / 2), o.Transform.Position.Y + (o.Transform.Size.Y / 2)), o.Transform.Rotation);
+                posVectors[i] = posVectors[i].Rotate(new Vector2(o.Transform.Position.X + (o.Transform.Size.X / 2), o.Transform.Position.Y + (o.Transform.Size.Y / 2)), o.Transform.RotationRadians);
             }
 
             var toAdd = o.TotalPosition;

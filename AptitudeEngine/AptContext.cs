@@ -52,7 +52,7 @@ namespace AptitudeEngine
         /// <summary>
         /// The currently active <see cref="Camera"/> in the context.
         /// </summary>
-        public Camera MainCamera { get; internal set; }
+        public Camera ActiveCamera { get; internal set; }
 
         /// <summary>
         /// Whether the context has been disposed or not.
@@ -567,7 +567,7 @@ namespace AptitudeEngine
             // dispose unmanaged resources
 
             // set references to null
-            MainCamera = null;
+            ActiveCamera = null;
             objectTable = null;
             hierarchy = null;
             toBeInitialized = null;

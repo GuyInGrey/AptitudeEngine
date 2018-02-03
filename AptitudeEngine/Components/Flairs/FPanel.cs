@@ -11,15 +11,18 @@ namespace AptitudeEngine.Components.Flairs
 {
     public class FPanel : AptComponent
     {
+        /// <summary>
+        /// The color that is drawn to the background of the image.
+        /// </summary>
         public Color BackColor { get; set; } = Color.LightGray;
 
         public override void Render(FrameEventArgs a)
         {
-            ScreenHandler.Poly(new PolyPoint[] {
-                new PolyPoint(Vector2.Zero, BackColor),
-                new PolyPoint(new Vector2(Transform.Size.X, 0), BackColor),
-                new PolyPoint(new Vector2(Transform.Size.X, Transform.Size.Y), BackColor),
-                new PolyPoint(new Vector2(0, Transform.Size.Y), BackColor),
+            ScreenHandler.Poly(new PolyVector[] {
+                new PolyVector(Vector2.Zero, BackColor),
+                new PolyVector(new Vector2(Transform.Size.X, 0), BackColor),
+                new PolyVector(new Vector2(Transform.Size.X, Transform.Size.Y), BackColor),
+                new PolyVector(new Vector2(0, Transform.Size.Y), BackColor),
             }, owner);
 
             ScreenHandler.Lines(new Vector2[] {

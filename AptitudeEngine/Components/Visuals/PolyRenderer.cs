@@ -5,7 +5,11 @@ namespace AptitudeEngine.Components.Visuals
 {
     public class PolyRenderer : AptComponent
     {
-        public PolyPoint[] Points;
-        public override void Render(FrameEventArgs a) => ScreenHandler.Poly(Points, owner);
+        /// <summary>
+        /// The vertices to draw the polygon at.
+        /// </summary>
+        public PolyVector[] Vertices;
+
+        public override void Render(FrameEventArgs a) => ScreenHandler.Poly(Vertices, owner);
     }
 }

@@ -143,9 +143,8 @@ namespace AptitudeEngine.CoordinateSystem
             return vec;
         }
 
-        public Vector2 Rotate(Vector2 centerPoint, float angleInDegrees)
+        public Vector2 Rotate(Vector2 centerPoint, float angleInRadians)
         {
-            var angleInRadians = angleInDegrees * (Math.PI / 180);
             var cosTheta = Math.Cos(angleInRadians);
             var sinTheta = Math.Sin(angleInRadians);
 
