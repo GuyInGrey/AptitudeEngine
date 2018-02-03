@@ -43,7 +43,7 @@ namespace AptitudeEngine.Tests
             var camera = context.Instantiate().AddComponent<Camera>();
             camera.SetAsMain();
             camera.Owner.AddComponent<MoveController>();
-            camera.Move(new Vector2(0.5f, 0.5f));
+            camera.SetPosition(new Vector2(0.5f, 0.5f));
 
             var buttonObject = context.Instantiate();
             buttonObject.Transform.Size = new Vector2(0.25f, 0.25f);
@@ -62,6 +62,13 @@ namespace AptitudeEngine.Tests
             renderer.Sprite = Asset.Load<SpriteAsset>("./assets/starDestroyer.png");
             destroyerObject.Transform.Size = new Vector2(1f, 1f);
             var movement = destroyerObject.AddComponent<DestroyerMovement>();
+
+            var fireObject = context.Instantiate();
+            fireObject.Transform.Size = new Vector2(0.2f,0.4f);
+            var fireRenderer = fireObject.AddComponent<SpriteRenderer>();
+            fireRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/fire.png");
+            var fireAnimator = fireObject.AddComponent<SpriteAnimator>();
+            fireAnimator.Animation = Animation.EasyMake(8, 4, 1, 1, 30);
         }
 
         private void Button_Click(object sender, MouseButtonEventArgs e) => LoggingHandler.Log("Button Clicked!", LogMessageType.Fine);
