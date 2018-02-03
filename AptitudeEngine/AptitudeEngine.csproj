@@ -85,7 +85,7 @@
     <Compile Include="Logger\LogMessageSource.cs" />
     <Compile Include="Logger\LogMessageType.cs" />
     <Compile Include="OrderedHashSet.cs" />
-    <Compile Include="CoordinateSystem\PolyPoint.cs" />
+    <Compile Include="CoordinateSystem\PolyVector.cs" />
     <Compile Include="ScreenHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Texture2D.cs" />
