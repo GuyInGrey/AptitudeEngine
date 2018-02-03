@@ -158,7 +158,9 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                if (i.Transform.ContainsPoint(MouseWorldPosition))
+                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+
+                if (rec.ContainsVector(MouseWorldPosition))
                 {
                     i.MouseDown(e);
                 }
@@ -188,20 +190,24 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                if (i.Transform.ContainsPoint(MouseWorldPosition))
+                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+
+                if (rec.ContainsVector(MouseWorldPosition))
                 {
                     i.MouseUp(e);
                 }
             });
         }
 
-        private void Context_MouseClick(MouseButtonEventArgs i) =>
+        private void Context_MouseClick(MouseButtonEventArgs e) =>
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
-            context.RecurseGameObjects(delegate (AptObject b)
+            context.RecurseGameObjects(delegate (AptObject i)
             {
-                if (b.Transform.ContainsPoint(MouseWorldPosition))
+                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+
+                if (rec.ContainsVector(MouseWorldPosition))
                 {
-                    b.MouseClick(i);
+                    i.MouseClick(e);
                 }
             });
 

@@ -6,6 +6,7 @@ using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Logger;
 using AptitudeEngine.Events;
 using AptitudeEngine.Enums;
+using AptitudeEngine.Components.Flairs;
 
 namespace AptitudeEngine.Tests
 {
@@ -42,8 +43,19 @@ namespace AptitudeEngine.Tests
             var camera = context.Instantiate().AddComponent<Camera>();
             camera.SetAsMain();
             camera.Owner.AddComponent<MoveController>();
-            camera.Owner.Transform.Size = new Vector2(2, 2);
-            camera.Owner.Transform.Position = new Vector2(0, 0);
+            camera.Move(new Vector2(0.5f, 0.5f));
+
+            var buttonObject = context.Instantiate();
+            buttonObject.Transform.Size = new Vector2(0.25f, 0.25f);
+            buttonObject.Transform.Position = new Vector2(0.05f, 0.05f);
+            var button = buttonObject.AddComponent<FButton>();
+            button.Click += Button_Click;
+
+            var panelObject = context.Instantiate();
+            panelObject.Transform.Size = new Vector2(0.35f, 0.8f);
+            panelObject.Transform.Position = new Vector2(0.05f, 0.05f);
+            var panel = panelObject.AddComponent<FPanel>();
+            panelObject.AddChild(buttonObject);
 
             var destroyerObject = context.Instantiate();
             var renderer = destroyerObject.AddComponent<SpriteRenderer>();
@@ -51,6 +63,8 @@ namespace AptitudeEngine.Tests
             destroyerObject.Transform.Size = new Vector2(1f, 1f);
             var movement = destroyerObject.AddComponent<DestroyerMovement>();
         }
+
+        private void Button_Click(object sender, MouseButtonEventArgs e) => LoggingHandler.Log("Button Clicked!", LogMessageType.Fine);
 
         public void Dispose()
         {

@@ -13,6 +13,9 @@ namespace AptitudeEngine.CoordinateSystem
         public Vector2 Position => new Vector2(X, Y);
         public Vector2 Size => new Vector2(Width, Height);
 
+        public bool ContainsVector(Vector2 p)
+            => p.X > X && p.Y > Y && p.X < X + Width && p.Y < Y + Height;
+
         public AptRectangle(float x, float y, float width, float height)
         {
             X = x;

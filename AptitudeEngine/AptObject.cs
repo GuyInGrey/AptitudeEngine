@@ -197,6 +197,22 @@ namespace AptitudeEngine
         private bool RemoveChildFinal(AptObject ao)
             => children.Remove(ao);
 
+        public Vector2 TotalPosition
+        {
+            get
+            {
+                var toReturn = Vector2.Zero;
+                var o = this;
+
+                while (o != null)
+                {
+                    toReturn += o.Transform.Position;
+                    o = o.Parent;
+                }
+                return toReturn;
+            }
+        }
+
         public T AddComponent<T>() where T : AptComponent, new()
         {
             var comp = new T();
