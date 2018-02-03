@@ -143,6 +143,35 @@ namespace AptitudeEngine.CoordinateSystem
             return vec;
         }
 
+        public Vector2 Rotate(Vector2 centerPoint, float angleInDegrees)
+        {
+            var angleInRadians = angleInDegrees * (Math.PI / 180);
+            var cosTheta = Math.Cos(angleInRadians);
+            var sinTheta = Math.Sin(angleInRadians);
+
+            return new Vector2()
+            {
+                X =
+                    (float)
+                    (cosTheta * (X - centerPoint.X) -
+                    sinTheta * (Y - centerPoint.Y) + centerPoint.X),
+                Y =
+                    (float)
+                    (sinTheta * (X - centerPoint.X) +
+                    cosTheta * (Y - centerPoint.Y) + centerPoint.Y)
+            };
+        }
+
+        public Vector2 Move(double angle, double distance)
+        {
+            angle = angle + 270;
+            var toReturn = Zero;
+            toReturn.X = X + (float)(Math.Cos(angle * Math.PI / 180.0) * distance);
+            toReturn.Y = Y + (float)(Math.Sin(angle * Math.PI / 180.0) * distance);
+
+            return toReturn;
+        }
+
         public static Vector2 operator -(Vector2 left, Vector2 right)
             => new Vector2(left.X - right.X, left.Y - right.Y);
 

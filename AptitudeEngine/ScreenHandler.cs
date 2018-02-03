@@ -1,4 +1,5 @@
 ﻿using AptitudeEngine.CoordinateSystem;
+using AptitudeEngine.Logger;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine
@@ -29,9 +30,15 @@ namespace AptitudeEngine
             GL.End();
         }
 
-        public static void Tex(Texture2D tex, AptRectangle window, AptRectangle frame)
+        public static void Tex(Texture2D tex, Transform t, AptRectangle frame)
         {
-            var posVectors = ConvertRectangle(window);
+            var posVectors = ConvertRectangle(t.Bounds);
+            
+            for (var i = 0; i < posVectors.Length; i++)
+            {
+                posVectors[i] = posVectors[i].Rotate(new Vector2(t.Position.X + (t.Size.X / 2), t.Position.Y + (t.Size.Y / 2)), t.Rotation);
+            }
+            
             var frameVectors = ConvertRectangle(frame);
 
             GL.Enable(EnableCap.Texture2D);
@@ -51,13 +58,10 @@ namespace AptitudeEngine
         /// <summary>
         /// Draws a texture based on a location and size
         /// </summary>
-        /// <param name="tex"></param>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public static void Tex(Texture2D tex, float x, float y, float width, float height)
-            => Tex(tex, new AptRectangle(x, y, width, height), new AptRectangle(0, 0, 1, 1));
+        /// <param name="tex">The <see cref="Texture2D"/> to draw, usually off of a <see cref="Assets.SpriteAsset"/>.</param>
+        /// <param name="t">The <see cref="Transform"/> to draw with.</param>
+        public static void Tex(Texture2D tex, Transform t)
+            => Tex(tex, t, new AptRectangle(0, 0, 1, 1));
 
         /// <summary>
         /// Converts a rectangle into a Vector2 list

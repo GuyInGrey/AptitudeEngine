@@ -8,6 +8,6 @@ namespace AptitudeEngine.Components.Visuals
         public SpriteAsset Sprite { get; set; }
 
         public override void Render(FrameEventArgs a) =>
-            ScreenHandler.Tex(Sprite.Texture, Transform.Bounds, Sprite.Frame);
+            ScreenHandler.Tex(Sprite.Texture, Transform, Sprite.Frame);
     }
 }
