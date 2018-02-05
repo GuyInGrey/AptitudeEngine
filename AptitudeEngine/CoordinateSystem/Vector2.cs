@@ -17,6 +17,12 @@ namespace AptitudeEngine.CoordinateSystem
 
         public Vector2 Normalized => this * (1f / Magnitude);
 
+        public Vector2(float both)
+        {
+            X = both;
+            Y = both;
+        }
+
         public Vector2(float x, float y)
         {
             X = x;

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using AptitudeEngine.Assets;
+using System.Drawing;
+using System.IO;
 
 namespace AptitudeEngine
 {
@@ -20,6 +22,30 @@ namespace AptitudeEngine
                 t.Path = path;
 
                 return t;
+            }
+        }
+
+        public static SpriteAsset LoadText(string s, float fontSize, Color c)
+        {
+            var lineCnt = s.Split('\n').Length;
+
+            var f = new Font(FontFamily.GenericSerif, fontSize, FontStyle.Regular);
+            using (var b = new Bitmap((int)(fontSize * s.Length), ((int)(fontSize + (fontSize / 2))) * lineCnt))
+            {
+                using (var g = Graphics.FromImage(b))
+                {
+                    g.Clear(Color.Transparent);
+
+                    var stringFormat = new StringFormat();
+                    stringFormat.Alignment = StringAlignment.Center;
+
+                    g.DrawString(s, f, new SolidBrush(c), new Rectangle(0,0,b.Width,b.Height), stringFormat);
+                }
+
+                var sa = new SpriteAsset();
+
+                sa.LoadFromBitmap(b);
+                return sa;
             }
         }
     }

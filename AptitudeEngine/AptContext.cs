@@ -9,6 +9,7 @@ using AptitudeEngine.Events;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Logger;
+using IrrKlang;
 
 namespace AptitudeEngine
 {
@@ -43,6 +44,11 @@ namespace AptitudeEngine
         /// The time since the last time the framerate had been updated to the console.
         /// </summary>
         private float timeSinceLastFrameLog;
+
+        /// <summary>
+        /// The sound engine from IrrKlang for the context.
+        /// </summary>
+        public ISoundEngine SoundEngine { get; set; }
 
         /// <summary>
         /// The <see cref="AptInput"/> for the context.
@@ -214,6 +220,8 @@ namespace AptitudeEngine
             LoggingHandler.Boot();
             //Setting WindowPixelSize to the gameWindow width and height.
             WindowPixelSize = new Vector2(width, height);
+            //Create Sound Engine
+            SoundEngine = new ISoundEngine();
 
             //Starting the gameWindow with the parameters.
             gameWindow = new OpenTK.GameWindow(
@@ -390,6 +398,7 @@ namespace AptitudeEngine
             PreRenderFrame?.Invoke(this, e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
             DeltaTime = (float) e.Delta;
             timeSinceLastFrameLog += DeltaTime;
 

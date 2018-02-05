@@ -17,7 +17,7 @@ namespace AptitudeEngine.Components.Visuals
 
         public override void Render(FrameEventArgs a)
         {
-            if (Drawing)
+            if (Drawing && Sprite != null)
             {
                 ScreenHandler.Tex(Sprite.Texture, owner, Sprite.Frame);
             }

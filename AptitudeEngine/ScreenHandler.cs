@@ -1,12 +1,21 @@
 ﻿using AptitudeEngine.CoordinateSystem;
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
+using AptitudeEngine.Logger;
+using System.Collections.Generic;
+using AptitudeEngine.Enums;
 
 namespace AptitudeEngine
 {
     public static class ScreenHandler // The ScreenHandler class is for all GL calls for rendering
     {
+        /// <summary>
+        /// Whether blending is enabled. To set, use <see cref="Blending(bool)"/>.
+        /// </summary>
         public static bool Blend { get; private set; }
+
+        public static List<DebugMode> DebugModes { get; set; } = new List<DebugMode>();
+
         /// <summary>
         /// Draws the specified selected points.
         /// </summary>
@@ -34,14 +43,13 @@ namespace AptitudeEngine
 
         public static void Tex(Texture2D tex, AptObject o, AptRectangle frame)
         {
-            var posVectors = ConvertRectangle(o.Transform.Bounds);
-            
+            var Position = o.TotalPosition;
+            var posVectors = ConvertRectangle(new AptRectangle(Position, o.Transform.Size));
+
             for (var i = 0; i < posVectors.Length; i++)
             {
                 posVectors[i] = posVectors[i].Rotate(new Vector2(o.Transform.Position.X + (o.Transform.Size.X / 2), o.Transform.Position.Y + (o.Transform.Size.Y / 2)), o.Transform.RotationRadians);
             }
-
-            var toAdd = o.TotalPosition;
             
             var frameVectors = ConvertRectangle(frame);
 
@@ -50,13 +58,26 @@ namespace AptitudeEngine
             GL.Color3(Color.Transparent);
             GL.Begin(PrimitiveType.Quads);
 
+
+
             for (var i = 0; i < 4; i++)
             {
                 GL.TexCoord2(frameVectors[i]);
-                GL.Vertex2(posVectors[i] + toAdd);
+                GL.Vertex2(posVectors[i]);
             }
 
             GL.End();
+
+            if (DebugModes.Contains(DebugMode.BorderTextures))
+            {
+                ScreenHandler.Lines(new Vector2[] {
+                    posVectors[0],
+                    posVectors[1],
+                    posVectors[2],
+                    posVectors[3],
+                    posVectors[0],
+                }, 5f, Color.Orange);
+            }
         }
 
         /// <summary>
@@ -80,6 +101,23 @@ namespace AptitudeEngine
             {
                 GL.Vertex2(v[i] + toAdd);
                 GL.Vertex2(v[i + 1] + toAdd);
+            }
+
+            GL.End();
+        }
+
+        private static void Lines(Vector2[] v, float thickness, Color c)
+        {
+            GL.Color3(c);
+            GL.LineWidth(thickness);
+
+            GL.Disable(EnableCap.Texture2D);
+            GL.Begin(PrimitiveType.Lines);
+
+            for (var i = 0; i < v.Length - 1; i++)
+            {
+                GL.Vertex2(v[i]);
+                GL.Vertex2(v[i + 1]);
             }
 
             GL.End();

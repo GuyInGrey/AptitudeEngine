@@ -5,12 +5,15 @@ namespace AptitudeEngine
 {
     public class AptComponent : ComponentEventChain, IDisposable
     {
-
-
         /// <summary>
         /// Global Identification for <see cref="AptComponent"/>
         /// </summary>
         public string Guid { get; }
+
+        /// <summary>
+        /// Tag of the component.
+        /// </summary>
+        public object Tag { get; set; }
 
         /// <summary>
         /// The private owner <see cref="AptObject"/> of the <see cref="AptComponent"/>

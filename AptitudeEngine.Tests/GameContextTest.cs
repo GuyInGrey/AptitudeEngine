@@ -27,7 +27,7 @@ namespace AptitudeEngine.Tests
 
         public void GameTestStart()
         {
-            context = new AptContext("Test Context", 600, 600);
+            context = new AptContext("Test Context", 1000, 1000);
             context.Load += Context_Load;
             context.Begin();
         }
@@ -39,35 +39,50 @@ namespace AptitudeEngine.Tests
 
             context.CustomCursorPath = @"./assets/cursor_small.png";
             context.CustomCursor = true;
-
-            var camera = context.Instantiate().AddComponent<Camera>();
+            
+            var cameraObject = context.Instantiate();
+            cameraObject.Transform.Size = new Vector2(1, 1);
+            var camera = cameraObject.AddComponent<Camera>();
             camera.SetAsActive();
             camera.SetPosition(new Vector2(0.5f, 0.5f));
+
+            var parallaxManager = context.Instantiate().AddComponent<ParallaxManager>();
+            parallaxManager.Image = @"./assets/parallax_background.jpg";
+
+            var checkBoxObject = context.Instantiate();
+            checkBoxObject.Transform.Size = new Vector2(0.25f, 0.25f);
+            checkBoxObject.Transform.Position = new Vector2(0.05f, 0.35f);
+            var checkBox = checkBoxObject.AddComponent<Flair>();
+            checkBox.Text = "Checkbox";
+            checkBox.CheckBoxMode = true;
 
             var buttonObject = context.Instantiate();
             buttonObject.Transform.Size = new Vector2(0.25f, 0.25f);
             buttonObject.Transform.Position = new Vector2(0.05f, 0.05f);
-            var button = buttonObject.AddComponent<FButton>();
+            var button = buttonObject.AddComponent<Flair>();
             button.Click += Button_Click;
+            button.MouseDownBackColor = Color.Gray;
+            button.Text = "Text";
 
             var panelObject = context.Instantiate();
             panelObject.Transform.Size = new Vector2(0.35f, 0.8f);
             panelObject.Transform.Position = new Vector2(0.05f, 0.05f);
-            var panel = panelObject.AddComponent<FPanel>();
+            var panel = panelObject.AddComponent<Flair>();
+            panelObject.AddChild(checkBoxObject);
             panelObject.AddChild(buttonObject);
 
-            var destroyerObject = context.Instantiate();
-            var renderer = destroyerObject.AddComponent<SpriteRenderer>();
-            renderer.Sprite = Asset.Load<SpriteAsset>("./assets/starDestroyer.png");
-            destroyerObject.Transform.Size = new Vector2(1f, 1f);
-            var movement = destroyerObject.AddComponent<DestroyerMovement>();
+            //var destroyerObject = context.Instantiate();
+            //var renderer = destroyerObject.AddComponent<SpriteRenderer>();
+            //renderer.Sprite = Asset.Load<SpriteAsset>("./assets/starDestroyer.png");
+            //destroyerObject.Transform.Size = new Vector2(1f, 1f);
+            //var movement = destroyerObject.AddComponent<DestroyerMovement>();
 
-            var fireObject = context.Instantiate();
-            fireObject.Transform.Size = new Vector2(0.2f,0.4f);
-            var fireRenderer = fireObject.AddComponent<SpriteRenderer>();
-            fireRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/fire.png");
-            var fireAnimator = fireObject.AddComponent<SpriteAnimator>();
-            fireAnimator.Animation = Animation.EasyMake(8, 4, 1, 1, 30);
+            //var fireObject = context.Instantiate();
+            //fireObject.Transform.Size = new Vector2(0.2f, 0.4f);
+            //var fireRenderer = fireObject.AddComponent<SpriteRenderer>();
+            //fireRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/fire.png");
+            //var fireAnimator = fireObject.AddComponent<SpriteAnimator>();
+            //fireAnimator.Animation = Animation.EasyMake(8, 4, 1, 1, 30);
         }
 
         private void Button_Click(object sender, MouseButtonEventArgs e) => LoggingHandler.Log("Button Clicked!", LogMessageType.Fine);

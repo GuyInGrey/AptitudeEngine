@@ -13,6 +13,9 @@ namespace AptitudeEngine
         private OrderedHashSet<InputCode> keysWaitingDown;
         private OrderedHashSet<InputCode> keysWaitingUp;
 
+        public static event EventHandler<KeyboardKeyEventArgs> GlobalKeyUp;
+        public static event EventHandler<KeyboardKeyEventArgs> GlobalKeyDown;
+
         public Vector2 MouseScreenPosition { get; private set; } = Vector2.Zero;
         public Vector2 MouseScreenPixelPosition { get; private set; } = Vector2.Zero;
         public Vector2 MouseWorldPosition { get; private set; } = Vector2.Zero;
@@ -131,6 +134,19 @@ namespace AptitudeEngine
             var key = e.Key;
             keysWaitingDown.TryRemove(key);
             keysWaitingUp.TryAdd(key);
+            GlobalKeyUp?.Invoke(this, e);
+
+            if (GetKeyDown(InputCode.ControlLeft) && GetKeyDown(InputCode.F1))
+            {
+                if (ScreenHandler.DebugModes.Contains(DebugMode.BorderTextures))
+                {
+                    ScreenHandler.DebugModes.Remove(DebugMode.BorderTextures);
+                }
+                else
+                {
+                    ScreenHandler.DebugModes.Add(DebugMode.BorderTextures);
+                }
+            }
         }
 
         private void Context_KeyDown(object sender, KeyboardKeyEventArgs e)
@@ -141,6 +157,7 @@ namespace AptitudeEngine
             var key = e.Key;
             keysWaitingUp.TryRemove(key);
             keysWaitingDown.TryAdd(key);
+            GlobalKeyDown?.Invoke(this, e);
         }
 
         DateTime downTime;

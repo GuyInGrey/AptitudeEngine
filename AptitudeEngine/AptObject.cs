@@ -14,14 +14,49 @@ namespace AptitudeEngine
         private AptObject parent;
         private List<AptComponent> compsToStart = new List<AptComponent>();
 
+        /// <summary>
+        /// The global unique ID of the object.
+        /// </summary>
         public string Guid { get; }
 
+        /// <summary>
+        /// The tag of the object.
+        /// </summary>
+        public object Tag { get; set; }
+
+        /// <summary>
+        /// The name of the object.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The parent object of the object.
+        /// </summary>
         public AptObject Parent => parent;
+
+        /// <summary>
+        /// The children objects of the object.
+        /// </summary>
         public AptObject[] Children => children.ToArray();
+
+        /// <summary>
+        /// The components of the object.
+        /// </summary>
         public AptComponent[] Components => components.ToArray();
+
+        /// <summary>
+        /// The context the object is located on.
+        /// </summary>
         public AptContext Context { get; }
+
+        /// <summary>
+        /// The transform of the object.
+        /// </summary>
         public Transform Transform { get; }
+        
+        /// <summary>
+        /// Whether the object has been disposed or not.
+        /// </summary>
         public bool Disposed { get; private set; }
 
         internal AptObject(AptContext context)
@@ -197,6 +232,9 @@ namespace AptitudeEngine
         private bool RemoveChildFinal(AptObject ao)
             => children.Remove(ao);
 
+        /// <summary>
+        /// Position of object plus all parents positions.
+        /// </summary>
         public Vector2 TotalPosition
         {
             get
@@ -249,12 +287,13 @@ namespace AptitudeEngine
                 if (!component.Started && component.Awoken)
                 {
                     component.InternalStart();
+                    compsToStart.Remove(component);
                 }
             });
 
         public override void PreUpdate()
         {
-            IterateComponents(compsToStart.ToArray(), comp => { comp.InternalStart(); });
+            IterateComponents(compsToStart.ToArray(), comp => { comp.InternalStart(); compsToStart.Remove(comp); });
 
             IterateComponents(component =>
             {
