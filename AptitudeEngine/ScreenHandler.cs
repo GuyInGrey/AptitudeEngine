@@ -4,25 +4,54 @@ using OpenTK.Graphics.OpenGL;
 using AptitudeEngine.Logger;
 using System.Collections.Generic;
 using AptitudeEngine.Enums;
+using System;
 
 namespace AptitudeEngine
 {
     public static class ScreenHandler // The ScreenHandler class is for all GL calls for rendering
     {
-        /// <summary>
-        /// Whether blending is enabled. To set, use <see cref="Blending(bool)"/>.
-        /// </summary>
-        public static bool Blend { get; private set; }
+        private static bool _Blending = false;
 
-        public static List<DebugMode> DebugModes { get; set; } = new List<DebugMode>();
+        /// <summary>
+        /// Whether transparency works.
+        /// </summary>
+        /// <param name="toggle"></param>
+        public static bool Blending
+        {
+            set
+            {
+                _Blending = value;
+                if (value)
+                {
+                    GL.Enable(EnableCap.Blend);
+                    GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+                }
+                else
+                {
+                    GL.Disable(EnableCap.Blend);
+                }
+            }
+            get => Blending;
+        }
+
+        public static AptObject CurrentDrawingObject { get; set; }
+
+        public static AptRectangle CustomBounds { get; set; }
+
+        public static DrawFlags Flags { get; set; }
+
+        public static bool Option(DrawFlags d) => (Flags & d) == d;
+
+        public static AptRectangle DefaultFrame { get; set; } = new AptRectangle(0,0,1,1);
+
 
         /// <summary>
         /// Draws the specified selected points.
         /// </summary>
         /// <param name="SelectedPoints">The selected points.</param>
-        public static void Poly(PolyVector[] SelectedPoints, AptObject o)
+        public static void Polygon(PolyVector[] CustomVertices)
         {
-            if (SelectedPoints == null)
+            if (CustomVertices == null)
             {
                 return;
             }
@@ -30,34 +59,65 @@ namespace AptitudeEngine
             GL.Disable(EnableCap.Texture2D);
             GL.Begin(PrimitiveType.Polygon);
 
-            var toAdd = o.TotalPosition;
+            var toAdd = Vector2.Zero;
 
-            for (var i = 0; i < SelectedPoints.Length; i++)
+            if (Option(DrawFlags.ParentCoordinateRelative))
             {
-                GL.Color4(SelectedPoints[i].Color);
-                GL.Vertex2(SelectedPoints[i].Position.X + toAdd.X, SelectedPoints[i].Position.Y + toAdd.Y);
+                toAdd = CurrentDrawingObject.TotalPosition;
+            }
+
+            for (var i = 0; i < CustomVertices.Length; i++)
+            {
+                GL.Color4(CustomVertices[i].Color);
+                GL.Vertex2(CustomVertices[i].Position.X + toAdd.X, CustomVertices[i].Position.Y + toAdd.Y);
             }
 
             GL.End();
         }
 
-        public static void Tex(Texture2D tex, AptObject o, AptRectangle frame)
+        /// <summary>
+        /// Draws a texture.
+        /// </summary>
+        /// <param name="tex"></param>
+        /// <param name="frame"></param>
+        public static void Texture(Texture2D tex, AptRectangle frame)
         {
-            var Position = o.TotalPosition;
-            var posVectors = ConvertRectangle(new AptRectangle(Position, o.Transform.Size));
+            var Position = Vector2.Zero;
 
+            if (Option(DrawFlags.ParentCoordinateRelative))
+            {
+                Position = CurrentDrawingObject.TotalPosition;
+            }
+            if (Option(DrawFlags.CustomBounds))
+            {
+                Position += CustomBounds.Position;
+            }
+
+            AptRectangle bounds;
+
+            if (!Option(DrawFlags.CustomBounds))
+            {
+                bounds = new AptRectangle(Position, CurrentDrawingObject.Transform.Size);
+            }
+            else
+            {
+                bounds = new AptRectangle(Position, CustomBounds.Size);
+            }
+
+            var posVectors = GetBoundCorners(bounds);
+
+            //Rotate vectors
             for (var i = 0; i < posVectors.Length; i++)
             {
-                posVectors[i] = posVectors[i].Rotate(new Vector2(o.Transform.Position.X + (o.Transform.Size.X / 2), o.Transform.Position.Y + (o.Transform.Size.Y / 2)), o.Transform.RotationRadians);
+                posVectors[i] = posVectors[i].Rotate(bounds.Center, CurrentDrawingObject.Transform.RotationRadians);
             }
             
-            var frameVectors = ConvertRectangle(frame);
+            var frameVectors = GetBoundCorners(frame);
 
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, tex.ID);
             GL.Color3(Color.Transparent);
             GL.Begin(PrimitiveType.Quads);
-
 
 
             for (var i = 0; i < 4; i++)
@@ -68,7 +128,9 @@ namespace AptitudeEngine
 
             GL.End();
 
-            if (DebugModes.Contains(DebugMode.BorderTextures))
+            var d = Flags;
+            Flags = DrawFlags.None;
+            if (DebugHandler.BorderTextures)
             {
                 ScreenHandler.Lines(new Vector2[] {
                     posVectors[0],
@@ -76,24 +138,37 @@ namespace AptitudeEngine
                     posVectors[2],
                     posVectors[3],
                     posVectors[0],
-                }, 5f, Color.Orange);
+                }, 4, Color.Orange);
             }
+            Flags = d;
         }
 
         /// <summary>
-        /// Draws a texture based on a location and size
+        /// Draws a texture.
         /// </summary>
         /// <param name="tex">The <see cref="Texture2D"/> to draw, usually off of a <see cref="Assets.SpriteAsset"/>.</param>
         /// <param name="t">The <see cref="Transform"/> to draw with.</param>
-        public static void Tex(Texture2D tex, AptObject o)
-            => Tex(tex, o, new AptRectangle(0, 0, 1, 1));
+        public static void Texture(Texture2D tex)
+            => Texture(tex, DefaultFrame);
 
-        public static void Lines(Vector2[] v, float thickness, Color c, AptObject o)
+        /// <summary>
+        /// Draws lines where each vertex on the line is a <see cref="Vector2"/> in v.
+        /// </summary>
+        /// <param name="v">The array of vectors representing the vertexes on the line.</param>
+        /// <param name="thickness">The thickness of the line.</param>
+        /// <param name="c">The color of the line.</param>
+        public static void Lines(Vector2[] v, float thickness, Color c)
         {
-            GL.Color3(c);
+            GL.Disable(EnableCap.Texture2D);
+            GL.Color4(c);
             GL.LineWidth(thickness);
 
-            var toAdd = o.TotalPosition;
+            var toAdd = Vector2.Zero;
+
+            if (Option(DrawFlags.ParentCoordinateRelative))
+            {
+                toAdd += CurrentDrawingObject.TotalPosition;
+            }
 
             GL.Begin(PrimitiveType.Lines);
 
@@ -106,29 +181,47 @@ namespace AptitudeEngine
             GL.End();
         }
 
-        private static void Lines(Vector2[] v, float thickness, Color c)
+        public static void Circle(Vector2 center, float radius, Color c)
         {
-            GL.Color3(c);
-            GL.LineWidth(thickness);
+            var currentOther = new Vector2(center.X, center.Y - radius);
 
-            GL.Disable(EnableCap.Texture2D);
-            GL.Begin(PrimitiveType.Lines);
-
-            for (var i = 0; i < v.Length - 1; i++)
+            for (var i = 0; i < 360; i++)
             {
-                GL.Vertex2(v[i]);
-                GL.Vertex2(v[i + 1]);
+                Lines(new Vector2[] { center, currentOther }, radius * 200, c);
+                currentOther = currentOther.Rotate(center, 1 * (float)(Math.PI / 180));
             }
 
-            GL.End();
+            if (Option(DrawFlags.ParentCoordinateRelative))
+            {
+                center += CurrentDrawingObject.TotalPosition;
+            }
+
+            var d = Flags;
+            Flags = DrawFlags.None;
+            if (DebugHandler.BorderTextures)
+            {
+                ScreenHandler.Lines(new Vector2[] {
+                    center - radius,
+                    new Vector2(center.X + radius, center.Y - radius),
+                    center + radius,
+                    new Vector2(center.X - radius, center.Y + radius),
+                    center - radius,
+                }, 4, Color.Orange);
+            }
+            Flags = d;
+        }
+
+        public static void RoundedRectangle(float r)
+        {
+            
         }
 
         /// <summary>
-        /// Converts a rectangle into a Vector2 list
+        /// Converts a rectangle into a Vector2 list representing the corners of the rectangle.
         /// </summary>
-        /// <param name="r"></param>
+        /// <param name="r">The rectangle to convert.</param>
         /// <returns></returns>
-        public static Vector2[] ConvertRectangle(AptRectangle r)
+        public static Vector2[] GetBoundCorners(AptRectangle r)
             => new[]
             {
                 new Vector2(r.X, r.Y),
@@ -136,23 +229,5 @@ namespace AptitudeEngine
                 new Vector2(r.X + r.Width, r.Y + r.Height),
                 new Vector2(r.X, r.Y + r.Height)
             };
-
-        /// <summary>
-        /// Toggles Blending
-        /// </summary>
-        /// <param name="toggle"></param>
-        public static void Blending(bool toggle)
-        {
-            Blend = toggle;
-            if (toggle)
-            {
-                GL.Enable(EnableCap.Blend);
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-            }
-            else
-            {
-                GL.Disable(EnableCap.Blend);
-            }
-        }
     }
 }

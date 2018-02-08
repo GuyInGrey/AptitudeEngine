@@ -10,6 +10,6 @@ namespace AptitudeEngine.Components.Visuals
         /// </summary>
         public PolyVector[] Vertices;
 
-        public override void Render(FrameEventArgs a) => ScreenHandler.Poly(Vertices, owner);
+        public override void Render(FrameEventArgs a) => ScreenHandler.Polygon(Vertices);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -10,6 +11,8 @@ namespace AptitudeEngine.Components.Visuals
         /// The OpenGL Projection of the camera.
         /// </summary>
         private Matrix4 projection;
+
+        private Vector2 lastPos = Vector2.Zero;
 
         /// <summary>
         /// Set the camera's position.
@@ -33,14 +36,23 @@ namespace AptitudeEngine.Components.Visuals
             //Set the matrix position to owner's transform's position.
             GL.Translate(new Vector3(-Transform.Position.X, -Transform.Position.Y, 0));
         }
-        
+
         public override void Awake()
         {
             projection = Matrix4.CreateOrthographic(Transform.Size.X, -Transform.Size.Y, 0f, 100f);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
-            GL.Translate(Transform.Position);
+            GL.Translate(new Vector3(-Transform.Position.X, -Transform.Position.Y, 0));
+        }
+
+        public override void Render(Events.FrameEventArgs a)
+        {
+            projection = Matrix4.CreateOrthographic(Transform.Size.X, -Transform.Size.Y, 0f, 100f);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref projection);
+            GL.Translate(new Vector3(-Transform.Position.X, -Transform.Position.Y, 0));
         }
 
         /// <summary>

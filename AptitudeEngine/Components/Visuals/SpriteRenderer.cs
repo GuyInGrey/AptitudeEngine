@@ -17,9 +17,10 @@ namespace AptitudeEngine.Components.Visuals
 
         public override void Render(FrameEventArgs a)
         {
+            ScreenHandler.Flags = DrawFlags.ParentCoordinateRelative;
             if (Drawing && Sprite != null)
             {
-                ScreenHandler.Tex(Sprite.Texture, owner, Sprite.Frame);
+                ScreenHandler.Texture(Sprite.Texture, Sprite.Frame);
             }
         }
     }

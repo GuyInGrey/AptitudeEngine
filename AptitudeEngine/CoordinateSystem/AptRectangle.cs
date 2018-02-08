@@ -32,7 +32,16 @@ namespace AptitudeEngine.CoordinateSystem
         /// <summary>
         /// The position. If possible, use <see cref="X"/> and <see cref="Y"/>.
         /// </summary>
-        public Vector2 Position => new Vector2(X, Y);
+        public Vector2 Position
+        {
+            get => new Vector2(X, Y);
+            set
+            {
+                X = value.X;
+                Y = value.Y;
+            }
+
+        }
 
         /// <summary>
         /// The size. If possible, use <see cref="Width"/> and <see cref="Height"/>.
@@ -114,5 +123,7 @@ namespace AptitudeEngine.CoordinateSystem
 
             return Empty;
         }
+
+        public Vector2 Center => new Vector2(X + (Width / 2), Y + (Height / 2));
     }
 }

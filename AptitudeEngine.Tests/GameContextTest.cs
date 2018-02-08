@@ -35,7 +35,7 @@ namespace AptitudeEngine.Tests
         private void Context_Load(object sender, EventArgs e)
         {
             context.ClearColor = Color.CornflowerBlue;
-            ScreenHandler.Blending(true);
+            ScreenHandler.Blending = true;
 
             context.CustomCursorPath = @"./assets/cursor_small.png";
             context.CustomCursor = true;
@@ -52,17 +52,20 @@ namespace AptitudeEngine.Tests
             var checkBoxObject = context.Instantiate();
             checkBoxObject.Transform.Size = new Vector2(0.25f, 0.25f);
             checkBoxObject.Transform.Position = new Vector2(0.05f, 0.35f);
-            var checkBox = checkBoxObject.AddComponent<Flair>();
-            checkBox.Text = "Checkbox";
-            checkBox.CheckBoxMode = true;
+            var checkBox = checkBoxObject.AddComponent<CheckBox>();
 
             var buttonObject = context.Instantiate();
             buttonObject.Transform.Size = new Vector2(0.25f, 0.25f);
             buttonObject.Transform.Position = new Vector2(0.05f, 0.05f);
-            var button = buttonObject.AddComponent<Flair>();
+            var button = buttonObject.AddComponent<Button>();
             button.Click += Button_Click;
-            button.MouseDownBackColor = Color.Gray;
-            button.Text = "Text";
+            button.AddText("Hello\nThere!", 6f);
+
+            var sliderObject = context.Instantiate();
+            sliderObject.Transform.Size = new Vector2(0.5f, 0.05f);
+            sliderObject.Transform.Position = new Vector2(0.05f, 0.65f);
+            var slider = sliderObject.AddComponent<Slider>();
+            slider.Background = true;
 
             var panelObject = context.Instantiate();
             panelObject.Transform.Size = new Vector2(0.35f, 0.8f);
@@ -70,19 +73,20 @@ namespace AptitudeEngine.Tests
             var panel = panelObject.AddComponent<Flair>();
             panelObject.AddChild(checkBoxObject);
             panelObject.AddChild(buttonObject);
+            panelObject.AddChild(sliderObject);
 
-            //var destroyerObject = context.Instantiate();
-            //var renderer = destroyerObject.AddComponent<SpriteRenderer>();
-            //renderer.Sprite = Asset.Load<SpriteAsset>("./assets/starDestroyer.png");
-            //destroyerObject.Transform.Size = new Vector2(1f, 1f);
-            //var movement = destroyerObject.AddComponent<DestroyerMovement>();
+            var destroyerObject = context.Instantiate();
+            var renderer = destroyerObject.AddComponent<SpriteRenderer>();
+            renderer.Sprite = Asset.Load<SpriteAsset>("./assets/starDestroyer.png");
+            destroyerObject.Transform.Size = new Vector2(1f, 1f);
+            var movement = destroyerObject.AddComponent<DestroyerMovement>();
 
-            //var fireObject = context.Instantiate();
-            //fireObject.Transform.Size = new Vector2(0.2f, 0.4f);
-            //var fireRenderer = fireObject.AddComponent<SpriteRenderer>();
-            //fireRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/fire.png");
-            //var fireAnimator = fireObject.AddComponent<SpriteAnimator>();
-            //fireAnimator.Animation = Animation.EasyMake(8, 4, 1, 1, 30);
+            var fireObject = context.Instantiate();
+            fireObject.Transform.Size = new Vector2(0.2f, 0.4f);
+            var fireRenderer = fireObject.AddComponent<SpriteRenderer>();
+            fireRenderer.Sprite = Asset.Load<SpriteAsset>("./assets/fire.png");
+            var fireAnimator = fireObject.AddComponent<SpriteAnimator>();
+            fireAnimator.Animation = Animation.EasyMake(8, 4, 1, 1, 30);
         }
 
         private void Button_Click(object sender, MouseButtonEventArgs e) => LoggingHandler.Log("Button Clicked!", LogMessageType.Fine);
@@ -137,6 +141,8 @@ namespace AptitudeEngine.Tests
             {
                 Transform.Position = Transform.Position.Move(Transform.Rotation, -Speed);
             }
+
+            Context.ActiveCamera.SetPosition(Transform.Position + (Transform.Size / 2));
         }
     }
 }

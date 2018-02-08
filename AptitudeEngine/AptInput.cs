@@ -19,7 +19,8 @@ namespace AptitudeEngine
         public Vector2 MouseScreenPosition { get; private set; } = Vector2.Zero;
         public Vector2 MouseScreenPixelPosition { get; private set; } = Vector2.Zero;
         public Vector2 MouseWorldPosition { get; private set; } = Vector2.Zero;
- 
+        public Vector2 MouseWorldPositionObjectRelative => MouseWorldPosition - ScreenHandler.CurrentDrawingObject.TotalPosition;
+        
         private AptContext context;
         private bool disposed;
 
@@ -32,6 +33,7 @@ namespace AptitudeEngine
             context.MouseUp += Context_MouseUp;
             context.PreUpdateFrame += Context_PreUpdateFrame;
             context.MouseMove += Context_MouseMove;
+            context.MouseWheel += Context_MouseWheel;
 
             keyStates = new Dictionary<InputCode, InputState>();
             foreach (var key in Enum.GetValues(typeof(InputCode)).Cast<InputCode>())
@@ -43,6 +45,15 @@ namespace AptitudeEngine
             keysWaitingUp = new OrderedHashSet<InputCode>();
         }
 
+        private void Context_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (DebugHandler.CameraScroll)
+            {
+                context.ActiveCamera.Transform.Size = context.ActiveCamera.Transform.Size - ((float)e.Delta / 100);
+                Console.Title = context.ActiveCamera.Transform.Size.ToString();
+            }
+        }
+
         private void Context_MouseMove(object sender, MouseMoveEventArgs e)
         {
             MouseScreenPixelPosition = new Vector2(e.X, e.Y);
@@ -50,9 +61,9 @@ namespace AptitudeEngine
             var mouseXPercent = e.X / context.WindowPixelSize.X;
             var mouseYPercent = e.Y / context.WindowPixelSize.Y;
 
-            MouseWorldPosition = new Vector2((mouseXPercent - 0.5f) + context.ActiveCamera.Transform.Position.X,
-                (mouseYPercent - 0.5f) + context.ActiveCamera.Transform.Position.Y);
-            MouseScreenPosition = new Vector2((mouseXPercent - 0.5f), (mouseYPercent - 0.5f));
+            var i = context.ActiveCamera.Transform.Size.X / 2;
+            MouseWorldPosition = new Vector2((mouseXPercent - i) + context.ActiveCamera.Transform.Position.X, (mouseYPercent - i) + context.ActiveCamera.Transform.Position.Y);
+            MouseScreenPosition = new Vector2((mouseXPercent - i), (mouseYPercent - i));
         }
 
         private void Context_PreUpdateFrame(object sender, FrameEventArgs e)
@@ -135,18 +146,6 @@ namespace AptitudeEngine
             keysWaitingDown.TryRemove(key);
             keysWaitingUp.TryAdd(key);
             GlobalKeyUp?.Invoke(this, e);
-
-            if (GetKeyDown(InputCode.ControlLeft) && GetKeyDown(InputCode.F1))
-            {
-                if (ScreenHandler.DebugModes.Contains(DebugMode.BorderTextures))
-                {
-                    ScreenHandler.DebugModes.Remove(DebugMode.BorderTextures);
-                }
-                else
-                {
-                    ScreenHandler.DebugModes.Add(DebugMode.BorderTextures);
-                }
-            }
         }
 
         private void Context_KeyDown(object sender, KeyboardKeyEventArgs e)

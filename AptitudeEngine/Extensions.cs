@@ -28,5 +28,20 @@ namespace AptitudeEngine
 
         public static InputCode ToApt(this OpenTK.Input.Key key)
             => (InputCode) key;
+
+        public static int LineCount(this string s) => s.Split('\n').Length;
+
+        public static float Clamp (this float f, float min, float max)
+        {
+            if (f < min)
+            {
+                return min;
+            }
+            if (f > max)
+            {
+                return max;
+            }
+            return f;
+        }
     }
 }

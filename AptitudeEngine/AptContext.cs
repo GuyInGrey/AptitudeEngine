@@ -218,6 +218,8 @@ namespace AptitudeEngine
         {
             //Begin Logging
             LoggingHandler.Boot();
+            //Debugger
+            DebugHandler.Boot(this);
             //Setting WindowPixelSize to the gameWindow width and height.
             WindowPixelSize = new Vector2(width, height);
             //Create Sound Engine
@@ -411,6 +413,13 @@ namespace AptitudeEngine
 
             RecurseGameObjects(go => go.InternalPreRender(e));
             RecurseGameObjects(go => go.InternalRender(e));
+
+            if (DebugHandler.OriginLocator)
+            {
+                ScreenHandler.Flags = DrawFlags.CustomBounds;
+                ScreenHandler.CustomBounds = new AptRectangle(0, 0, 0, 0);
+                ScreenHandler.Circle(new Vector2(0, 0), ActiveCamera.Transform.Size.X / 4, Color.FromArgb(50, 255, 0, 0));
+            }
 
             GL.Flush();
             gameWindow.SwapBuffers();

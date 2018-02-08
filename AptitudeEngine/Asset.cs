@@ -9,8 +9,17 @@ namespace AptitudeEngine
         public int ID { get; private set; }
         public string Path { get; private set; }
 
+        /// <summary>
+        /// For new Asset types.
+        /// </summary>
+        /// <param name="file"></param>
         public abstract void Load(FileStream file);
 
+        /// <summary>
+        /// Returns an Asset of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The Asset type to load.</typeparam>
+        /// <param name="path">The physical path of the Asset to load.</param>
         public static T Load<T>(string path)
             where T : Asset, new()
         {
@@ -25,26 +34,32 @@ namespace AptitudeEngine
             }
         }
 
-        public static SpriteAsset LoadText(string s, float fontSize, Color c)
+        /// <summary>
+        /// Returns an image <see cref="SpriteAsset"/> that shows text.
+        /// </summary>
+        /// <param name="s">The text to display.</param>
+        /// <param name="c">The color of the text to display.</param>
+        /// <param name="quality">The quality of the text.</param>
+        public static SpriteAsset LoadText(string s, Color c, float quality)
         {
             var lineCnt = s.Split('\n').Length;
 
-            var f = new Font(FontFamily.GenericSerif, fontSize, FontStyle.Regular);
-            using (var b = new Bitmap((int)(fontSize * s.Length), ((int)(fontSize + (fontSize / 2))) * lineCnt))
+            var f = new Font(FontFamily.GenericSerif, quality, FontStyle.Regular);
+            using (var bitmap = new Bitmap((int)(quality * s.Length), (int)(quality * 1.5f) * lineCnt))
             {
-                using (var g = Graphics.FromImage(b))
+                using (var graphics = Graphics.FromImage(bitmap))
                 {
-                    g.Clear(Color.Transparent);
+                    graphics.Clear(Color.Transparent);
 
                     var stringFormat = new StringFormat();
                     stringFormat.Alignment = StringAlignment.Center;
 
-                    g.DrawString(s, f, new SolidBrush(c), new Rectangle(0,0,b.Width,b.Height), stringFormat);
+                    graphics.DrawString(s, f, new SolidBrush(c), new Rectangle(0,0,bitmap.Width,bitmap.Height), stringFormat);
                 }
 
                 var sa = new SpriteAsset();
 
-                sa.LoadFromBitmap(b);
+                sa.Load(bitmap);
                 return sa;
             }
         }

@@ -30,7 +30,7 @@ namespace AptitudeEngine.Assets
         /// Loads the SpriteAsset from a bitmap.
         /// </summary>
         /// <param name="b">The bitmap to load the asset from.</param>
-        public void LoadFromBitmap(Bitmap b)
+        public void Load(Bitmap b)
         {
             Texture = Texture2D.FromBitmap(b);
             Frame = new AptRectangle(0f, 0f, 1f, 1f);

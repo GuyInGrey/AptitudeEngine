@@ -1,12 +1,13 @@
 ﻿using AptitudeEngine.Assets;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
+using System;
 
 namespace AptitudeEngine.Components.Visuals
 {
     public class ParallaxManager : AptComponent
     {
-        public Vector2 Speed { get; set; } = new Vector2(0.001f,0);
+        public Vector2 Speed { get; set; } = new Vector2(0.0003f,0);
         public Vector2 DistanceTraveled { get; private set; } = Vector2.Zero;
         public string Image { get; set; }
 
@@ -86,6 +87,6 @@ namespace AptitudeEngine.Components.Visuals
                 new Vector2(1,1),
                 new Vector2(0,1),
                 Vector2.Zero,
-            }, 10f, System.Drawing.Color.Green, Owner);
+            }, 10f, System.Drawing.Color.Green);
     }
 }

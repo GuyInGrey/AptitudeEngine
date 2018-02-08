@@ -335,7 +335,8 @@ namespace AptitudeEngine
             });
 
         public override void Render(FrameEventArgs a)
-        =>
+        {
+            ScreenHandler.CurrentDrawingObject = this;
             IterateComponents(component =>
             {
                 if (component.Started)
@@ -343,6 +344,7 @@ namespace AptitudeEngine
                     component.InternalRender(a);
                 }
             });
+        }
 
         public override void PostRender(FrameEventArgs a)
         =>
