@@ -70,6 +70,7 @@
     <Compile Include="Components\Flairs\Flair.cs" />
     <Compile Include="Components\Flairs\Label.cs" />
     <Compile Include="Components\Flairs\Slider.cs" />
+    <Compile Include="Components\Turtle\Turtle.cs" />
     <Compile Include="Components\Visuals\ParallaxManager.cs" />
     <Compile Include="Components\Visuals\PolyRenderer.cs" />
     <Compile Include="DebugHandler.cs" />
