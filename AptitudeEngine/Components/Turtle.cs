@@ -3,7 +3,7 @@ using System.Drawing;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
 
-namespace AptitudeEngine.Components.Turtle
+namespace AptitudeEngine.Components
 {
     public class Turtle : AptComponent
     {
@@ -11,6 +11,10 @@ namespace AptitudeEngine.Components.Turtle
         private Color currentColor = Color.Black;
         private float thickness = 5;
         private bool debug = true;
+
+        private static Random rnd = new Random();
+
+        public static Color ColorRandom => Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
 
         public void SetDebug(bool b) => debug = b;
 
@@ -42,11 +46,12 @@ namespace AptitudeEngine.Components.Turtle
             currentColor = Color.Black;
             Transform.Rotation = 90;
             Transform.Position = Vector2.Zero;
+
             DrawCode(this);
 
             if (debug)
             {
-                ScreenHandler.Circle(Vector2.Zero, 0.005f, Color.Green);
+                ScreenHandler.Circle(Vector2.Zero, 0.005f, Color.White);
                 ScreenHandler.Circle(Transform.Position, 0.005f, Color.Red);
             }
         }

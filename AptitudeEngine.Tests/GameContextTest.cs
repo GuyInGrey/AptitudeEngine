@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using AptitudeEngine.Assets;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.CoordinateSystem;
-using AptitudeEngine.Logger;
-using AptitudeEngine.Events;
-using AptitudeEngine.Enums;
-using AptitudeEngine.Components.Flairs;
-using AptitudeEngine.Components.Turtle;
+using AptitudeEngine.Components;
 
 namespace AptitudeEngine.Tests
 {
@@ -28,7 +23,7 @@ namespace AptitudeEngine.Tests
 
         public void GameTestStart()
         {
-            context = new AptContext("Test Context", 1000, 1000);
+            context = new AptContext("Test Context", 1000, 1000, 1000000,1000000);
             context.Load += Context_Load;
             context.Begin();
         }
@@ -50,6 +45,11 @@ namespace AptitudeEngine.Tests
             var TurtleObject = context.Instantiate();
             var turtle = TurtleObject.AddComponent<Turtle>();
 
+            var waveObject = context.Instantiate();
+            waveObject.Transform.Position = new Vector2(0.5f, 0);
+            var wave = waveObject.AddComponent<WaveGenerator>();
+            wave.Radius = 0.1f;
+
             turtle.DrawCode = t =>
             {
                 t.SetLineThickness(2);
@@ -59,7 +59,7 @@ namespace AptitudeEngine.Tests
                 {
                     t.Move(q);
                     t.Turn(110);
-                    q += 0.003f;
+                    q += 0.005f;
                 }
             };
         }
