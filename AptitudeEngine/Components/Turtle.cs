@@ -51,8 +51,8 @@ namespace AptitudeEngine.Components
 
             if (debug)
             {
-                ScreenHandler.Circle(Vector2.Zero, 0.005f, Color.White);
-                ScreenHandler.Circle(Transform.Position, 0.005f, Color.Red);
+                ScreenHandler.Circle(Vector2.Zero, 0.01f, Color.White);
+                ScreenHandler.Circle(Transform.Position, 0.01f, Color.Red);
             }
         }
     }

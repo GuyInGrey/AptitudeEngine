@@ -70,7 +70,9 @@
     <Compile Include="Components\Flairs\Flair.cs" />
     <Compile Include="Components\Flairs\Label.cs" />
     <Compile Include="Components\Flairs\Slider.cs" />
+    <Compile Include="Components\Timer.cs" />
     <Compile Include="Components\Turtle.cs" />
+    <Compile Include="Components\Tweener.cs" />
     <Compile Include="Components\Visuals\ParallaxManager.cs" />
     <Compile Include="Components\Visuals\PolyRenderer.cs" />
     <Compile Include="Components\WaveGenerator.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Enums\GameWindowFlags.cs" />
     <Compile Include="Enums\InputCode.cs" />
     <Compile Include="Enums\InputState.cs" />
+    <Compile Include="Enums\TweenType.cs" />
     <Compile Include="Enums\VSyncMode.cs" />
     <Compile Include="Events\FrameEventArgs.cs" />
     <Compile Include="Events\KeyboardKeyEventArgs.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Events\MouseButtonEventArgs.cs" />
     <Compile Include="Events\MouseMoveEventArgs.cs" />
     <Compile Include="Events\MouseWheelEventArgs.cs" />
+    <Compile Include="Events\TimerEventArgs.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Components\Visuals\Camera.cs" />
     <Compile Include="AptObject.cs" />

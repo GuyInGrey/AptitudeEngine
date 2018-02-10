@@ -159,6 +159,7 @@ namespace AptitudeEngine
         /// <param name="c">The color of the line.</param>
         public static void Lines(Vector2[] v, float thickness, Color c)
         {
+            GL.Enable(EnableCap.LineSmooth);
             GL.Disable(EnableCap.Texture2D);
             GL.Color4(c);
             GL.LineWidth(thickness);

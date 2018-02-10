@@ -3,6 +3,8 @@ using System.Drawing;
 using AptitudeEngine.Components.Visuals;
 using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Components;
+using AptitudeEngine.Enums;
+using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Tests
 {
@@ -11,19 +13,16 @@ namespace AptitudeEngine.Tests
         public static void Main(string[] args)
         {
             var test = new GameTest();
-            test.GameTestStart();
         }
     }
 
-    public class GameTest : IDisposable
+    public class GameTest
     {
-        private bool disposed;
-
         private AptContext context;
 
-        public void GameTestStart()
+        public GameTest()
         {
-            context = new AptContext("Test Context", 1000, 1000, 1000000,1000000);
+            context = new AptContext("Test Context", 1000, 1000, 1000000, 1000000);
             context.Load += Context_Load;
             context.Begin();
         }
@@ -35,55 +34,79 @@ namespace AptitudeEngine.Tests
 
             context.CustomCursorPath = @"./assets/cursor_small.png";
             context.CustomCursor = true;
-            
+
             var cameraObject = context.Instantiate();
             cameraObject.Transform.Size = new Vector2(1, 1);
             var camera = cameraObject.AddComponent<Camera>();
             camera.SetAsActive();
-            camera.SetPosition(new Vector2(0, 0));
+            var timer = cameraObject.AddComponent<Timer>();
+            timer.IntervalInSeconds = 1f;
+            timer.Tick += Timer_Tick;
+            var tweener = cameraObject.AddComponent<Tweener>();
+            tweener.SetPosition(new Vector2(f), TweenType.QuadraticInOut, ti);
+
+            var parallaxObject = context.Instantiate();
+            parallaxObject.Transform.Position = new Vector2(-0.5f, 0);
+            var parallax = parallaxObject.AddComponent<ParallaxManager>();
+            parallax.Image = "./assets/parallax_background.jpg";
 
             var TurtleObject = context.Instantiate();
             var turtle = TurtleObject.AddComponent<Turtle>();
 
             var waveObject = context.Instantiate();
-            waveObject.Transform.Position = new Vector2(0.5f, 0);
             var wave = waveObject.AddComponent<WaveGenerator>();
-            wave.Radius = 0.1f;
+            wave.Radius = 180f;
+            wave.Frequency = 0.001f;
+
+            var labelObject = context.Instantiate();
 
             turtle.DrawCode = t =>
             {
                 t.SetLineThickness(2);
                 var q = 0.001f;
 
-                for (var i = 0; i < 100; i++)
+                for (var i = 0; i < 200; i++)
                 {
                     t.Move(q);
-                    t.Turn(110);
+                    t.Turn(wave.ValueX);
                     q += 0.005f;
                 }
+
+                Console.Title = wave.ValueX.ToString("0") + " / 180";
             };
         }
 
-        public void Dispose()
+        bool stage;
+        float f = 0.25f;
+        float ti = 2;
+
+        private void Timer_Tick(object sender, TimerEventArgs e)
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        private void Dispose(bool disposing)
-        {
-            if (disposed)
+            Tweener tweener;
+
+            foreach (var a in e.Timer.Owner.Components)
             {
-                return;
+                if (a is Tweener)
+                {
+                    tweener = (Tweener)a;
+                    goto a;
+                }
             }
 
-            if (disposing)
+            return;
+
+            a:;
+
+            if (stage)
             {
-                context.Dispose();
+                tweener.SetPosition(new Vector2(f), TweenType.QuadraticInOut, ti);
+            }
+            else
+            {
+                tweener.SetPosition(new Vector2(-f), TweenType.QuadraticInOut, ti);
             }
 
-            context = null;
-
-            disposed = true;
+            stage = !stage;
         }
     }
 }
