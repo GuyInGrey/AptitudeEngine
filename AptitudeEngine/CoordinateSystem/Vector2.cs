@@ -177,6 +177,14 @@ namespace AptitudeEngine.CoordinateSystem
             return toReturn;
         }
 
+        public float DistanceFrom(Vector2 v)
+        => (float)Math.Sqrt(Math.Pow(v.X - X, 2) + Math.Pow(v.Y - Y, 2));
+
+        public static Random VectorRandom { get; set; } = new Random();
+
+        public static Vector2 Random(float minX, float minY, float maxX, float maxY)
+        => new Vector2(Extensions.RandomNumberBetween(minX, maxX), Extensions.RandomNumberBetween(minY, maxY));
+
         public static Vector2 operator +(Vector2 left, float right)
             => new Vector2(left.X + right, left.Y + right);
 

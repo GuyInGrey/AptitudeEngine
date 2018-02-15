@@ -5,6 +5,7 @@ using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Components;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
+using AptitudeEngine.Components.Pathing;
 
 namespace AptitudeEngine.Tests
 {
@@ -39,74 +40,31 @@ namespace AptitudeEngine.Tests
             cameraObject.Transform.Size = new Vector2(1, 1);
             var camera = cameraObject.AddComponent<Camera>();
             camera.SetAsActive();
-            var timer = cameraObject.AddComponent<Timer>();
-            timer.IntervalInSeconds = 1f;
-            timer.Tick += Timer_Tick;
-            var tweener = cameraObject.AddComponent<Tweener>();
-            tweener.SetPosition(new Vector2(f), TweenType.QuadraticInOut, ti);
 
-            var parallaxObject = context.Instantiate();
-            parallaxObject.Transform.Position = new Vector2(-0.5f, 0);
-            var parallax = parallaxObject.AddComponent<ParallaxManager>();
-            parallax.Image = "./assets/parallax_background.jpg";
+            var pathingObject = context.Instantiate();
+            var pathFinder = pathingObject.AddComponent<PathFinder>();
+            var turtle = pathingObject.AddComponent<Turtle>();
 
-            var TurtleObject = context.Instantiate();
-            var turtle = TurtleObject.AddComponent<Turtle>();
+            pathFinder.GenerateNodes(20, -0.5f, -0.5f, 0.5f, 0.5f, 20);
 
-            var waveObject = context.Instantiate();
-            var wave = waveObject.AddComponent<WaveGenerator>();
-            wave.Radius = 180f;
-            wave.Frequency = 0.001f;
-
-            var labelObject = context.Instantiate();
+            turtle.SetDebug(false);
 
             turtle.DrawCode = t =>
             {
-                t.SetLineThickness(2);
-                var q = 0.001f;
+                t.SetLineThickness(20);
 
-                for (var i = 0; i < 200; i++)
+                foreach (var n in pathFinder.Nodes)
                 {
-                    t.Move(q);
-                    t.Turn(wave.ValueX);
-                    q += 0.005f;
-                }
+                    foreach (var m in n.ConnectedNodes)
+                    {
+                        ScreenHandler.Lines(new Vector2[] { n.Position, m.Position }, 2, Color.Black);
+                    }
 
-                Console.Title = wave.ValueX.ToString("0") + " / 180";
+                    t.SetPosition(n.Position);
+                    t.SetColor(Color.Red);
+                    t.Circle(0.01f);
+                }
             };
-        }
-
-        bool stage;
-        float f = 0.25f;
-        float ti = 2;
-
-        private void Timer_Tick(object sender, TimerEventArgs e)
-        {
-            Tweener tweener;
-
-            foreach (var a in e.Timer.Owner.Components)
-            {
-                if (a is Tweener)
-                {
-                    tweener = (Tweener)a;
-                    goto a;
-                }
-            }
-
-            return;
-
-            a:;
-
-            if (stage)
-            {
-                tweener.SetPosition(new Vector2(f), TweenType.QuadraticInOut, ti);
-            }
-            else
-            {
-                tweener.SetPosition(new Vector2(-f), TweenType.QuadraticInOut, ti);
-            }
-
-            stage = !stage;
         }
     }
 }

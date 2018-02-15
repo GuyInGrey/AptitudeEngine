@@ -21,7 +21,7 @@ namespace AptitudeEngine.Components
 
                 if (DeltaSinceLastTick > IntervalInSeconds)
                 {
-                    Tick(this, new TimerEventArgs(this));
+                    Tick?.Invoke(this, new TimerEventArgs(this));
                     DeltaSinceLastTick = 0f;
                 }
             }

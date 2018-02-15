@@ -32,6 +32,9 @@ namespace AptitudeEngine.Components
             Transform.Position = NewPos(distance);
         }
 
+        public void Circle(float radius)
+            => ScreenHandler.Circle(Transform.Position, radius, currentColor);
+
         public void SetPosition(Vector2 v) => Transform.Position = v;
 
         public void SetRotation(float f) => Transform.Rotation = f;

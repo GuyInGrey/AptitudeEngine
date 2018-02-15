@@ -70,6 +70,8 @@
     <Compile Include="Components\Flairs\Flair.cs" />
     <Compile Include="Components\Flairs\Label.cs" />
     <Compile Include="Components\Flairs\Slider.cs" />
+    <Compile Include="Components\Pathing\Node.cs" />
+    <Compile Include="Components\Pathing\PathFinder.cs" />
     <Compile Include="Components\Timer.cs" />
     <Compile Include="Components\Turtle.cs" />
     <Compile Include="Components\Tweener.cs" />
