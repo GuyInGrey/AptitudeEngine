@@ -50,7 +50,7 @@ namespace AptitudeEngine.Components
             Transform.Rotation = 90;
             Transform.Position = Vector2.Zero;
 
-            DrawCode(this);
+            DrawCode?.Invoke(this);
 
             if (debug)
             {
