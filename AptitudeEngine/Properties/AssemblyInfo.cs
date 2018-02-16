@@ -1,15 +1,16 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AptitudeEngine")]
-[assembly: AssemblyDescription("A 2D Engine")]
+[assembly: AssemblyDescription("A 2D Entity Component Game Engine")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Phoenix Game Development ")]
-[assembly: AssemblyProduct("AptitudeEngine")]
-[assembly: AssemblyCopyright("Copyright © Phoenix Game Development 2018")]
+[assembly: AssemblyCompany("Pheonix Game Development")]
+[assembly: AssemblyProduct("AptitudeEngine Game Engine")]
+[assembly: AssemblyCopyright("Copyright © Pheonix Game Development 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -31,5 +32,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2017.0.0.0")]
+[assembly: AssemblyVersion("2018.1.6.4")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("en")]
+
