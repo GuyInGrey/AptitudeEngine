@@ -10,8 +10,10 @@ namespace AptitudeEngine
 
         public static Animation EasyMake(int partsHor, int partsVer, float sizeHor, float sizeVer, int frameRate)
         {
-            var toReturn = new Animation();
-            toReturn.Frames = new AptRectangle[partsHor * partsVer];
+            var toReturn = new Animation
+            {
+                Frames = new AptRectangle[partsHor * partsVer]
+            };
             var horSize = sizeHor / partsHor;
             var verSize = sizeVer / partsVer;
 

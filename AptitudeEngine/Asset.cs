@@ -51,8 +51,10 @@ namespace AptitudeEngine
                 {
                     graphics.Clear(Color.Transparent);
 
-                    var stringFormat = new StringFormat();
-                    stringFormat.Alignment = StringAlignment.Center;
+                    var stringFormat = new StringFormat
+                    {
+                        Alignment = StringAlignment.Center
+                    };
 
                     graphics.DrawString(s, f, new SolidBrush(c), new Rectangle(0,0,bitmap.Width,bitmap.Height), stringFormat);
                 }
