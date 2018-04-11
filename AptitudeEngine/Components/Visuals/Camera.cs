@@ -1,6 +1,4 @@
-﻿using AptitudeEngine.Enums;
-using AptitudeEngine.Events;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace AptitudeEngine.Components.Visuals
@@ -29,7 +27,7 @@ namespace AptitudeEngine.Components.Visuals
         public void SetPosition(float x, float y)
         {
             //Set the owner's transform to the new location.
-            Transform.Position = new CoordinateSystem.Vector2(x, y);
+            Transform.Position = new Vector2(x, y);
 
             //Load this matrix as the current one.
             GL.LoadMatrix(ref projection);
@@ -39,7 +37,7 @@ namespace AptitudeEngine.Components.Visuals
 
         public override void Awake()
         {
-            projection = Matrix4.CreateOrthographic(Transform.Size.X, -Transform.Size.Y, 0f, 100f);
+            projection = Matrix4.CreateOrthographic(Transform.Scale.X, -Transform.Scale.Y, 0f, 100f);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);
@@ -48,7 +46,7 @@ namespace AptitudeEngine.Components.Visuals
 
         public override void Render(Events.FrameEventArgs a)
         {
-            projection = Matrix4.CreateOrthographic(Transform.Size.X, -Transform.Size.Y, 0f, 100f);
+            projection = Matrix4.CreateOrthographic(Transform.Scale.X, -Transform.Scale.Y, 0f, 100f);
 
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref projection);

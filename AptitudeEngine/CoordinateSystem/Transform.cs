@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace AptitudeEngine.CoordinateSystem
+namespace AptitudeEngine
 {
     public class Transform
     {
         /// <summary>
-        /// The Bounds of the <see cref="Transform"/>, as per <see cref="Transform.Position"/> and <see cref="Transform.Size"/>.
+        /// The Bounds of the <see cref="Transform"/>, as per <see cref="Transform.Position"/> and <see cref="Transform.Scale"/>.
         /// </summary>
-        public AptRectangle Bounds => new AptRectangle(Position, Size);
+        public Rectangle Bounds => new Rectangle(Position, Scale);
 
         /// <summary>
         /// World space position, relative to the world's origin (0, 0).
@@ -22,7 +22,7 @@ namespace AptitudeEngine.CoordinateSystem
         /// <summary>
         /// World space scale of this transform.
         /// </summary>
-        public Vector2 Size { get; set; } = new Vector2(1f, 1f);
+        public Vector2 Scale { get; set; } = new Vector2(1f, 1f);
 
         /// <summary>
         /// World space rotation, in counter-clockwise radians.
@@ -72,7 +72,11 @@ namespace AptitudeEngine.CoordinateSystem
             // lmao p simple right
             => Rotation += degrees;
 
-        public bool ContainsPoint(Vector2 p) =>
-            p.X > Position.X && p.Y > Position.Y && p.X < Position.X + Size.X && p.Y < Position.Y + Size.Y;
+        /// <summary>
+        /// Checks if the transform contains the specified vector. DOES NOT account for rotation.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public bool ContainsVector(Vector2 v) => Bounds.ContainsVector(v);
     }
 }

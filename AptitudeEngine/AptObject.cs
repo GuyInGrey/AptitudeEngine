@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using AptitudeEngine.Events;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
 
 namespace AptitudeEngine

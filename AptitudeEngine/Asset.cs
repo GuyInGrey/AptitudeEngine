@@ -56,7 +56,7 @@ namespace AptitudeEngine
                         Alignment = StringAlignment.Center
                     };
 
-                    graphics.DrawString(s, f, new SolidBrush(c), new Rectangle(0,0,bitmap.Width,bitmap.Height), stringFormat);
+                    graphics.DrawString(s, f, new SolidBrush(c), new System.Drawing.Rectangle(0,0, bitmap.Width, bitmap.Height), stringFormat);
                 }
 
                 var sa = new SpriteAsset();

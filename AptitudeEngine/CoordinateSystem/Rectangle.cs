@@ -1,52 +1,64 @@
 ﻿using System;
 
-namespace AptitudeEngine.CoordinateSystem
+namespace AptitudeEngine
 {
-    public struct AptRectangle
+    public class Rectangle
     {
         /// <summary>
-        /// An empty rectangle.
+        /// Represents a rectangle with position (0,0) and size (0,0)
         /// </summary>
-        public static readonly AptRectangle Empty = new AptRectangle();
+        public static readonly Rectangle Zero = new Rectangle(0, 0, 0, 0);
+
+        /// <summary>
+        /// Represents a rectangle with position (0,0) and size (1,1)
+        /// </summary>
+        public static readonly Rectangle One = new Rectangle(0, 0, 1, 1);
 
         /// <summary>
         /// The X axis location.
         /// </summary>
-        public float X { get; set; }
+        public float X
+        {
+            get => Position.X;
+            set => Position = new Vector2(value, Position.Y);
+        }
 
         /// <summary>
         /// The Y axis location.
         /// </summary>
-        public float Y { get; set; }
-
-        /// <summary>
-        /// The size on the X axis (width).
-        /// </summary>
-        public float Width { get; set; }
-
-        /// <summary>
-        /// The size on the Y axis (height).
-        /// </summary>
-        public float Height { get; set; }
-
-        /// <summary>
-        /// The position. If possible, use <see cref="X"/> and <see cref="Y"/>.
-        /// </summary>
-        public Vector2 Position
+        public float Y
         {
-            get => new Vector2(X, Y);
-            set
-            {
-                X = value.X;
-                Y = value.Y;
-            }
-
+            get => Position.Y;
+            set => Position = new Vector2(Position.X, value);
         }
 
         /// <summary>
-        /// The size. If possible, use <see cref="Width"/> and <see cref="Height"/>.
+        /// The size on the X axis.
         /// </summary>
-        public Vector2 Size => new Vector2(Width, Height);
+        public float Width
+        {
+            get => Size.X;
+            set => Size = new Vector2(value, Size.Y);
+        }
+
+        /// <summary>
+        /// The size on the Y axis.
+        /// </summary>
+        public float Height
+        {
+            get => Size.Y;
+            set => Size = new Vector2(Size.X, value);
+        }
+
+        /// <summary>
+        /// The position.
+        /// </summary>
+        public Vector2 Position { get; set; }
+
+        /// <summary>
+        /// The size.
+        /// </summary>
+        public Vector2 Size { get; set; }
 
         /// <summary>
         /// Check whether vector v is within the bounds of the rectangle.
@@ -57,34 +69,32 @@ namespace AptitudeEngine.CoordinateSystem
             => v.X > X && v.Y > Y && v.X < X + Width && v.Y < Y + Height;
 
         /// <summary>
-        /// Create a new <see cref="AptRectangle"/>.
+        /// Create a new <see cref="Rectangle"/>.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <param name="width">The width size.</param>
         /// <param name="height">The height size.</param>
-        public AptRectangle(float x, float y, float width, float height)
-        {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
-        }
+        public Rectangle(float x, float y, float width, float height) : this(new Vector2(x, y), new Vector2(width, height)) { }
+        
 
         /// <summary>
-        /// Create a new <see cref="AptRectangle"/>. If possible use <see cref="AptRectangle(float, float, float, float)"/> constructor instead.
+        /// Create a new <see cref="Rectangle"/>. If possible use <see cref="Rectangle(float, float, float, float)"/> constructor instead.
         /// </summary>
         /// <param name="position">The position of the rectangle.</param>
         /// <param name="size">The size of the rectangle.</param>
-        public AptRectangle(Vector2 position, Vector2 size)
-            : this(position.X, position.Y, size.X, size.Y) { }
+        public Rectangle(Vector2 position, Vector2 size)
+        {
+            Position = position;
+            Size = size;
+        }
 
         /// <summary>
-        /// See if this rectangle's bounds intersect at all with <see cref="r"/>.
+        /// See if this rectangle's bounds intersect at all with the given rectangle.
         /// </summary>
         /// <param name="r">The rectangle to check with.</param>
         /// <returns></returns>
-        public bool IntersectsWith(AptRectangle r)
+        public bool IntersectsWith(Rectangle r)
         {
             var l1 = r.Position;
             var l2 = Position;
@@ -109,7 +119,7 @@ namespace AptitudeEngine.CoordinateSystem
         /// </summary>
         /// <param name="r">The rectangle to check intersection with.</param>
         /// <returns></returns>
-        public AptRectangle Intersect(AptRectangle r)
+        public Rectangle Intersect(Rectangle r)
         {
             var x1 = Math.Max(X, r.X);
             var x2 = Math.Min(X + Width, r.X + r.Width);
@@ -118,10 +128,10 @@ namespace AptitudeEngine.CoordinateSystem
 
             if (x2 >= x1 && y2 >= y1)
             {
-                return new AptRectangle(x1, y1, x2 - x1, y2 - y1);
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
 
-            return Empty;
+            return Zero;
         }
 
         public Vector2 Center => new Vector2(X + (Width / 2), Y + (Height / 2));

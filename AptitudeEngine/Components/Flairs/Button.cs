@@ -5,7 +5,7 @@ namespace AptitudeEngine.Components.Flairs
 {
     public class Button : Flair
     {
-        public override void Start() => Rounding = Transform.Size.Y / 4;
+        public override void Start() => Rounding = Transform.Scale.Y / 4;
 
         /// <summary>
         /// The color that that is drawn to the background of the object when a mouse button is down over the object.

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using AptitudeEngine.CoordinateSystem;
 
 namespace AptitudeEngine.Components.Flairs
 {
@@ -25,9 +24,9 @@ namespace AptitudeEngine.Components.Flairs
                 ScreenHandler.Flags = DrawFlags.ParentCoordinateRelative;
                 ScreenHandler.Polygon(new PolyVector[] {
                     new PolyVector(Vector2.Zero + CheckedMargin, CheckedColor),
-                    new PolyVector(new Vector2(Transform.Size.X - CheckedMargin, CheckedMargin), CheckedColor),
-                    new PolyVector(new Vector2(Transform.Size - CheckedMargin), CheckedColor),
-                    new PolyVector(new Vector2(CheckedMargin, Transform.Size.Y - CheckedMargin), CheckedColor),
+                    new PolyVector(new Vector2(Transform.Scale.X - CheckedMargin, CheckedMargin), CheckedColor),
+                    new PolyVector(new Vector2(Transform.Scale - CheckedMargin), CheckedColor),
+                    new PolyVector(new Vector2(CheckedMargin, Transform.Scale.Y - CheckedMargin), CheckedColor),
                 });
             }
         }

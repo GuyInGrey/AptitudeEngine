@@ -1,5 +1,4 @@
-﻿using AptitudeEngine.CoordinateSystem;
-using AptitudeEngine.Enums;
+﻿using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 using System;
 using System.Collections.Generic;

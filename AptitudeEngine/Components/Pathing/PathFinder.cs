@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using AptitudeEngine.CoordinateSystem;
 
 namespace AptitudeEngine.Components.Pathing
 {

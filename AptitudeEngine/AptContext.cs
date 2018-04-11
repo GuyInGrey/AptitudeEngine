@@ -7,7 +7,6 @@ using OpenTK.Graphics.OpenGL;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 using AptitudeEngine.Components.Visuals;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Logger;
 
 namespace AptitudeEngine
@@ -409,8 +408,8 @@ namespace AptitudeEngine
             if (DebugHandler.OriginLocator)
             {
                 ScreenHandler.Flags = DrawFlags.CustomBounds;
-                ScreenHandler.CustomBounds = new AptRectangle(0, 0, 0, 0);
-                ScreenHandler.Circle(new Vector2(0, 0), ActiveCamera.Transform.Size.X / 4, Color.FromArgb(50, 255, 0, 0));
+                ScreenHandler.CustomBounds = new Rectangle(0, 0, 0, 0);
+                ScreenHandler.Circle(new Vector2(0, 0), ActiveCamera.Transform.Scale.X / 4, Color.FromArgb(50, 255, 0, 0));
             }
 
             GL.Flush();
@@ -483,7 +482,7 @@ namespace AptitudeEngine
                 hierarchy.Add(go);
             }
 
-            go.Transform.Size = new Vector2(1, 1);
+            go.Transform.Scale = new Vector2(1, 1);
 
             go.InternalAwake();
 

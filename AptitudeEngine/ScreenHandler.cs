@@ -1,5 +1,4 @@
-﻿using AptitudeEngine.CoordinateSystem;
-using System.Drawing;
+﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using AptitudeEngine.Logger;
 using System.Collections.Generic;
@@ -36,13 +35,13 @@ namespace AptitudeEngine
 
         public static AptObject CurrentDrawingObject { get; set; }
 
-        public static AptRectangle CustomBounds { get; set; }
+        public static Rectangle CustomBounds { get; set; }
 
         public static DrawFlags Flags { get; set; }
 
         public static bool Option(DrawFlags d) => (Flags & d) == d;
 
-        public static AptRectangle DefaultFrame { get; set; } = new AptRectangle(0,0,1,1);
+        public static Rectangle DefaultFrame { get; set; } = new Rectangle(0,0,1,1);
 
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace AptitudeEngine
         /// </summary>
         /// <param name="tex"></param>
         /// <param name="frame"></param>
-        public static void Texture(Texture2D tex, AptRectangle frame)
+        public static void Texture(Texture2D tex, Rectangle frame)
         {
             var Position = Vector2.Zero;
 
@@ -93,15 +92,15 @@ namespace AptitudeEngine
                 Position += CustomBounds.Position;
             }
 
-            AptRectangle bounds;
+            Rectangle bounds;
 
             if (!Option(DrawFlags.CustomBounds))
             {
-                bounds = new AptRectangle(Position, CurrentDrawingObject.Transform.Size);
+                bounds = new Rectangle(Position, CurrentDrawingObject.Transform.Scale);
             }
             else
             {
-                bounds = new AptRectangle(Position, CustomBounds.Size);
+                bounds = new Rectangle(Position, CustomBounds.Size);
             }
 
             var posVectors = GetBoundCorners(bounds);
@@ -222,7 +221,7 @@ namespace AptitudeEngine
         /// </summary>
         /// <param name="r">The rectangle to convert.</param>
         /// <returns></returns>
-        public static Vector2[] GetBoundCorners(AptRectangle r)
+        public static Vector2[] GetBoundCorners(Rectangle r)
             => new[]
             {
                 new Vector2(r.X, r.Y),

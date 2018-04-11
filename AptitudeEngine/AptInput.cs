@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Events;
 
@@ -49,8 +48,8 @@ namespace AptitudeEngine
         {
             if (DebugHandler.CameraScroll)
             {
-                context.ActiveCamera.Transform.Size = context.ActiveCamera.Transform.Size - ((float)e.Delta / 100);
-                Console.Title = context.ActiveCamera.Transform.Size.ToString();
+                context.ActiveCamera.Transform.Scale = context.ActiveCamera.Transform.Scale - ((float)e.Delta / 100);
+                Console.Title = context.ActiveCamera.Transform.Scale.ToString();
             }
         }
 
@@ -61,7 +60,7 @@ namespace AptitudeEngine
             var mouseXPercent = e.X / context.WindowPixelSize.X;
             var mouseYPercent = e.Y / context.WindowPixelSize.Y;
 
-            var i = context.ActiveCamera.Transform.Size.X / 2;
+            var i = context.ActiveCamera.Transform.Scale.X / 2;
             MouseWorldPosition = new Vector2((mouseXPercent - i) + context.ActiveCamera.Transform.Position.X, (mouseYPercent - i) + context.ActiveCamera.Transform.Position.Y);
             MouseScreenPosition = new Vector2((mouseXPercent - i), (mouseYPercent - i));
         }
@@ -174,7 +173,7 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+                var rec = new Rectangle(i.TotalPosition, i.Transform.Scale);
 
                 if (rec.ContainsVector(MouseWorldPosition))
                 {
@@ -206,7 +205,7 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+                var rec = new Rectangle(i.TotalPosition, i.Transform.Scale);
 
                 if (rec.ContainsVector(MouseWorldPosition))
                 {
@@ -219,7 +218,7 @@ namespace AptitudeEngine
             //Tell all AptObjects, and therefore AptComponents, that a mouse button went up.
             context.RecurseGameObjects(delegate (AptObject i)
             {
-                var rec = new AptRectangle(i.TotalPosition, i.Transform.Size);
+                var rec = new Rectangle(i.TotalPosition, i.Transform.Scale);
 
                 if (rec.ContainsVector(MouseWorldPosition))
                 {

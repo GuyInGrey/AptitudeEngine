@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using AptitudeEngine.Components.Visuals;
-using AptitudeEngine.CoordinateSystem;
-using AptitudeEngine.Components;
-using AptitudeEngine.Enums;
-using AptitudeEngine.Events;
-using AptitudeEngine.Components.Pathing;
+using AptitudeEngine.Components.Flairs;
 
 namespace AptitudeEngine.Tests
 {
@@ -23,7 +19,7 @@ namespace AptitudeEngine.Tests
 
         public GameTest()
         {
-            context = new AptContext("Test Context", 1000, 1000, 1000000, 1000000);
+            context = new AptContext("Test Context", 1000, 1000, 60, 60);
             context.Load += Context_Load;
             context.Begin();
         }
@@ -37,34 +33,14 @@ namespace AptitudeEngine.Tests
             context.CustomCursor = true;
 
             var cameraObject = context.Instantiate();
-            cameraObject.Transform.Size = new Vector2(1, 1);
+            cameraObject.Transform.Scale = new Vector2(1, 1);
             var camera = cameraObject.AddComponent<Camera>();
             camera.SetAsActive();
 
-            var pathingObject = context.Instantiate();
-            var pathFinder = pathingObject.AddComponent<PathFinder>();
-            var turtle = pathingObject.AddComponent<Turtle>();
-
-            pathFinder.GenerateNodes(20, -0.5f, -0.5f, 0.5f, 0.5f, 20);
-
-            turtle.SetDebug(false);
-
-            turtle.DrawCode = t =>
-            {
-                t.SetLineThickness(20);
-
-                foreach (var n in pathFinder.Nodes)
-                {
-                    foreach (var m in n.ConnectedNodes)
-                    {
-                        ScreenHandler.Lines(new Vector2[] { n.Position, m.Position }, 2, Color.Black);
-                    }
-
-                    t.SetPosition(n.Position);
-                    t.SetColor(Color.Red);
-                    t.Circle(0.01f);
-                }
-            };
+            var GameOverFlair = context.Instantiate().AddComponent<Flair>();
+            GameOverFlair.Transform.Position = new Vector2(0.025f);
+            GameOverFlair.Transform.Scale = new Vector2(0.5f);
+            GameOverFlair.AddText("Game Over!", 8).IndividualVisible = true;
         }
     }
 }

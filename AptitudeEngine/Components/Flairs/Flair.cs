@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using AptitudeEngine.Assets;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
 using AptitudeEngine.Logger;
 
@@ -110,9 +109,9 @@ namespace AptitudeEngine.Components.Flairs
 
                 ScreenHandler.Polygon(new PolyVector[] {
                     new PolyVector(Vector2.Zero, c),
-                    new PolyVector(new Vector2(Transform.Size.X, 0), c),
-                    new PolyVector(new Vector2(Transform.Size.X, Transform.Size.Y), c),
-                    new PolyVector(new Vector2(0, Transform.Size.Y), c),
+                    new PolyVector(new Vector2(Transform.Scale.X, 0), c),
+                    new PolyVector(new Vector2(Transform.Scale.X, Transform.Scale.Y), c),
+                    new PolyVector(new Vector2(0, Transform.Scale.Y), c),
                 });
 
                 if (BackImage != null)
@@ -124,9 +123,9 @@ namespace AptitudeEngine.Components.Flairs
                 {
                     ScreenHandler.Lines(new Vector2[] {
                         Vector2.Zero,
-                        new Vector2(Transform.Size.X, 0),
-                        new Vector2(Transform.Size.X, Transform.Size.Y),
-                        new Vector2(0, Transform.Size.Y),
+                        new Vector2(Transform.Scale.X, 0),
+                        new Vector2(Transform.Scale.X, Transform.Scale.Y),
+                        new Vector2(0, Transform.Scale.Y),
                         Vector2.Zero,
                     }, BorderWidth, BorderColor);
                 }

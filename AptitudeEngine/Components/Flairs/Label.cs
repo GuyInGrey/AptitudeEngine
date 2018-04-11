@@ -1,5 +1,4 @@
 ﻿using AptitudeEngine.Assets;
-using AptitudeEngine.CoordinateSystem;
 using System;
 using System.Drawing;
 
@@ -23,7 +22,7 @@ namespace AptitudeEngine.Components.Flairs
             {
                 ScreenHandler.Flags = DrawFlags.CustomBounds | DrawFlags.ParentCoordinateRelative;
                 var size = new Vector2(Text.Length * (FontSize / 200), Text.LineCount() * (FontSize / 200) * (float)1.5);
-                ScreenHandler.CustomBounds = new AptRectangle((Transform.Size - size) / 2, size);
+                ScreenHandler.CustomBounds = new Rectangle((Transform.Scale - size) / 2, size);
                 ScreenHandler.Texture(textAsset.Texture);
             }
         }

@@ -1,5 +1,4 @@
 ﻿using AptitudeEngine.Assets;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
 using System;
 
@@ -35,7 +34,7 @@ namespace AptitudeEngine.Components.Visuals
                 var ao = Context.Instantiate();
                 owner.AddChild(ao);
                 ao.Name = "P" + i;
-                ao.Transform.Size = new Vector2(1,1);
+                ao.Transform.Scale = new Vector2(1,1);
                 ao.Transform.Position = FinalPositions[i];
                 var renderer = ao.AddComponent<SpriteRenderer>();
                 renderer.Sprite = Asset.Load<SpriteAsset>(Image);

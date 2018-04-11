@@ -1,5 +1,4 @@
-﻿using AptitudeEngine.CoordinateSystem;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 
 namespace AptitudeEngine.Assets
@@ -14,7 +13,7 @@ namespace AptitudeEngine.Assets
         /// <summary>
         /// The current image frame selected.
         /// </summary>
-        public AptRectangle Frame { get; set; }
+        public Rectangle Frame { get; set; }
 
         /// <summary>
         /// Loads the SpriteAsset from a file.
@@ -23,7 +22,7 @@ namespace AptitudeEngine.Assets
         public override void Load(FileStream file)
         {
             Texture = Texture2D.FromStream(file);
-            Frame = new AptRectangle(0f, 0f, 1f, 1f);
+            Frame = new Rectangle(0f, 0f, 1f, 1f);
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace AptitudeEngine.Assets
         public void Load(Bitmap b)
         {
             Texture = Texture2D.FromBitmap(b);
-            Frame = new AptRectangle(0f, 0f, 1f, 1f);
+            Frame = new Rectangle(0f, 0f, 1f, 1f);
         }
     }
 }

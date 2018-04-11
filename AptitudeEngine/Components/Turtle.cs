@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Components

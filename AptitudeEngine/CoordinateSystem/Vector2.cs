@@ -2,26 +2,118 @@
 using System.Drawing;
 using System.Runtime.CompilerServices;
 
-namespace AptitudeEngine.CoordinateSystem
+namespace AptitudeEngine
 {
+#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public struct Vector2
+#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (0,0).
+        /// </summary>
         public static readonly Vector2 Zero = new Vector2(0f, 0f);
 
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (1,1).
+        /// </summary>
+        public static readonly Vector2 One = new Vector2(1f, 1f);
+
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (0,1).
+        /// </summary>
+        public static readonly Vector2 Up = new Vector2(0f, 1f);
+
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (0,1).
+        /// </summary>
+        public static readonly Vector2 Down = new Vector2(0f, -1f);
+
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (0,1).
+        /// </summary>
+        public static readonly Vector2 Left = new Vector2(-1f, 0f);
+
+        /// <summary>
+        /// Represents a Vector2 object with coordinates (0,1).
+        /// </summary>
+        public static readonly Vector2 Right = new Vector2(1f, 0f);
+
+        /// <summary>
+        /// The coordinate on the X axis.
+        /// </summary>
         public float X { get; set; }
+
+        /// <summary>
+        /// The coordinate on the Y axis.
+        /// </summary>
         public float Y { get; set; }
 
+        /// <summary>
+        /// Access the x, y components using [0], [1] respectively. Null will return 0.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Nullable<float> this[int index]
+        {
+            get
+            {
+                switch (index)
+                {
+                    case (0):
+                        return X;
+                    case (1):
+                        return Y;
+                    default:
+                        return null;
+                }
+            }
+
+            set
+            {
+                switch (index)
+                {
+                    case (0):
+                        X = value.GetValueOrDefault();
+                        break;
+                    case (1):
+                        Y = value.GetValueOrDefault();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Vector2 vec)
+            {
+                return Equals(vec);
+            }
+            return false;
+        }
+
+        public bool Equals(Vector2 obj) => (obj.X == X && obj.Y == Y);
+
+        /// <summary>
+        /// Returns the squared length of this vector.
+        /// </summary>
         public float SquareMagnitude => (X * X) + (Y * Y);
 
-        public float Magnitude => (float) Math.Sqrt(SquareMagnitude);
+        /// <summary>
+        /// Returns the length of this vector. It is reccomended you use <see cref="SquareMagnitude"/>. <see cref="Math.Sqrt(double)"/> is resource intensive.
+        /// </summary>
+        public float Magnitude => (float)Math.Sqrt(SquareMagnitude);
 
-        public Vector2 Normalized => this * (1f / Magnitude);
+        /// <summary>
+        /// Returns the normalized vector.
+        /// </summary>
+        public Vector2 Normalized => Magnitude == 0 ? Vector2.Zero : this * (1f / Magnitude);
 
-        public Vector2(float both)
-        {
-            X = both;
-            Y = both;
-        }
+        /// <summary>
+        /// Normalizes the vector.
+        /// </summary>
+        public void Normalize() => this = Normalized;
 
         public Vector2(float x, float y)
         {
@@ -29,31 +121,25 @@ namespace AptitudeEngine.CoordinateSystem
             Y = y;
         }
 
-        public Vector2(Point p)
-        {
-            X = p.X;
-            Y = p.Y;
-        }
+        public Vector2(float both) : this(both,both) { }
 
-        public Vector2(OpenTK.Vector2 v)
-        {
-            X = v.X;
-            Y = v.Y;
-        }
+        public Vector2(Point p) : this(p.X, p.Y) { }
+
+        public Vector2(OpenTK.Vector2 v) : this(v.X,v.Y) { }
 
         public static Vector2 Add(params Vector2[] vecs)
         {
             var toReturn = Zero;
-            for (var i = 0; i < vecs.Length; i++)
+            foreach (var v in vecs)
             {
-                toReturn += vecs[i];
+                toReturn += v;
             }
 
             return toReturn;
         }
 
         /// <summary>
-        /// Add the specified instances
+        /// Add the specified vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -63,7 +149,7 @@ namespace AptitudeEngine.CoordinateSystem
             => a + b;
 
         /// <summary>
-        /// Subtract one Vector from another
+        /// Subtracts the specified vectors.
         /// </summary>
         /// <param name="a">First operand</param>
         /// <param name="b">Second operand</param>
@@ -73,7 +159,7 @@ namespace AptitudeEngine.CoordinateSystem
             => a - b;
 
         /// <summary>
-        /// Multiply a vector and a scalar
+        /// Multiply a vector by a scalar
         /// </summary>
         /// <param name="a">Vector operand</param>
         /// <param name="f">Scalar operand</param>
@@ -148,7 +234,13 @@ namespace AptitudeEngine.CoordinateSystem
                 vec.Y > max.Y ? max.Y : vec.Y;
             return vec;
         }
-
+        
+        /// <summary>
+        /// Rotates the vector around a center of rotation.
+        /// </summary>
+        /// <param name="centerPoint">Center of rotation.</param>
+        /// <param name="angleInRadians">Angle to rorate in radians.</param>
+        /// <returns></returns>
         public Vector2 Rotate(Vector2 centerPoint, float angleInRadians)
         {
             var cosTheta = Math.Cos(angleInRadians);
@@ -167,6 +259,12 @@ namespace AptitudeEngine.CoordinateSystem
             };
         }
 
+        /// <summary>
+        /// Move in direction for distance.
+        /// </summary>
+        /// <param name="angle">Direction in degrees.</param>
+        /// <param name="distance">Distance to move.</param>
+        /// <returns></returns>
         public Vector2 Move(double angle, double distance)
         {
             angle = angle + 270;
@@ -177,19 +275,50 @@ namespace AptitudeEngine.CoordinateSystem
             return toReturn;
         }
 
+        /// <summary>
+        /// Returns the distance from this vector to another vector.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         public float DistanceFrom(Vector2 v)
         => (float)Math.Sqrt(Math.Pow(v.X - X, 2) + Math.Pow(v.Y - Y, 2));
 
+        /// <summary>
+        /// Returns a random number.
+        /// </summary>
         public static Random VectorRandom { get; set; } = new Random();
 
+        /// <summary>
+        /// Returns a random vector within the range given.
+        /// </summary>
+        /// <param name="minX">The minimum X coordinate of the vector.</param>
+        /// <param name="minY">The minimum Y coordinate of the vector.</param>
+        /// <param name="maxX">The maximum X coordinate of the vector.</param>
+        /// <param name="maxY">The maximum Y coordinate of the vector.</param>
+        /// <returns></returns>
         public static Vector2 Random(float minX, float minY, float maxX, float maxY)
         => new Vector2(Extensions.RandomNumberBetween(minX, maxX), Extensions.RandomNumberBetween(minY, maxY));
 
+        #region Addition
         public static Vector2 operator +(Vector2 left, float right)
             => new Vector2(left.X + right, left.Y + right);
 
+        public static Vector2 operator +(float right, Vector2 left)
+            => new Vector2(left.X + right, left.Y + right);
+
+        public static Vector2 operator +(Vector2 left, Vector2 right)
+            => new Vector2(left.X + right.X, left.Y + right.Y);
+
+        public static Vector2 operator +(Vector2 left, Vector2? right)
+            => (right == null) ? left : left + right.Value;
+        #endregion
+
+        #region Subtraction
         public static Vector2 operator -(Vector2 left, float right)
             => new Vector2(left.X - right, left.Y - right);
+
+        public static Vector2 operator -(float right, Vector2 left)
+            => new Vector2(right - left.X, right - left.Y);
 
         public static Vector2 operator -(Vector2 left, Vector2 right)
             => new Vector2(left.X - right.X, left.Y - right.Y);
@@ -197,11 +326,10 @@ namespace AptitudeEngine.CoordinateSystem
         public static Vector2 operator -(Vector2 vec)
             => new Vector2(-vec.X, -vec.Y);
 
-        public static Vector2 operator +(Vector2 left, Vector2 right)
-            => new Vector2(left.X + right.X, left.Y + right.Y);
+        public static Vector2 operator -(Vector2 left, Vector2? right)
+            => (right == null) ? left : left - right.Value;
 
-        public static Vector2 operator +(Vector2 left, Vector2? right) 
-            => (right == null) ? left : left + right.Value;
+        #endregion
 
         public static Vector2 operator *(Vector2 left, float right)
             => new Vector2(left.X * right, left.Y * right);
@@ -209,8 +337,17 @@ namespace AptitudeEngine.CoordinateSystem
         public static Vector2 operator *(float left, Vector2 right)
             => new Vector2(left * right.X, left * right.Y);
 
+        public static Vector2 operator *(Vector2 left, Vector2 right)
+            => new Vector2(left.X * right.X, left.Y * right.Y);
+
         public static Vector2 operator /(Vector2 left, float right)
             => new Vector2(left.X / right, left.Y / right);
+
+        public static Vector2 operator /(float right, Vector2 left)
+            => new Vector2(right / left.X, right / left.Y);
+
+        public static Vector2 operator /(Vector2 left, Vector2 right)
+            => new Vector2(left.X / right.X, left.Y / right.Y);
 
         public static implicit operator OpenTK.Vector2(Vector2 vec)
             => new OpenTK.Vector2(vec.X, vec.Y);

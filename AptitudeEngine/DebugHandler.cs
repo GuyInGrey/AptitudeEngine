@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using AptitudeEngine.CoordinateSystem;
 using AptitudeEngine.Enums;
 using AptitudeEngine.Logger;
 
@@ -32,8 +31,8 @@ namespace AptitudeEngine
         {
             if (!StopCamSizeClamp)
             {
-                var camSize = Context.ActiveCamera.Transform.Size;
-                Context.ActiveCamera.Transform.Size = new Vector2(camSize.X.Clamp(0.00001f, 100000), camSize.Y.Clamp(0.00001f, 100000));
+                var camSize = Context.ActiveCamera.Transform.Scale;
+                Context.ActiveCamera.Transform.Scale = new Vector2(camSize.X.Clamp(0.00001f, 100000), camSize.Y.Clamp(0.00001f, 100000));
             }
         }
 

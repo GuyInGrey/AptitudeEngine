@@ -1,5 +1,4 @@
-﻿using AptitudeEngine.CoordinateSystem;
-using AptitudeEngine.Events;
+﻿using AptitudeEngine.Events;
 
 namespace AptitudeEngine.Components.Visuals
 {

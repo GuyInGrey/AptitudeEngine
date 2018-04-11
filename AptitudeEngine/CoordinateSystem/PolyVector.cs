@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace AptitudeEngine.CoordinateSystem
+namespace AptitudeEngine
 {
     public class PolyVector
     {
