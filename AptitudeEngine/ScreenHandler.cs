@@ -1,8 +1,5 @@
 ﻿using System.Drawing;
 using OpenTK.Graphics.OpenGL;
-using AptitudeEngine.Logger;
-using System.Collections.Generic;
-using AptitudeEngine.Enums;
 using System;
 
 namespace AptitudeEngine
@@ -41,8 +38,7 @@ namespace AptitudeEngine
 
         public static bool Option(DrawFlags d) => (Flags & d) == d;
 
-        public static Rectangle DefaultFrame { get; set; } = new Rectangle(0,0,1,1);
-
+        public static Rectangle DefaultFrame { get; set; } = Rectangle.One;
 
         /// <summary>
         /// Draws the specified selected points.
