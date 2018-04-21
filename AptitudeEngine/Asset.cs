@@ -40,12 +40,13 @@ namespace AptitudeEngine
         /// <param name="s">The text to display.</param>
         /// <param name="c">The color of the text to display.</param>
         /// <param name="quality">The quality of the text.</param>
-        public static SpriteAsset LoadText(string s, Color c, float quality)
+        public static SpriteAsset LoadText(string s, Color c, Font f)
         {
             var lineCnt = s.Split('\n').Length;
-
-            var f = new Font(FontFamily.GenericSerif, quality, FontStyle.Regular);
-            using (var bitmap = new Bitmap((int)(quality * s.Length), (int)(quality * 1.5f) * lineCnt))
+            
+            var b = Graphics.FromImage(new Bitmap(1, 1));
+            var x = b.MeasureString(s, f).ToSize();
+            using (var bitmap = new Bitmap(x.Width + 2, x.Height + 2))
             {
                 using (var graphics = Graphics.FromImage(bitmap))
                 {
@@ -56,7 +57,7 @@ namespace AptitudeEngine
                         Alignment = StringAlignment.Center
                     };
 
-                    graphics.DrawString(s, f, new SolidBrush(c), new System.Drawing.Rectangle(0,0, bitmap.Width, bitmap.Height), stringFormat);
+                    graphics.DrawString(s, f, new SolidBrush(c), new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height), stringFormat);
                 }
 
                 var sa = new SpriteAsset();

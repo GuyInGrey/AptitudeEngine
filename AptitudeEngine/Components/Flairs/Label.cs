@@ -27,6 +27,6 @@ namespace AptitudeEngine.Components.Flairs
             }
         }
 
-        public void Gen() => textAsset = Asset.LoadText(Text, TextColor, 1000);
+        public void Gen() => textAsset = Asset.LoadText(Text, TextColor, new Font(FontFamily.GenericSansSerif, 100f));
     }
 }

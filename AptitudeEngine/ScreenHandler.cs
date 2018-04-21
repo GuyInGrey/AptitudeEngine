@@ -27,7 +27,7 @@ namespace AptitudeEngine
                     GL.Disable(EnableCap.Blend);
                 }
             }
-            get => Blending;
+            get => _Blending;
         }
 
         public static AptObject CurrentDrawingObject { get; set; }
